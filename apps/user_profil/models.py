@@ -63,3 +63,5 @@ class ProfileFeedItem(models.Model):
 
     def __str__(self):
         return self.status_text
+
+

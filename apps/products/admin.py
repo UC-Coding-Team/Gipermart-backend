@@ -84,17 +84,14 @@ class ColorAdmin(admin.ModelAdmin):
 
 
 class SizeAdmin(admin.ModelAdmin):
-    list_display = ['name', 'code']
+    list_display = ['name']
 
 
 class VariantsAdmin(admin.ModelAdmin):
     list_display = ['title', 'product', 'color', 'size', 'price', 'quantity', 'image_tag']
 
 
-class ProductLangugaeAdmin(admin.ModelAdmin):
-    list_display = ['title', 'lang', 'slug']
-    prepopulated_fields = {'slug': ('title',)}
-    list_filter = ['lang']
+
 
 
 class CategoryLangugaeAdmin(admin.ModelAdmin):
