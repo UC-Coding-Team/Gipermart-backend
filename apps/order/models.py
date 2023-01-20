@@ -1,5 +1,5 @@
 from django.db import models
-from apps.user_profil.models import User
+from apps.user_profile.models import User
 from django.db.models import Sum, F, DecimalField
 from apps.products.models import Product
 from django.dispatch import receiver

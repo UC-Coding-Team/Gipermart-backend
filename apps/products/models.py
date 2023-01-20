@@ -102,7 +102,7 @@ class Comment(models.Model):
         ('False', 'False'),
     )
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    user = models.ForeignKey('user_profil.User', on_delete=models.CASCADE)
+    user = models.ForeignKey('user_profile.User', on_delete=models.CASCADE)
     subject = models.CharField(max_length=50, blank=True)
     comment = models.CharField(max_length=250, blank=True)
     rate = models.IntegerField(default=1)
