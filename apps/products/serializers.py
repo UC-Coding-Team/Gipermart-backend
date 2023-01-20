@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Category, Product
-from ..user_profil.models import User
+from apps.user_profile.models import User
 from drf_extra_fields.fields import Base64ImageField
 
 
