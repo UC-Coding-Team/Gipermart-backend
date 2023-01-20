@@ -17,6 +17,7 @@ django-mptt==0.14.0
 django_debug_toolbar==3.8.1
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.1
+drf-extra-fields==3.4.1
 drf-yasg==1.21.4
 googletrans==3.0.0
 h11==0.9.0
@@ -26,7 +27,7 @@ hstspreload==2023.1.1
 httpcore==0.9.1
 httpx==0.13.3
 hyperframe==5.2.0
-idna==3.4
+idna==2.10
 inflection==0.5.1
 itypes==1.2.0
 Jinja2==3.1.2
