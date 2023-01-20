@@ -86,13 +86,13 @@ class Product(models.Model):
         return cnt
 
 
-class Images(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    title = models.CharField(max_length=50, blank=True)
-    image = models.ImageField(blank=True, upload_to='images/')
-
-    def __str__(self):
-        return self.title
+# class Images(models.Model):
+#     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+#     title = models.CharField(max_length=50, blank=True)
+#     image = models.ImageField(blank=True, upload_to='images/')
+#
+#     def __str__(self):
+#         return self.title
 
 
 class Comment(models.Model):
@@ -141,24 +141,17 @@ class Variants(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     color = models.ForeignKey(Color, on_delete=models.CASCADE, blank=True, null=True)
     size = models.ForeignKey(Size, on_delete=models.CASCADE, blank=True, null=True)
-    image_id = models.IntegerField(blank=True, null=True, default=0)
+    image = models.ImageField(blank=True, upload_to='images/')
+    # image_id = models.IntegerField(blank=True, null=True, default=0)
     quantity = models.IntegerField(default=1)
     price = models.DecimalField(max_digits=12, decimal_places=2, default=0)
 
     def __str__(self):
         return self.title
 
-    def image(self):
-        img = Images.objects.get(id=self.image_id)
-        if img.id is not None:
-            varimage = img.image.url
-        else:
-            varimage = ""
-        return varimage
-
     def image_tag(self):
-        img = Images.objects.get(id=self.image_id)
-        if img.id is not None:
-            return mark_safe('<img src="{}" height="50"/>'.format(img.image.url))
+        if self.image.url is not None:
+            return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
         else:
             return ""
+

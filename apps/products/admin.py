@@ -6,7 +6,7 @@ from django.contrib import admin
 # Register your models here.
 from mptt.admin import DraggableMPTTAdmin
 
-from .models import Category, Product, Images, Comment, Color, Size, Variants
+from .models import Category, Product, Comment, Color, Size, Variants
 
 
 class CategoryAdmin(DraggableMPTTAdmin):
@@ -46,11 +46,11 @@ class CategoryAdmin(DraggableMPTTAdmin):
     related_products_cumulative_count.short_description = 'Related products (in tree)'
 
 
-@admin_thumbnails.thumbnail('image')
-class ProductImageInline(admin.TabularInline):
-    model = Images
-    readonly_fields = ('id',)
-    extra = 1
+# @admin_thumbnails.thumbnail('image')
+# class ProductImageInline(admin.TabularInline):
+#     model = Images
+#     readonly_fields = ('id',)
+#     extra = 1
 
 
 class ProductVariantsInline(admin.TabularInline):
@@ -60,16 +60,16 @@ class ProductVariantsInline(admin.TabularInline):
     show_change_link = True
 
 
-@admin_thumbnails.thumbnail('image')
-class ImagesAdmin(admin.ModelAdmin):
-    list_display = ['image', 'title', 'image_thumbnail']
+# @admin_thumbnails.thumbnail('image')
+# class ImagesAdmin(admin.ModelAdmin):
+#     list_display = ['image', 'title', 'image_thumbnail']
 
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['title', 'category', 'status', 'image_tag']
     list_filter = ['category']
     readonly_fields = ('image_tag',)
-    inlines = [ProductImageInline, ProductVariantsInline]
+    inlines = [ProductVariantsInline]
     prepopulated_fields = {'slug': ('title',)}
 
 
@@ -103,7 +103,7 @@ class CategoryLangugaeAdmin(admin.ModelAdmin):
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Comment, CommentAdmin)
-admin.site.register(Images, ImagesAdmin)
+# admin.site.register(, ImagesAdmin)
 admin.site.register(Color, ColorAdmin)
 admin.site.register(Size, SizeAdmin)
 admin.site.register(Variants, VariantsAdmin)
