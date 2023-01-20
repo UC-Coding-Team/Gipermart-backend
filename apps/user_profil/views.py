@@ -1,93 +1,155 @@
+from django.shortcuts import render
+
+from rest_framework import viewsets
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.views import APIView
-from .serializers import *
-from django.contrib.auth import authenticate
-from .renderers import UserRenderer, renderers
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.filters import SearchFilter
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+
+from .models import (
+    User,
+    ProfileFeedItem
+)
+from .permissions import (
+    UpdateOwnProfile,
+    PostOwnStatus
+)
+
+from .serializers import (
+    HelloSerializer,
+    UserProfileSerializer,
+    ProfileFeedItemSerializer
+)
 
 
+class HelloApiView(APIView):
+    """Test API View."""
 
-#  ************************    Tokken Genrated Class    ************************
-def get_tokens_for_user(user):
-    refresh = RefreshToken.for_user(user)
+    serializer_class = HelloSerializer
 
-    return {
-        'refresh': str(refresh),
-        'access': str(refresh.access_token),
-    }
-
-
-
-# Create your views here.
-#  ************************    User Registraion View    ************************
-class UserRegistrationView(APIView):
-    renderer_classes = [UserRenderer]
-    def post(self, request, format=None):
-        serializer = UserRegistrationSerilizer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        get_tokens_for_user(user)
-        return Response({"message":"registration success"}, status=status.HTTP_201_CREATED)
-
-
-
-#  ************************    User Login View    ************************
-class UserLoginView(APIView):
-    renderer_classes = [UserRenderer]
-    def post(self, request, format=None):
-        serializer = UserLoginSerilizer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        email = serializer.data.get('email')
-        password = serializer.data.get('password')
-        user = authenticate(email=email, password=password)
-        if user is not None:
-            token = get_tokens_for_user(user)
-            return Response({"token":token,"message":"login success"}, status=status.HTTP_200_OK)
-        else:
-            return Response({"errors":{"non_field_errors":["Email or Password is not Valid"]}}, status=status.HTTP_401_UNAUTHORIZED)
-        
-
-
-#  ************************    User Profile View    ************************
-class UserProfileView(APIView):
-    renderer_classes = [UserRenderer]
-    permission_classes = [IsAuthenticated]
     def get(self, request, format=None):
-        serializer = UserProfileSerilizer(request.user)
-        return Response({'data':serializer.data}, status=status.HTTP_200_OK)
+        """Returns a list of APIView features."""
+
+        an_apiview = [
+            'Uses HTTP methods as function (get, post, patch, put, delete',
+            'It is similar to a traditional Django view',
+            'Gives you the most control over your logic',
+            'Is mapped manually to URLs'
+        ]
+
+        return Response({'message': 'Hello!', 'an_apiview': an_apiview})
+
+    def post(self, request):
+        """Create a hello message with our name."""
+
+        serializer = HelloSerializer(data=request.data)
+
+        if serializer.is_valid():
+            name = serializer.data.get('name')
+            message = f"Hello {name}"
+            return Response({'message': message})
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, pk=None):
+        """Handles updating an object."""
+
+        return Response({'method': 'put'})
+
+    def patch(self, request, pk=None):
+        """Patch request only updates field provided in the request."""
+
+        return Response({'method': 'patch'})
+
+    def delete(self, request, pk=None):
+        """Deletes an object."""
+
+        return Response({'method': 'delete'})
 
 
+class HelloViewSet(viewsets.ViewSet):
+    """Test API Viewset."""
 
-#  ************************    User Change Password View    ************************
-class UserChangePassword(APIView):
-    renderer_classes = [UserRenderer]
-    permission_classes = [IsAuthenticated]
-    def post(self, request, format=None):
-        serializer = UserChangePasswordSerilizer(data=request.data, context={'user':request.user})
-        serializer.is_valid(raise_exception=True)
-        return Response({"message":"your password successfully changed"}, status=status.HTTP_200_OK)
+    def list(self, request):
+        """Return a hello message"""
+
+        a_viewset = [
+            'Uses actions (list, create, retrieve, update, partial_update',
+            'Automatically maps to URLs using Routers',
+            'Provides more functionality with less code'
+        ]
+
+        return Response({'message': 'Hello!', 'a_viewset': a_viewset})
+
+    def create(self, request):
+        """Create a new hello message."""
+
+        serializer = HelloSerializer
+
+        if serializer.is_valid():
+            name = serializer.data.get('name')
+            message = f"Hello {name}"
+            return Response({'message': message})
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def retrieve(self, request, pk=None):
+        """Handles getting an object by its ID."""
+
+        serializer = HelloSerializer(data=request.data)
+
+        return Response({'http_method': 'GET'})
+
+    def update(self, request, pk=None):
+        """Handles updating an object."""
+
+        return Response({'http_method': 'PUT'})
+
+    def partial_update(self, request, pk=None):
+        """Handles updating part of an object"""
+
+        return Response({'http_method': 'PATCH'})
+
+    def destroy(self, request, pk=None):
+        """Handles removing an object"""
+
+        return Response({'http_method': 'DELETE'})
 
 
+class UserProfileViewSet(viewsets.ModelViewSet):
+    """Handles creating, and updating profile"""
 
-#  ************************    Send Password Reset Email View    ************************
-class SendPasswordResetEmailView(APIView):
-    renderer_classes = [UserRenderer]
-    def post(self, request, format=None):
-        serializer = SendPasswordResetEmailSerilizer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        return Response({"message":"Password reset link successfully send. Please check your email."}, status=status.HTTP_200_OK)
-
-
-
-#  ************************    User Password Reset View    ************************
-class UserPasswordResetView(APIView):
-    renderer_classes = [UserRenderer]
-    def post(self, request, uid, token, format=None):
-        serializer = UserPasswordResetViewSerilizer(data=request.data, context={'uid':uid, 'token':token})
-        serializer.is_valid(raise_exception=True)
-        return Response({"message":"your password successfully changed"}, status=status.HTTP_200_OK)
-            
+    serializer_class = UserProfileSerializer
+    queryset = User.objects.all()
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (UpdateOwnProfile,)
+    filter_backends = (SearchFilter,)
+    search_fields = ('name', 'email')
 
 
+class LoginViewSet(viewsets.ViewSet):
+    """Checks email and password and returns an auth token."""
+
+    serializer_class = AuthTokenSerializer
+
+    def create(self, request):
+        """Use the ObtainAuthToken APIView to validate and create a token."""
+
+        return ObtainAuthToken().post(request)
+
+
+class UserProfileFeedViewSet(viewsets.ModelViewSet):
+    """Handles creating, reading and updating profile feed items."""
+
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticatedOrReadOnly, PostOwnStatus)
+    serializer_class = ProfileFeedItemSerializer
+    queryset = ProfileFeedItem.objects.all()
+
+    def perform_create(self, serializer):
+        """Sets the user profile to the logged in user."""
+        serializer.save(user_profile=self.request.user)

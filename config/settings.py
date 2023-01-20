@@ -153,24 +153,6 @@ REST_FRAMEWORK = {
     #     'rest_framework.renderers.JSONRenderer' )
 }
 
-# **********************************   Email Config Setting    **********************************
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = "abduqulovabdulla3108@gmail.com"  #sender's email-id
-EMAIL_HOST_PASSWORD = "raphvzsojuvfpgfx"    #password associated with above email-id
-EMAIL_USE_TLS = True
-
-# **********************************   Password Reset Token Timeout    **********************************
-PASSWORD_RESET_TIMEOUT=900
-
-# **********************************   Django JWT token duration   **********************************
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1)
-}
-
 
 
 # JAZZMIN_SETTINGS = {

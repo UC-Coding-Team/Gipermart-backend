@@ -1,11 +1,22 @@
 from django.urls import path
-from .views import *
+from django.urls import include
+from rest_framework.routers import DefaultRouter
+
+from .views import (
+    HelloApiView,
+    HelloViewSet,
+    UserProfileViewSet,
+    LoginViewSet,
+    UserProfileFeedViewSet
+    )
+
+router = DefaultRouter()
+router.register('hello-viewset', HelloViewSet, basename='hello-viewset')
+router.register('profile', UserProfileViewSet, basename="profile" )
+router.register('login', LoginViewSet, basename="login" )
+router.register('feed', UserProfileFeedViewSet)
 
 urlpatterns = [
-    path('register/', UserRegistrationView.as_view()),
-    path('login/', UserLoginView.as_view()),
-    path('profile/', UserProfileView.as_view()),
-    path('change_password/', UserChangePassword.as_view()),
-    path('send_reset_password_email/', SendPasswordResetEmailView.as_view()),
-    path('user_reset_password/<uid>/<token>/', UserPasswordResetView.as_view()),
+    path('hello-view/', HelloApiView.as_view()),
+    path('', include(router.urls)),
 ]
