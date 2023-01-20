@@ -38,6 +38,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("outside/", include("apps.outside.urls")),
     path("user/", include("apps.user_profil.urls")),
+    path("cart/", include("apps.cart.urls")),
+    path("order/", include("apps.order.urls")),
+
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),

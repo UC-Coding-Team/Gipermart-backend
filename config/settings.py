@@ -42,12 +42,15 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'rest_framework.authtoken',
+    'django_extensions',
     'drf_yasg',
     'corsheaders',
 
     'apps.outside',
     'apps.user_profil',
     'apps.products',
+    'apps.cart',
+    'apps.order',
 
     'ckeditor',
     'ckeditor_uploader',
