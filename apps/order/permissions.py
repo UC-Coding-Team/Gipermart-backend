@@ -1,6 +1,6 @@
 from rest_framework.permissions import BasePermission
 from .models import Order, OrderItem
-from apps.user_profil.models import User
+from apps.user_profile.models import User
 
 class IsOwner(BasePermission):
     """

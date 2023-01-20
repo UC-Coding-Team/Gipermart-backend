@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'corsheaders',
 
     'apps.outside',
-    'apps.user_profil',
+    'apps.user_profile',
     'apps.products',
     'apps.cart',
     'apps.order',
@@ -99,7 +99,7 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = 'user_profil.User'
+AUTH_USER_MODEL = 'user_profile.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
