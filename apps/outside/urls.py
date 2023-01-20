@@ -10,5 +10,6 @@ urlpatterns = [
     path("slider/", Sliderviews.as_view(),name="Sliderviews"),
     path("stock/", Stockviews.as_view(), name="Stockviews"),
     path("brand/", Brandviews.as_view(), name="Brandviews"),
+    # path("Add_to_cart/", Add_to_cartviews.as_view(), name="Add_to_cartviews"),
 
 ]

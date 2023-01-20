@@ -15,3 +15,9 @@ class Brand_serializer(serializers.ModelSerializer):
     class Meta:
         model = Brand
         fields = ["id","slug","images","category","product","created_at","updated_at"]
+
+
+# class Add_to_cart_serializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Add_to_cart
+#         fields = ["id","product","user","created_at","updated_at"]

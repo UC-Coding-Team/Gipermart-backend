@@ -28,3 +28,13 @@ class Brandviews(APIView):
         transformers = Brand.objects.all()
         serializer = Brand_serializer(transformers, many=True)
         return Response(serializer.data)
+
+# class Add_to_cartviews(APIView):
+#     serializer_class = Add_to_cart_serializer
+#
+#
+#
+#     def get(self, request, format=None):
+#         transformers = Add_to_cart.objects.all()
+#         serializer = Brand_serializer(transformers, many=True)
+#         return Response(serializer.data)

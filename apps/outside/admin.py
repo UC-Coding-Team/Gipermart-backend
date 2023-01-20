@@ -23,3 +23,9 @@ class Brandadmin(admin.ModelAdmin):
     list_display = ("id","slug","images","category","product","created_at","updated_at","image_tag")
     list_display_links = ("id",)
     readonly_fields = ('image_tag',)
+
+# @admin.register(Add_to_cart)
+# class Add_to_cartadmin(admin.ModelAdmin):
+#     """Add_to_cart admin"""
+#     list_display = ("id","product","user","created_at","updated_at")
+#     list_display_links = ("user",)
