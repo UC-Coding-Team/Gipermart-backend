@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'apps.cart',
     'apps.order',
     'apps.checkout',
+    'apps.paymart',
 
     'ckeditor',
     'ckeditor_uploader',
@@ -337,3 +338,6 @@ JAZZMIN_UI_TWEAKS = {
 
 CKEDITOR_UPLOAD_PATH = 'ck-uploads/'
 CKEDITOR_ALLOW_NONIMAGE_FILES = False
+
+PAYMART_URL = "https://cabinet.paymart.uz/api/v1/"
+PAYMART_TOKEN = "c299b59322b426a25357a5d0c3d05b2f"
