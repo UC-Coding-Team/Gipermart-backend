@@ -11,7 +11,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 # from mebel.serializers import AllMebelSerializer
 # from products.serializers import HomeSerializer, NewAllWebHomeCreateSerializer
 # from store.serializers import StoreModelSerializer, ProfileStoreModelSerializer
-from .models import User
+from .models import User, Map
 
 
 class CheckTokenSerializer(serializers.Serializer):
@@ -114,6 +114,12 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = '__all__'
 
+
+class MapSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Map
+        fields = '__all__'
+        extra_kwargs = {"user": {"read_only": True}}
 
 # class UserProductsSerializer(serializers.ModelSerializer):
 #     maklers = MasterSerializer(many=True)

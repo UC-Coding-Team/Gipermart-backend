@@ -1,6 +1,6 @@
 from django.contrib.auth import logout
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework import viewsets, generics, permissions, status
+from rest_framework import mixins, generics, permissions, status
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -8,21 +8,21 @@ from rest_framework.authtoken.models import Token
 from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.request import Request
 from rest_framework.views import APIView
-from rest_framework.viewsets import GenericViewSet
+from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 # from masters.models import MasterModel
 # from products.models import HouseModel
 # from store.models import StoreModel
-from .models import User
+from .models import User, Map
 
 # from products.serializers import HomeSerializer
 # from masters.serializers import MasterSerializer
 # from store.serializers import StoreModelSerializer
 
 from .serializers import RegistrationSerializer, UserSerializer, LoginSerializer, UserALLSerializer, \
-    UpdateUserSerializer
+    UpdateUserSerializer, MapSerializer
 
 
 class UserViewSet(GenericViewSet):
@@ -77,7 +77,8 @@ class LoginView(GenericViewSet):
             token, created = User.objects.get_or_create(phone_number=phone_number)
             return Response({'token': token.tokens()})
         else:
-            return Response({'error':f"Code is not valid! {code}=!{User.objects.get(phone_number=phone_number).mycode}"})
+            return Response(
+                {'error': f"Code is not valid! {code}=!{User.objects.get(phone_number=phone_number).mycode}"})
 
     @action(['POST'], detail=False, permission_classes=[permissions.IsAuthenticated])
     def logout(self, request):
@@ -125,7 +126,6 @@ class UserDetail(generics.RetrieveAPIView):
 class UserDetailAPIView(APIView):
     permission_classes = (IsAuthenticated,)
 
-
     def get(self, request, pk):
         users = User.objects.get(id=pk)
         serializer = UserALLSerializer(users, context={'request': request})
@@ -136,3 +136,19 @@ class UpdateProfileView(generics.RetrieveUpdateAPIView):
     queryset = User.objects.all()
     permission_classes = (AllowAny,)
     serializer_class = UpdateUserSerializer
+
+
+class UserProfileList(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, pk):
+        users = User.objects.get(id=pk)
+        serializer = UserSerializer(users, context={'request': request})
+        return Response(serializer.data)
+
+
+class MapView(mixins.CreateModelMixin, mixins.ListModelMixin, mixins.RetrieveModelMixin,
+              mixins.DestroyModelMixin, GenericViewSet):
+    queryset = Map.objects.all()
+    serializer_class = MapSerializer
+    permission_classes = (IsAuthenticated, )

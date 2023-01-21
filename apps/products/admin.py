@@ -7,6 +7,7 @@ from django.contrib import admin
 from mptt.admin import DraggableMPTTAdmin
 
 from .models import Category, Product, Comment, Color, Size, Variants
+from ..user_profile.models import Map
 
 
 class CategoryAdmin(DraggableMPTTAdmin):
@@ -91,7 +92,10 @@ class VariantsAdmin(admin.ModelAdmin):
     list_display = ['title', 'product', 'color', 'size', 'price', 'quantity', 'image_tag']
 
 
-
+@admin.register(Map)
+class MapAdmin(admin.ModelAdmin):
+    list_display = ['pk', 'user', 'title', 'phone_number', 'address']
+    search_fields = ['title', 'phone_number']
 
 
 class CategoryLangugaeAdmin(admin.ModelAdmin):
