@@ -3,7 +3,6 @@
 from django.conf import settings
 from django.db import migrations, models
 import django.db.models.deletion
-import mptt.fields
 
 
 class Migration(migrations.Migration):
@@ -12,18 +11,17 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('products', '0001_initial'),
+        ('order', '0002_initial'),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='comment',
+            model_name='order',
             name='user',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
         ),
-        migrations.AddField(
-            model_name='category',
-            name='parent',
-            field=mptt.fields.TreeForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='threads', to='products.category'),
+        migrations.AlterUniqueTogether(
+            name='orderitem',
+            unique_together={('order', 'product')},
         ),
     ]

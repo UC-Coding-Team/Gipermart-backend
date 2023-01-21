@@ -1,22 +1,24 @@
 from django.contrib import admin
-from .models import (
-    User,
-    ProfileFeedItem,
-)
+from django.contrib.auth.admin import UserAdmin
+from .models import User
 
 
-# admin.site.register(UserProfile) # modelni adminda ko'rinishi
-# admin.site.register(ProfileFeedItem) # modelni adminda ko'rinishi
+class CustomUserAdmin(UserAdmin):
+    model = User
+    list_display = ['id', 'first_name', 'phone_number', 'created_at', 'is_superuser', 'is_staff', 'is_active']
+    ordering = ['id']
+    add_fieldsets = (
+        (None, {
+            'fields': ('phone_number', 'is_superuser'),
+        }),
+    )
+    fieldsets = (
+        (None, {
+            "fields": (
+                ('first_name', 'phone_number', 'mycode', 'is_superuser', 'is_staff'),
+            ),
+        }),
+    )
 
-@admin.register(User)
-class UserProfileAdmin(admin.ModelAdmin):
-    """UserProfile admin"""
-    list_display = ("id", "email", "name", "is_active", "is_staff")
-    list_display_links = ("email",)
 
-
-@admin.register(ProfileFeedItem)
-class ProfileFeedItemAdmin(admin.ModelAdmin):
-    """ProfileFeedItem admin"""
-    list_display = ("id", "user_profile", "status_text", "created_on")
-    list_display_links = ("user_profile",)
+admin.site.register(User, CustomUserAdmin)
