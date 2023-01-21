@@ -4,6 +4,7 @@ from django.db.models import Avg, Count
 from django.utils.safestring import mark_safe
 from mptt.fields import TreeForeignKey
 from mptt.models import MPTTModel
+from colorfield.fields import ColorField
 
 
 class Category(MPTTModel):
@@ -117,7 +118,7 @@ class Comment(models.Model):
 
 class Color(models.Model):
     name = models.CharField(max_length=20)
-    code = models.CharField(max_length=10, blank=True, null=True)
+    code = ColorField(default='#FF0000')
 
     def __str__(self):
         return self.name
