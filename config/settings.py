@@ -173,7 +173,7 @@ PAYMART_TOKEN = "c299b59322b426a25357a5d0c3d05b2f"
 
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
-JET_DEFAULT_THEME = 'light-gray'
+JET_SIDE_MENU_COMPACT = True
 JET_THEMES = [
     {
         'theme': 'default', # theme folder name
@@ -206,3 +206,26 @@ JET_THEMES = [
         'title': 'Light Gray'
     }
 ]
+# from django.utils.translation import gettext_lazy as _
+# JET_SIDE_MENU_ITEMS = [  # A list of application or custom item dicts
+#     {'label': _('General'), 'app_label': 'core', 'items': [
+#         {'name': 'help.question'},
+#         {'name': 'pages.page', 'label': _('Static page')},
+#         {'name': 'city'},
+#         {'name': 'validationcode'},
+#         {'label': _('Analytics'), 'url': 'http://example.com', 'url_blank': True},
+#     ]},
+#     {'label': _('Users'), 'items': [
+#         {'name': 'core.user'},
+#         {'name': 'auth.group'},
+#         {'name': 'core.userprofile', 'permissions': ['core.user']},
+#     ]},
+#     {'app_label': 'banners', 'items': [
+#         {'name': 'banner'},
+#         {'name': 'bannertype'},
+#     ]},
+# ]
+JET_CHANGE_FORM_SIBLING_LINKS = True
+# JET_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultIndexDashboard'
+# JET_APP_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultAppIndexDashboard'
+
