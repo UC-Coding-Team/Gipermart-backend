@@ -36,6 +36,8 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('jet/', include('jet.urls', 'jet')),
+    path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
     path("outside/", include("apps.outside.urls")),
     path("user/", include("apps.user_profile.urls")),
     path("cart/", include("apps.cart.urls")),

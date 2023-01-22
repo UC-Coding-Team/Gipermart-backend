@@ -30,11 +30,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    # General use templates & template tags (should appear first)
-    'adminlte3',
-    # Optional: Django admin theme (must be before django.contrib.admin)
-    'adminlte3_theme',
-
+    'jet.dashboard',
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -173,3 +170,39 @@ CKEDITOR_ALLOW_NONIMAGE_FILES = False
 
 PAYMART_URL = "https://cabinet.paymart.uz/api/v1/"
 PAYMART_TOKEN = "c299b59322b426a25357a5d0c3d05b2f"
+
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+JET_DEFAULT_THEME = 'light-gray'
+JET_THEMES = [
+    {
+        'theme': 'default', # theme folder name
+        'color': '#47bac1', # color of the theme's button in user menu
+        'title': 'Default' # theme title
+    },
+    {
+        'theme': 'green',
+        'color': '#44b78b',
+        'title': 'Green'
+    },
+    {
+        'theme': 'light-green',
+        'color': '#2faa60',
+        'title': 'Light Green'
+    },
+    {
+        'theme': 'light-violet',
+        'color': '#a464c4',
+        'title': 'Light Violet'
+    },
+    {
+        'theme': 'light-blue',
+        'color': '#5EADDE',
+        'title': 'Light Blue'
+    },
+    {
+        'theme': 'light-gray',
+        'color': '#222',
+        'title': 'Light Gray'
+    }
+]
