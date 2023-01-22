@@ -176,9 +176,9 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 JET_SIDE_MENU_COMPACT = True
 JET_THEMES = [
     {
-        'theme': 'default', # theme folder name
+        'theme': 'Blue', # theme folder name
         'color': '#47bac1', # color of the theme's button in user menu
-        'title': 'Default' # theme title
+        'title': 'Green' # theme title
     },
     {
         'theme': 'green',
@@ -225,7 +225,7 @@ JET_THEMES = [
 #         {'name': 'bannertype'},
 #     ]},
 # ]
-JET_CHANGE_FORM_SIBLING_LINKS = True
+# JET_CHANGE_FORM_SIBLING_LINKS = True
 # JET_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultIndexDashboard'
 # JET_APP_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultAppIndexDashboard'
 
