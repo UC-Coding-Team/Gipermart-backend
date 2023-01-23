@@ -1,8 +1,5 @@
-from django.contrib import admin
-
 import admin_thumbnails
 from django.contrib import admin
-
 # Register your models here.
 from mptt.admin import DraggableMPTTAdmin
 
@@ -98,7 +95,7 @@ class MapAdmin(admin.ModelAdmin):
     search_fields = ['title', 'phone_number']
 
 
-class CategoryLangugaeAdmin(admin.ModelAdmin):
+class CategoryLanguageAdmin(admin.ModelAdmin):
     list_display = ['title', 'lang', 'slug']
     prepopulated_fields = {'slug': ('title',)}
     list_filter = ['lang']
