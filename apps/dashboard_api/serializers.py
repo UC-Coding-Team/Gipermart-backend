@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from apps.products.models import Category, Product, Color, Size, Variants
+from apps.outside.models import Slider, Stock, Brand
 
 
 class CategorySerializers(serializers.ModelSerializer):
@@ -31,3 +32,20 @@ class VariantSerializers(serializers.ModelSerializer):
         model = Variants
         fields = ('id', 'title', 'product', 'color', 'size', 'image', 'quantity', 'price')
 
+
+class SliderSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Slider
+        fields = ('id', 'slug', 'images', 'created_at', 'updated_at')
+
+
+class StockSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Stock
+        fields = ('id', 'slug', 'images', 'created_at', 'updated_at')
+
+
+class BrandSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Brand
+        fields = ('id', 'slug', 'images', 'category', 'product', 'created_at', 'updated_at')
