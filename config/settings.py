@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'apps.order',
     'apps.checkout',
     'apps.paymart',
+    'apps.dashboard_api',
 
     'ckeditor',
     'ckeditor_uploader',
