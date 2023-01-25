@@ -12,6 +12,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 # from products.serializers import HomeSerializer, NewAllWebHomeCreateSerializer
 # from store.serializers import StoreModelSerializer, ProfileStoreModelSerializer
 from .models import User, Map
+from ..products.serializers import CreateProductSerializer
 
 
 class CheckTokenSerializer(serializers.Serializer):
@@ -110,6 +111,8 @@ class LoginSerializer(serializers.Serializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    products = CreateProductSerializer(many=True)
+
     class Meta:
         model = User
         fields = '__all__'

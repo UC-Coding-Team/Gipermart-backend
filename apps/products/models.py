@@ -5,6 +5,8 @@ from django.utils.safestring import mark_safe
 from mptt.fields import TreeForeignKey
 from mptt.models import MPTTModel
 
+from apps.user_profile.models import User
+
 
 class Category(MPTTModel):
     STATUS = (
@@ -56,6 +58,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=12, decimal_places=2, default=0)
     amount = models.IntegerField(default=0)
     variant = models.CharField(max_length=10, choices=VARIANTS, default='None')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='products', null=True)
     detail = RichTextUploadingField()
     slug = models.SlugField(null=False, unique=True)
     status = models.CharField(max_length=10, choices=STATUS)
