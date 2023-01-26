@@ -2,7 +2,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 
-from .views import UserProfile, UserList, UserDetailAPIView, UpdateProfileView, UserViewSet, LoginView, UserProfileList, \
+from .views import UserProfile, UserList, UpdateProfileView, UserViewSet, LoginView, UserProfileList, \
         MapView
 
 router = DefaultRouter()
@@ -17,9 +17,7 @@ urlpatterns = [
         path('api-auth/', include('rest_framework.urls')),
         path('api/v1/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
         path('api/v1/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
-        path('api/v1/get-user/<int:pk>/', UserDetailAPIView.as_view()),
         path('api/v1/update-user/<int:pk>/', UpdateProfileView.as_view()),
-        path('api/v1/delete-user/<int:pk>/', UserDetailAPIView.as_view()),
         path('profile/', UserProfile.as_view(), name='user-profile'),
 ]
 

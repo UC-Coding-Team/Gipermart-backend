@@ -69,6 +69,9 @@ class ProductAdmin(admin.ModelAdmin):
     readonly_fields = ('image_tag',)
     inlines = [ProductVariantsInline]
     prepopulated_fields = {'slug': ('title',)}
+    save_as = True
+    save_on_top = True
+    save_as_continue = True
 
 
 class CommentAdmin(admin.ModelAdmin):
