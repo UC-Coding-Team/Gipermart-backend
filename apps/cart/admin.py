@@ -1,21 +1,12 @@
 from django.contrib import admin
-from .models import (
-    Cart,
-    CartItem,
-)
+from .models import *
 
+class CartItemInline(admin.TabularInline):
+    model = CartItem
 
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
-    """Cart admin"""
-    list_display = ("id", "user", "total")
-    list_display_links = ("user",)
+    list_display = ('id', 'user', 'created_at', 'updated_at')
+    inlines = [CartItemInline]
 
-@admin.register(CartItem)
-class CartItemAdmin(admin.ModelAdmin):
-    """CartItem admin"""
-    list_display = ("id", "cart", "product","quantity")
-    list_display_links = ("cart",)
-
-# admin.site.register(Cart)
-# admin.site.register(CartItem)
+admin.site.register(CartItem)

@@ -15,7 +15,7 @@ from apps.products.serializers import ProductDetailSerializer
 from apps.user_profile.models import Map
 from apps.user_profile.serializers import MapSerializer
 from apps.cart.models import Cart, CartItem
-from apps.cart.serializers import CartItemMiniSerializer
+from apps.cart.serializers import CartItemSerializer
 
 
 class CheckoutView(APIView):
@@ -58,7 +58,7 @@ class CheckoutCartView(APIView):
         end_total = ecommerce_feez + (total * quantity)
 
         data["address"] = MapSerializer(user_address).data
-        data["items"] = CartItemMiniSerializer(cart_items, many=True).data
+        data["items"] = CartItemSerializer(cart_items, many=True).data
         data["total"] = end_total
         data["feez"] = ecommerce_feez
         return Response(data, status=status.HTTP_200_OK)
