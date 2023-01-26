@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'django_extensions',
     'drf_yasg',
     'corsheaders',
+    'django_elasticsearch_dsl',
+    'django_elasticsearch_dsl_drf',
 
     'apps.outside',
     'apps.user_profile',
@@ -53,6 +55,7 @@ INSTALLED_APPS = [
     'apps.checkout',
     'apps.paymart',
     'apps.dashboard_api',
+    'apps.search',
 
     'ckeditor',
     'ckeditor_uploader',
@@ -163,6 +166,14 @@ REST_FRAMEWORK = {
     ),
 
 }
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'localhost:9200'
+    },
+}
+
+ELASTICSEARCH_DSL_SIGNAL_PROCESSOR = 'django_elasticsearch_dsl.signals.RealTimeSignalProcessor'
 
 
 
