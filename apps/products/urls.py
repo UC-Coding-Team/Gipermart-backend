@@ -4,6 +4,7 @@ from . import views
 
 router = DefaultRouter()
 
+router.register(r'wishlists', views.WishlistViewSet)
 router.register(r"product-lists", views.ListProductView)
 
 urlpatterns = [

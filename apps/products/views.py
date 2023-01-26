@@ -8,13 +8,18 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView, DestroyAPIView
 from rest_framework.views import APIView
 
 from .permission import ModelViewSetsPermission, IsOwnerAuth
-from .serializers import CategoryListSerializer, ProductSerializer, CreateProductSerializer, ProductDetailSerializer
+from .serializers import CategoryListSerializer, ProductSerializer, CreateProductSerializer, ProductDetailSerializer, WishlistSerializer
 # from django_filters.rest_framework import DjangoFilterBackend
 from .models import Category, Product
 from googletrans import Translator
 
 translator = Translator()
 logger = logging.getLogger(__name__)
+
+
+class WishlistViewSet(viewsets.ModelViewSet):
+    queryset = Wishlist.objects.all()
+    serializer_class = WishlistSerializer
 
 
 class CategoryListAPIView(ListAPIView):

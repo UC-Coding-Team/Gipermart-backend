@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Category, Product
 from apps.user_profile.models import User
 from drf_extra_fields.fields import Base64ImageField
+from .models import Wishlist
 
 
 class CategoryListSerializer(serializers.ModelSerializer):
@@ -40,3 +41,9 @@ class ProductDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = '__all__'
+
+
+class WishlistSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Wishlist
+        fields = ('id', 'user', 'product', 'date_added')
