@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 from .permission import ModelViewSetsPermission, IsOwnerAuth
 from .serializers import CategoryListSerializer, ProductSerializer, CreateProductSerializer, ProductDetailSerializer, WishlistSerializer
 # from django_filters.rest_framework import DjangoFilterBackend
-from .models import Category, Product
+from .models import Category, Product, Wishlist
 from googletrans import Translator
 
 translator = Translator()

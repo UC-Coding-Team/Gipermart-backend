@@ -4,6 +4,7 @@ from django.db.models import Avg, Count
 from django.utils.safestring import mark_safe
 from mptt.fields import TreeForeignKey
 from mptt.models import MPTTModel
+from django.conf import settings
 
 from apps.user_profile.models import User
 
