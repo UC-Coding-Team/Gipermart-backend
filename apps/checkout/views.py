@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apps.products.models import Product
-from apps.products.serializers import ProductDetailSerializer
+from apps.products.serializers import ProductSerializer
 from apps.user_profile.models import Map
 from apps.user_profile.serializers import MapSerializer
 from apps.cart.models import Cart, CartItem
@@ -30,7 +30,7 @@ class CheckoutView(APIView):
         total = ecommerce_feez + (product.price * product.quantity)
         data = {}
         data["address"] = MapSerializer(user_address).data
-        data["product"] = ProductDetailSerializer(
+        data["product"] = ProductSerializer(
             product, context={"request": request}
         ).data
         data["feez"] = ecommerce_feez

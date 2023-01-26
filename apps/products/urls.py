@@ -5,16 +5,9 @@ from . import views
 router = DefaultRouter()
 
 router.register(r'wishlists', views.WishlistViewSet)
-router.register(r"product-lists", views.ListProductView)
+router.register(r'categories', views.CategoryViewSet)
+router.register(r'products', views.ProductViewSet)
 
 urlpatterns = [
     path("", include(router.urls)),
-    path("category/", views.CategoryListAPIView.as_view()),
-    path("category/<int:pk>/", views.CategoryAPIView.as_view()),
-    path("list/product/", views.ListProductAPIView.as_view()),
-    # path("product/<int:pk>/delete/", views.DestroyProductAPIView.as_view()),
-    # path("product/<str:uuid>/", views.ProductDetailView.as_view()),
-
-
-
 ]
