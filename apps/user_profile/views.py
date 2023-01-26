@@ -122,16 +122,6 @@ class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-
-class UserDetailAPIView(APIView):
-    permission_classes = (IsAuthenticated,)
-
-    def get(self, request, pk):
-        users = User.objects.get(id=pk)
-        serializer = UserALLSerializer(users, context={'request': request})
-        return Response(serializer.data)
-
-
 class UpdateProfileView(generics.RetrieveUpdateAPIView):
     queryset = User.objects.all()
     permission_classes = (AllowAny,)
