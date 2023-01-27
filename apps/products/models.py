@@ -52,7 +52,7 @@ class Product(models.Model):
 
     )
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    title = models.CharField(max_length=150)
+    title = models.CharField(max_length=150, db_index=True)
     installment_plan = models.CharField(max_length=255)
     description = models.TextField(max_length=255)
     image = models.ImageField(upload_to='product/', null=False)

@@ -1,11 +1,6 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-
-from .views import ProductViewSet
-
-router = DefaultRouter()
-router.register(r'products', ProductViewSet, basename='products')
+from django.urls import path
+from .views import ProductSearch
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('search/<str:query>', ProductSearch.as_view()),
 ]
