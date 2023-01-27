@@ -4,28 +4,23 @@ from apps.products.models import Product, Category
 
 
 @registry.register_document
-class ProductsDocument(Document):
-    category = fields.ObjectField(properties={
-        'name': fields.TextField(),
-    })
-
+class ProductDocument(Document):
     class Index:
-        # Name of the Elasticsearch index
         name = 'products'
-        # See Elasticsearch Indices API reference for available settings
         settings = {'number_of_shards': 1,
                     'number_of_replicas': 0}
 
     class Django:
-        model = Product  # The model associated with this Document
+        model = Product
 
-        # The fields of the model you want to be indexed in Elasticsearch
-        fields = [
-            'name',
-            'description'
-        ]
-        related_models = [Category]
-
-    def get_instances_from_related(self, related_instance):
-        if isinstance(related_instance, Category):
-            return related_instance.category.all()
+    fields = [
+        'title',
+        'description',
+        'price',
+        'amount',
+        'variant',
+        'slug',
+        'status',
+        'create_at',
+        'update_at',
+    ]

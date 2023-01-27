@@ -1,8 +1,17 @@
-from apps.products.models import Product
-from rest_framework import serializers
+from django_elasticsearch_dsl_drf.serializers import DocumentSerializer
+from .document import ProductDocument
 
-
-class ProductSearchSerializer(serializers.ModelSerializer):
+class ProductSerializer(DocumentSerializer):
     class Meta:
-        model = Product
-        fields = ('id', 'title', 'description', 'price')
+        document = ProductDocument
+        fields = (
+            'title',
+            'description',
+            'price',
+            'amount',
+            'variant',
+            'slug',
+            'status',
+            'create_at',
+            'update_at',
+        )
