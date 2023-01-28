@@ -34,14 +34,10 @@ class Category(MPTTModel):
 
 
 class Product(models.Model):
-    web_id = models.CharField(
-        max_length=50,
-        unique=True,
-    )
-    slug = models.SlugField(
+    name = models.CharField(
         max_length=255,
     )
-    name = models.CharField(
+    slug = models.SlugField(
         max_length=255,
     )
     description = models.TextField(blank=True)
