@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'corsheaders',
     'django_elasticsearch_dsl',
-    'django_elasticsearch_dsl_drf',
+
 
     'apps.outside',
     'apps.user_profile',
@@ -169,9 +169,10 @@ REST_FRAMEWORK = {
 
 ELASTICSEARCH_DSL = {
     'default': {
-        'hosts': 'localhost:8000'
+        'hosts': 'localhost:9200'
     },
 }
+
 
 ELASTICSEARCH_DSL_SIGNAL_PROCESSOR = 'django_elasticsearch_dsl.signals.RealTimeSignalProcessor'
 
