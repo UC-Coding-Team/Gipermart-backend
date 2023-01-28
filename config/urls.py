@@ -47,7 +47,7 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
     path('product/', include("apps.products.urls")),
-    # path('search/', include("apps.search.urls"))
+    path('search/', include("apps.search.urls"))
 
 ]
 if settings.DEBUG:

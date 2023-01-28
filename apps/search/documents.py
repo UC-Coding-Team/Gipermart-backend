@@ -1,13 +1,25 @@
-from django_elasticsearch_dsl import Document, Index
-from apps.products.models import Product
+from django_elasticsearch_dsl import Document, fields
+from django_elasticsearch_dsl.registries import registry
+from apps.products.models import ProductInventory
 
-product_index = Index("product")
-product_index.settings(
-    number_of_shards=1,
-    number_of_replicas=0,
-)
-@product_index.doc_type
-class ProductDocument(Document):
+
+@registry.register_document
+class ProductInventoryDocument(Document):
+
+    product = fields.ObjectField(
+        properties={"name": fields.TextField()}
+    )
+    brand = fields.ObjectField(properties={"name": fields.TextField()})
+
+    class Index:
+        name = "productinventory"
+
     class Django:
-        model = Product
-        fields = ["id","title"]
+        model = ProductInventory
+
+        fields = [
+            "id",
+            "sku",
+            "store_price",
+            "is_default",
+        ]
