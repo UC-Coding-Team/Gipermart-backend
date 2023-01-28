@@ -1,5 +1,4 @@
 from decimal import Decimal
-
 from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -11,6 +10,8 @@ class Category(MPTTModel):
         max_length=100,
     )
     slug = models.SlugField(max_length=150, unique=True)
+    description = models.TextField()
+    background_image = models.ImageField(upload_to='category-backgrounds', blank=True, null=True)
     is_active = models.BooleanField(
         default=False,
     )
@@ -242,4 +243,3 @@ class Wishlist(models.Model):
 
     def __str__(self):
         return self.product
-

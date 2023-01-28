@@ -33,7 +33,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ["name", "web_id"]
+        fields = ["name"]
         read_only = True
         editable = False
 
