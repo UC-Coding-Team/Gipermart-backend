@@ -1,169 +1,249 @@
-from ckeditor_uploader.fields import RichTextUploadingField
-from django.db import models
-from django.db.models import Avg, Count
-from django.utils.safestring import mark_safe
-from mptt.fields import TreeForeignKey
-from mptt.models import MPTTModel
-from django.conf import settings
+from decimal import Decimal
 
-from apps.user_profile.models import User
+from django.core.validators import MinValueValidator
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+from mptt.models import MPTTModel, TreeForeignKey
 
 
 class Category(MPTTModel):
-    STATUS = (
-        ('True', 'True'),
-        ('False', 'False'),
+    name = models.CharField(
+        max_length=100,
     )
-    parent = TreeForeignKey('self', blank=True, null=True, related_name='threads', on_delete=models.CASCADE)
-    title = models.CharField(max_length=50)
-    description = models.TextField(max_length=255)
-    image = models.ImageField(blank=True, upload_to='category/')
-    status = models.CharField(max_length=10, choices=STATUS)
-    slug = models.SlugField(null=False, unique=True)
-    create_at = models.DateTimeField(auto_now_add=True)
-    update_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.title
+    slug = models.SlugField(max_length=150, unique=True)
+    is_active = models.BooleanField(
+        default=False,
+    )
+    parent = TreeForeignKey(
+        "self",
+        on_delete=models.PROTECT,
+        related_name="children",
+        null=True,
+        blank=True,
+    )
 
     class MPTTMeta:
-        order_insertion_by = ['title']
+        order_insertion_by = ["name"]
+
+    class Meta:
+        ordering = ["name"]
+        verbose_name_plural = _("categories")
 
     def __str__(self):
-        full_path = [self.title]
-        k = self.parent
-        while k is not None:
-            full_path.append(k.title)
-            k = k.parent
-        return ' / '.join(full_path[::-1])
+        return self.name
 
 
 class Product(models.Model):
-    STATUS = (
-        ('True', 'True'),
-        ('False', 'False'),
+    web_id = models.CharField(
+        max_length=50,
+        unique=True,
     )
-
-    VARIANTS = (
-        ('None', 'None'),
-        ('Size', 'Size'),
-        ('Color', 'Color'),
-        ('Size-Color', 'Size-Color'),
-
+    slug = models.SlugField(
+        max_length=255,
     )
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    title = models.CharField(max_length=150, db_index=True)
-    installment_plan = models.CharField(max_length=255)
-    description = models.TextField(max_length=255)
-    image = models.ImageField(upload_to='product/', null=False)
-    price = models.DecimalField(max_digits=12, decimal_places=2, default=0)
-    amount = models.IntegerField(default=0)
-    variant = models.CharField(max_length=10, choices=VARIANTS, default='None')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='products', null=True)
-    detail = RichTextUploadingField()
-    slug = models.SlugField(null=False, unique=True)
-    status = models.CharField(max_length=10, choices=STATUS)
-    create_at = models.DateTimeField(auto_now_add=True)
-    update_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.title
-
-    def image_tag(self):
-        if self.image.url is not None:
-            return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
-        else:
-            return ""
-
-    def avaregereview(self):
-        reviews = Comment.objects.filter(product=self, status='True').aggregate(avarage=Avg('rate'))
-        avg = 0
-        if reviews["avarage"] is not None:
-            avg = float(reviews["avarage"])
-        return avg
-
-    def countreview(self):
-        reviews = Comment.objects.filter(product=self, status='True').aggregate(count=Count('id'))
-        cnt = 0
-        if reviews["count"] is not None:
-            cnt = int(reviews["count"])
-        return cnt
-
-
-# class Images(models.Model):
-#     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-#     title = models.CharField(max_length=50, blank=True)
-#     image = models.ImageField(blank=True, upload_to='images/')
-#
-#     def __str__(self):
-#         return self.title
-
-
-class Comment(models.Model):
-    STATUS = (
-        ('New', 'New'),
-        ('True', 'True'),
-        ('False', 'False'),
+    name = models.CharField(
+        max_length=255,
     )
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    user = models.ForeignKey('user_profile.User', on_delete=models.CASCADE)
-    subject = models.CharField(max_length=50, blank=True)
-    comment = models.CharField(max_length=250, blank=True)
-    rate = models.IntegerField(default=1)
-    ip = models.CharField(max_length=20, blank=True)
-    status = models.CharField(max_length=10, choices=STATUS, default='New')
-    create_at = models.DateTimeField(auto_now_add=True)
-    update_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.subject
-
-
-class Color(models.Model):
-    name = models.CharField(max_length=20)
-    code = models.CharField(max_length=10, blank=True, null=True)
-
-    def __str__(self):
-        return self.name
-
-    def color_tag(self):
-        if self.code is not None:
-            return mark_safe('<p style="background-color:{}">Color </p>'.format(self.code))
-        else:
-            return ""
-
-
-class Size(models.Model):
-    name = models.CharField(max_length=20)
+    description = models.TextField(blank=True)
+    category = models.ForeignKey(
+        Category,
+        related_name="product",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
+    is_active = models.BooleanField(
+        default=False,
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        editable=False,
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True,
+    )
 
     def __str__(self):
         return self.name
 
 
-class Variants(models.Model):
-    title = models.CharField(max_length=100, blank=True, null=True)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    color = models.ForeignKey(Color, on_delete=models.CASCADE, blank=True, null=True)
-    size = models.ForeignKey(Size, on_delete=models.CASCADE, blank=True, null=True)
-    image = models.ImageField(blank=True, upload_to='variant/')
-    # image_id = models.IntegerField(blank=True, null=True, default=0)
-    quantity = models.IntegerField(default=1)
-    price = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+class Brand(models.Model):
+    name = models.CharField(
+        max_length=255,
+        unique=True,
+    )
 
     def __str__(self):
-        return self.title
+        return self.name
 
-    def image_tag(self):
-        if self.image.url is not None:
-            return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
-        else:
-            return ""
+
+class ProductAttribute(models.Model):
+    name = models.CharField(
+        max_length=255,
+        unique=True,
+    )
+    description = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+class ProductType(models.Model):
+    name = models.CharField(
+        max_length=255,
+        unique=True,
+    )
+
+    product_type_attributes = models.ManyToManyField(
+        ProductAttribute,
+        related_name="product_type_attributes",
+        through="ProductTypeAttribute",
+    )
+
+    def __str__(self):
+        return self.name
+
+
+class ProductAttributeValue(models.Model):
+    product_attribute = models.ForeignKey(
+        ProductAttribute,
+        related_name="product_attribute",
+        on_delete=models.PROTECT,
+    )
+    attribute_value = models.CharField(
+        max_length=255,
+    )
+
+
+class ProductInventory(models.Model):
+    sku = models.CharField(
+        max_length=20,
+        unique=True,
+    )
+    upc = models.CharField(
+        max_length=12,
+        unique=True,
+    )
+    product_type = models.ForeignKey(ProductType, related_name="product_type", on_delete=models.PROTECT)
+    product = models.ForeignKey(Product, related_name="product", on_delete=models.PROTECT)
+    brand = models.ForeignKey(
+        Brand,
+        related_name="brand",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+    )
+    attribute_values = models.ManyToManyField(
+        ProductAttributeValue,
+        related_name="product_attribute_values",
+        through="ProductAttributeValues",
+    )
+    is_active = models.BooleanField(
+        default=False,
+    )
+    is_default = models.BooleanField(
+        default=False,
+    )
+    retail_price = models.DecimalField(
+        max_digits=10, decimal_places=2, validators=[MinValueValidator(Decimal("0.01"))]
+    )
+    store_price = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+    )
+    is_digital = models.BooleanField(
+        default=False,
+    )
+    weight = models.FloatField()
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        editable=False,
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True,
+    )
+
+    def __str__(self):
+        return self.sku
+
+
+class Media(models.Model):
+    product_inventory = models.ForeignKey(
+        ProductInventory,
+        on_delete=models.PROTECT,
+        related_name="media",
+    )
+    img_url = models.ImageField()
+    alt_text = models.CharField(
+        max_length=255,
+    )
+    is_feature = models.BooleanField(
+        default=False,
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        editable=False,
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True,
+    )
+
+
+class Stock(models.Model):
+    product_inventory = models.OneToOneField(
+        ProductInventory,
+        related_name="product_inventory",
+        on_delete=models.PROTECT,
+    )
+    last_checked = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
+    units = models.IntegerField(
+        default=0,
+    )
+    units_sold = models.IntegerField(
+        default=0,
+    )
+
+
+class ProductAttributeValues(models.Model):
+    attributevalues = models.ForeignKey(
+        "ProductAttributeValue",
+        related_name="attributevaluess",
+        on_delete=models.PROTECT,
+    )
+    productinventory = models.ForeignKey(
+        ProductInventory,
+        related_name="productattributevaluess",
+        on_delete=models.PROTECT,
+    )
+
+    class Meta:
+        unique_together = (("attributevalues", "productinventory"),)
+
+
+class ProductTypeAttribute(models.Model):
+    product_attribute = models.ForeignKey(
+        ProductAttribute,
+        related_name="productattribute",
+        on_delete=models.PROTECT,
+    )
+    product_type = models.ForeignKey(
+        ProductType,
+        related_name="producttype",
+        on_delete=models.PROTECT,
+    )
+
+    class Meta:
+        unique_together = (("product_attribute", "product_type"),)
 
 
 class Wishlist(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey('user_profile.User', on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.user
+        return self.product
+

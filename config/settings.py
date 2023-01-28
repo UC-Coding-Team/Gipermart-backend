@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'apps.cart',
     'apps.order',
     'apps.checkout',
-    'apps.paymart',
+    # 'apps.paymart',
     'apps.dashboard_api',
     # 'apps.search',
 

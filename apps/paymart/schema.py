@@ -8,7 +8,6 @@ from apps.user_profile.models import User
 from typing import TYPE_CHECKING, Type, Union
 # from saleor.graphql.core.utils import from_global_id_or_error
 from .models import Contract
-from apps.products.models import Variants
 
 
 def from_global_id_or_error(
@@ -78,7 +77,7 @@ class CreateContract(graphene.Mutation):
 
     def mutate(self, info, input):
         _, user_id = from_global_id_or_error(input.user_id, User)
-        _, product_variant_id = from_global_id_or_error(input.product_variant_id, Variants)
+        _, product_variant_id = from_global_id_or_error(input.product_variant_id)
         contract = Contract(
             user_id=user_id,
             product_variant_id=product_variant_id,
@@ -108,7 +107,7 @@ class UpdateContract(graphene.Mutation):
             contract.user_id = user_id
 
         if input.product_variant_id:
-            _, product_variant_id = from_global_id_or_error(input.product_variant_id, Variants)
+            _, product_variant_id = from_global_id_or_error(input.product_variant_id)
             contract.product_variant_id = product_variant_id
         #
         if input.status:
