@@ -1,6 +1,6 @@
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
-from apps.products.models import ProductInventory
+from ecommerce.inventory.models import ProductInventory
 
 
 @registry.register_document
@@ -20,6 +20,6 @@ class ProductInventoryDocument(Document):
         fields = [
             "id",
             "sku",
-            "price",
+            "store_price",
             "is_default",
         ]
