@@ -7,7 +7,7 @@ from apps.products.models import ProductInventory
 class ProductInventoryDocument(Document):
 
     product = fields.ObjectField(
-        properties={"name": fields.TextField()}
+        properties={"name": fields.TextField(), "web_id": fields.TextField()}
     )
     brand = fields.ObjectField(properties={"name": fields.TextField()})
 
