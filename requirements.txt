@@ -39,8 +39,8 @@ flake8-typing-imports==1.14.0
 google-api-python-client==1.4.1
 googletrans==3.0.0
 graphene==2.1.9
-graphene-django==2.15.0
-graphene-django-filter==0.6.4
+# graphene-django==2.15.0
+# graphene-django-filter==0.6.4
 graphql-core==2.3.2
 graphql-relay==2.0.1
 greenlet==2.0.1

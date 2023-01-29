@@ -68,3 +68,7 @@ class ProductAttributeValueAdmin(admin.ModelAdmin):
 class ProductAttributeAdmin(admin.ModelAdmin):
     list_display = ['name', 'description']
     
+
+@admin.register(models.ProductTypeAttribute)
+class ProductTypeAttributeAdmin(admin.ModelAdmin):
+    list_display = ['product_attribute', 'product_type']

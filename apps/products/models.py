@@ -111,6 +111,9 @@ class ProductAttributeValue(models.Model):
         max_length=255,
     )
 
+    def __str__(self):
+        return str(self.attribute_value)
+
 
 class ProductInventory(models.Model):
     sku = models.CharField(
@@ -217,6 +220,9 @@ class ProductAttributeValues(models.Model):
     class Meta:
         unique_together = (("attributevalues", "productinventory"),)
 
+    def __str__(self):
+        return str(self.productinventory)
+
 
 class ProductTypeAttribute(models.Model):
     product_attribute = models.ForeignKey(
@@ -232,6 +238,9 @@ class ProductTypeAttribute(models.Model):
 
     class Meta:
         unique_together = (("product_attribute", "product_type"),)
+
+    def __str__(self):
+        return str(self.product_attribute)
 
 
 class Wishlist(models.Model):
