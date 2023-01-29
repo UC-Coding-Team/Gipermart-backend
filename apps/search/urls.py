@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import SearchProductInventory
+
+from apps.search.views import SearchProductInventory
 
 urlpatterns = [
     path("api/<str:query>/", SearchProductInventory.as_view()),
-
 ]

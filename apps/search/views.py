@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from apps.products.serializers import ProductInventorySearchSerializer
-from .documents import ProductInventoryDocument
+from apps.search.documents import ProductInventoryDocument
 from elasticsearch_dsl import Q
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.views import APIView
@@ -15,7 +15,7 @@ class SearchProductInventory(APIView, LimitOffsetPagination):
             q = Q(
                 "multi_match",
                 query=query,
-                fields=["product.name", "product.web_id", "brand.name"],
+                fields=["product.name", "brand.name"],
                 fuzziness="auto",
             ) & Q(
                 should=[
