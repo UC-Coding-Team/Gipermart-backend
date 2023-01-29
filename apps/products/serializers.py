@@ -31,12 +31,13 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Product
         fields = '__all__'
         # exclude = ["id"]
-        # read_only = True
-        # editable = False
+        read_only = True
+        editable = False
 
 
 class ProductMediaSerializer(serializers.ModelSerializer):
@@ -82,7 +83,11 @@ class ProductInventorySerializer(serializers.ModelSerializer):
 class ProductInventorySearchSerializer(serializers.ModelSerializer):
 
     product = ProductSerializer(many=False, read_only=True)
-    brand = BrandSerializer(many=False, read_only=True)
+    # media = ProductMediaSerializer(many=True, read_only=True)
+    brand = BrandSerializer(read_only=True)
+    # attributes = ProductAttributeValueSerializer(
+    #     source="attribute_values", many=True, read_only=True
+    # )
 
     class Meta:
         model = ProductInventory
