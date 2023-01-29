@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-i*62ti7vrwom)*%^s_2g4q%)uyzh8%xz#4ks45cu4i%v&u(c+)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['172.20.16.3', '*','127.0.0.1']
+ALLOWED_HOSTS = ['172.20.16.3', '*', '127.0.0.1']
 
 # Application definition
 
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'corsheaders',
     'django_elasticsearch_dsl',
+    'django_elasticsearch_dsl_drf',
 
     'apps.outside',
     'apps.user_profile',
@@ -150,10 +151,8 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 # **********************************   Django JWT Configration    **********************************
 REST_FRAMEWORK = {
-
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 25,
-
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -178,16 +177,11 @@ ELASTICSEARCH_DSL = {
 
 ELASTICSEARCH_DSL_SIGNAL_PROCESSOR = 'django_elasticsearch_dsl.signals.RealTimeSignalProcessor'
 
-
-
 CKEDITOR_UPLOAD_PATH = 'ck-uploads/'
 CKEDITOR_ALLOW_NONIMAGE_FILES = False
 
 PAYMART_URL = "https://cabinet.paymart.uz/api/v1/"
 PAYMART_TOKEN = "c299b59322b426a25357a5d0c3d05b2f"
-
-
-
 
 JAZZMIN_SETTINGS = {
     "site_title": "your_site_name",
@@ -253,8 +247,6 @@ JAZZMIN_SETTINGS = {
         "auth.group": "vertical_tabs",
     },
 }
-
-
 
 JAZZMIN_UI_TWEAKS = {
     "navbar_small_text": False,
