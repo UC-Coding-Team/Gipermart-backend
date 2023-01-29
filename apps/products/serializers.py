@@ -33,9 +33,10 @@ class CategorySerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        exclude = ["id"]
-        read_only = True
-        editable = False
+        fields = '__all__'
+        # exclude = ["id"]
+        # read_only = True
+        # editable = False
 
 
 class ProductMediaSerializer(serializers.ModelSerializer):
@@ -85,6 +86,7 @@ class ProductInventorySearchSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductInventory
+        # fields = '__all__'
         fields = [
             "id",
             "sku",

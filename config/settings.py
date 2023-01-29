@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'drf_yasg',
     'corsheaders',
     'django_elasticsearch_dsl',
-    'django_elasticsearch_dsl_drf',
 
     'apps.outside',
     'apps.user_profile',
@@ -55,7 +54,7 @@ INSTALLED_APPS = [
     'apps.checkout',
     # 'apps.paymart',
     'apps.dashboard_api',
-    # 'apps.search',
+    'apps.search',
 
     'ckeditor',
     'ckeditor_uploader',
@@ -151,6 +150,10 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 # **********************************   Django JWT Configration    **********************************
 REST_FRAMEWORK = {
+
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 25,
+
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -169,7 +172,7 @@ REST_FRAMEWORK = {
 
 ELASTICSEARCH_DSL = {
     'default': {
-        'hosts': 'localhost:8000'
+        'hosts': 'localhost:9200'
     },
 }
 
