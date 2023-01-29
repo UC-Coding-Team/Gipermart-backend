@@ -65,7 +65,7 @@ class ProductInventorySerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "sku",
-            "store_price",
+            "price",
             "is_default",
             "brand",
             "product",
@@ -88,7 +88,7 @@ class ProductInventorySearchSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "sku",
-            "store_price",
+            "price",
             "is_default",
             "product",
             "brand",

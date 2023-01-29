@@ -20,6 +20,6 @@ class ProductInventoryDocument(Document):
         fields = [
             "id",
             "sku",
-            "store_price",
+            "price",
             "is_default",
         ]

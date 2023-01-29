@@ -47,10 +47,10 @@ class MediaAdmin(admin.ModelAdmin):
 
 @admin.register(models.ProductInventory)
 class ProductInventory(admin.ModelAdmin):
-    list_display = ['sku', 'upc', 'product_type', 'product', 'brand', 'is_active', 'is_default', 'retail_price',
-                    'store_price', 'is_digital', 'weight', 'created_at', 'updated_at']
+    list_display = ['sku', 'upc', 'product_type', 'product', 'brand', 'is_active', 'is_default', 'sale_price',
+                    'price', 'weight', 'created_at', 'updated_at']
     list_filter = ['is_active', 'created_at', 'updated_at']
-    list_editable = ['is_active', 'is_default', 'retail_price', 'store_price']
+    list_editable = ['is_active', 'is_default', 'sale_price', 'price']
     inlines = [ProductAttributeValuesInline]
 
 
