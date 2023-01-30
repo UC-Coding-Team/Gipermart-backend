@@ -20,15 +20,14 @@ class CheckTokenSerializer(serializers.Serializer):
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
-    # password1 = serializers.CharField(max_length=255, required=False,
-    #                                   write_only=True)
-    #
-    # password2 = serializers.CharField(max_length=255, required=False,
-    #                                   write_only=True)
+    first_name = serializers.CharField(max_length=130, required=False)
+    last_name = serializers.CharField(max_length=130, required=False)
+    password = serializers.CharField(max_length=130, required=False)
+    confirm_password = serializers.CharField(max_length=130, required=False)
 
     class Meta:
         model = User
-        fields = ['phone_number']
+        fields = ['phone_number', 'first_name', 'last_name', 'password', 'confirm_password']
         # extra_kwargs = dict(
         #     password=dict(required=True)
         # )
@@ -36,16 +35,17 @@ class RegistrationSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         errors = defaultdict(list)
         # emails = CustomUser.objects.filter(email=attrs['email'])
-        # password1 = attrs.get('password1')
+        password = attrs.get('password')
+        confirm_password = attrs.get('confirm_password')
         # password2 = attrs.get('password2')
         # if emails.exists():
         #     errors['email'].append('Email has already')
         if errors:
             raise serializers.ValidationError(errors)
-        # if password1 != password2:
-        #     raise serializers.ValidationError(
-        #         {'status': "Password do not match"}
-        #     )
+        if password != confirm_password:
+            raise serializers.ValidationError(
+                {'status': "Password do not match"}
+            )
         return attrs
 
     def create(self, validated_data):

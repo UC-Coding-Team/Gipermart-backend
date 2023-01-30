@@ -36,7 +36,11 @@ class UserViewSet(GenericViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         phone_number = serializer.validated_data['phone_number']
-        token, created = User.objects.get_or_create(phone_number=phone_number)
+        first_name = serializer.validated_data['first_name']
+        last_name = serializer.validated_data['last_name']
+        password = serializer.validated_data['password']
+        token, created = User.objects.get_or_create(phone_number=phone_number, first_name=first_name,
+                                                    last_name=last_name, password=password)
         return Response({'token': token.tokens()})
 
     #

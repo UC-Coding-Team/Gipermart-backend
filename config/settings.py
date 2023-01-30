@@ -103,6 +103,17 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'test_db',
+#         'USER': 'test_us',
+#         'PASSWORD': 'tess_pass',
+#         'HOST': 'localhost',
+#         'PORT': 5432,
+#     }
+# }
+
 AUTH_USER_MODEL = 'user_profile.User'
 
 # Password validation
