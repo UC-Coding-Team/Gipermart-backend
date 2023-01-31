@@ -15,7 +15,7 @@ class SearchProductInventory(APIView, LimitOffsetPagination):
             q = Q(
                 "multi_match",
                 query=query,
-                fields=["product.name", "brand.name"],
+                fields=["product.name","product.description", "brand.name",],
                 fuzziness="auto",
             ) & Q(
                 should=[
