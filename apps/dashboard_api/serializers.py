@@ -15,24 +15,6 @@ class ProductSerializers(serializers.ModelSerializer):
         fields = '__all__'
 
 
-# class ColorSerializers(serializers.ModelSerializer):
-#     class Meta:
-#         model = Color
-#         fields = ('id', 'name', 'code')
-#
-#
-# class SizeSerializers(serializers.ModelSerializer):
-#     class Meta:
-#         model = Size
-#         fields = ('id', 'name')
-#
-#
-# class VariantSerializers(serializers.ModelSerializer):
-#     class Meta:
-#         model = Variants
-#         fields = ('id', 'title', 'product', 'color', 'size', 'image', 'quantity', 'price')
-
-
 class SliderSerializers(serializers.ModelSerializer):
     class Meta:
         model = Slider

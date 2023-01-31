@@ -17,24 +17,6 @@ class ProductViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
 
-# class ColorViewSet(viewsets.ModelViewSet):
-#     queryset = Color.objects.all()
-#     serializer_class = serializers.ColorSerializers
-#     permission_classes = [IsAuthenticated]
-#
-#
-# class SizeViewSet(viewsets.ModelViewSet):
-#     queryset = Size.objects.all()
-#     serializer_class = serializers.SizeSerializers
-#     permission_classes = [IsAuthenticated]
-#
-#
-# class VariantViewSet(viewsets.ModelViewSet):
-#     queryset = Variants.objects.all()
-#     serializer_class = serializers.VariantSerializers
-#     permission_classes = [IsAuthenticated]
-
-
 class SliderViewSet(viewsets.ModelViewSet):
     queryset = Slider.objects.all()
     serializer_class = serializers.SliderSerializers
