@@ -42,9 +42,10 @@ class Brandviews(viewsets.ModelViewSet):
 
 class WishlistAPIView(APIView):
     def get(self, request, pk):
-        wishlist = Add_to_wishlist.objects.get(user_id=pk)
-        serializer = WishlistItemSerializer(wishlist, context={'request': request})
+        wishlist = Add_to_wishlist.objects.filter(user_id=pk)
+        serializer = WishlistItemSerializer(wishlist, context={'request': request}, many=True)
         return Response(serializer.data)
+
 
 class WishlistCreateAPIView(generics.CreateAPIView):
     queryset = Add_to_wishlist.objects.all()

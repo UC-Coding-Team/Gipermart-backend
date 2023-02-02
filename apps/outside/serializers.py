@@ -23,7 +23,7 @@ class Brand_serializer(serializers.ModelSerializer):
 
 class WishlistItemSerializer(serializers.ModelSerializer):
     user = UserSerializer()
-    product = CartProductSerializer(many=True)
+    product = CartProductSerializer()
 
     class Meta:
         model = Add_to_wishlist
