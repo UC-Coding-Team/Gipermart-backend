@@ -37,7 +37,7 @@ class Category(MPTTModel):
 
 
 class Product(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='products', null=True)
     name = models.CharField(
         max_length=255,
     )
