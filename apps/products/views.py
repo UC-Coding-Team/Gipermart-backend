@@ -1,3 +1,5 @@
+from rest_framework.generics import ListAPIView
+
 from .serializers import (
     CategorySerializer,
     ProductInventorySerializer,
@@ -39,3 +41,11 @@ class ProductInventoryById(APIView):
         queryset = ProductInventory.objects.filter(product__id=query)
         serializer = ProductInventorySerializer(queryset, many=True)
         return Response(serializer.data)
+
+
+class AllProductsView(ListAPIView):
+    """
+    Return products
+    """
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
