@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.safestring import mark_safe
 # from apps.user_profile.models import User
+from apps.cart.models import User
 from apps.products.models import Category, Product
 
 
@@ -48,11 +49,12 @@ class Brand(models.Model):
         else:
             return ""
 
-# class Add_to_cart(models.Model):
-#     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-#
-#     def __str__(self):
-#         return self.user
+
+class Add_to_wishlist(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.user

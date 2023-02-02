@@ -25,7 +25,7 @@ class ALLCartListAPIView(generics.ListAPIView):
 class CartAPIView(APIView):
     def get(self, request, pk):
         cart = CartItem.objects.get(user_id=pk)
-        serializer = CartItemSerializer(cart, context={'request': request}, )
+        serializer = CartItemSerializer(cart, context={'request': request}, many=True)
         return Response(serializer.data)
 
 

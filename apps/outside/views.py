@@ -1,6 +1,11 @@
-from rest_framework import viewsets
-from .models import Slider,Stock,Brand
-from .serializers import Slider_serializer,Stock_serializer,Brand_serializer
+from rest_framework import viewsets, generics, mixins
+from rest_framework.views import APIView
+from rest_framework.viewsets import GenericViewSet
+from rest_framework.response import Response
+
+from .models import Slider, Stock, Brand, Add_to_wishlist
+from .serializers import Slider_serializer, Stock_serializer, Brand_serializer, WishlistCreateSerializer, \
+    WishlistItemSerializer
 from ..products.permission import ModelViewSetsPermission
 
 
@@ -34,3 +39,26 @@ class Brandviews(viewsets.ModelViewSet):
 #         transformers = Add_to_cart.objects.all()
 #         serializer = Brand_serializer(transformers, many=True)
 #         return Response(serializer.data)
+
+class WishlistAPIView(APIView):
+    def get(self, request, pk):
+        wishlist = Add_to_wishlist.objects.get(user_id=pk)
+        serializer = WishlistItemSerializer(wishlist, context={'request': request})
+        return Response(serializer.data)
+
+class WishlistCreateAPIView(generics.CreateAPIView):
+    queryset = Add_to_wishlist.objects.all()
+    serializer_class = WishlistCreateSerializer
+
+
+class WishlistDeleteAPIView(mixins.DestroyModelMixin, GenericViewSet):
+    queryset = Add_to_wishlist.objects.all()
+    serializer_class = WishlistCreateSerializer
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+
+
+class WishlistUpdateAPIView(generics.RetrieveUpdateAPIView):
+    queryset = Add_to_wishlist.objects.all()
+    serializer_class = WishlistCreateSerializer
