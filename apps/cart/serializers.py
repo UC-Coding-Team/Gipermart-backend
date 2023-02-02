@@ -26,7 +26,7 @@ class CartSerializer(serializers.ModelSerializer):
 
 class CartItemSerializer(serializers.ModelSerializer):
     user = UserSerializer()
-    product = CartProductSerializer(many=True)
+    product = CartProductSerializer()
 
     class Meta:
         model = CartItem

@@ -5,6 +5,8 @@ from django.utils.translation import gettext_lazy as _
 from mptt.models import MPTTModel, TreeForeignKey
 
 
+from ..user_profile .models import User
+
 class Category(MPTTModel):
     name = models.CharField(
         max_length=100,
@@ -35,6 +37,7 @@ class Category(MPTTModel):
 
 
 class Product(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     name = models.CharField(
         max_length=255,
     )
