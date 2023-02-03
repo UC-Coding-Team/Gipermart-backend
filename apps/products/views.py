@@ -27,6 +27,7 @@ class ProductByCategory(APIView):
     """
 
     def get(self, request, slug=None):
+
         queryset = Product.objects.filter(category__slug=slug)
         serializer = ProductSerializer(queryset, many=True)
         return Response(serializer.data)
@@ -37,8 +38,8 @@ class ProductDetailBySlug(APIView):
     Return Sub Product by Slug
     """
 
-    def get(self, request, slug=None):
-        queryset = ProductInventory.objects.filter(product__slug=slug)
+    def get(self, request, pk=None):
+        queryset = ProductInventory.objects.filter(product__id=pk)
         serializer = ProductInventorySerializer(queryset, many=True)
         return Response(serializer.data)
 

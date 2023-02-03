@@ -37,6 +37,17 @@ class Category(MPTTModel):
 
 
 class Product(models.Model):
+    PROCESS = "process"
+    SUCCESS = "success"
+    FAILED = "failed"
+    DELETED = "deleted"
+
+    CHOICES = [
+        (PROCESS, "Process"),
+        (SUCCESS, "Success"),
+        (FAILED, "Failed"),
+        (DELETED, "Deleted"),
+    ]
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='products', null=True)
     name = models.CharField(
         max_length=255,
@@ -57,11 +68,13 @@ class Product(models.Model):
     is_active = models.BooleanField(
         default=False,
     )
-    related_product = models.BooleanField(
-        default=False,
-    )
+    is_recommended = models.BooleanField(default=False)
     USA_product = models.BooleanField(
         default=False,
+    )
+    rating = models.FloatField(null=True, blank=True)
+    status = models.CharField(
+        max_length=50, choices=CHOICES, default=PROCESS
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
