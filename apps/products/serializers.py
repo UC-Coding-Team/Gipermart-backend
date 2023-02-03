@@ -47,10 +47,10 @@ class ProductMediaSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Product
-        fields = ('name', 'slug', 'description', 'category', 'is_active', 'related_product', 'USA_product', 'created_at')
+        fields = (
+            'name', 'slug', 'description', 'category', 'is_active', 'is_recommended', 'USA_product', 'created_at')
         # exclude = ["id"]
         read_only = True
         # editable = False

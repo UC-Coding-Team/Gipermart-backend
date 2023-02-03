@@ -19,12 +19,12 @@ class ProductMediaInline(admin.TabularInline):
 
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug', 'category', 'is_active', 'related_product', 'USA_product', 'created_at', 'updated_at']
+    list_display = ['name', 'slug', 'category', 'is_active', 'is_recommended', 'USA_product', 'created_at', 'updated_at']
     prepopulated_fields = {'slug': ('name',)}
     inlines = [ProductInventoryInline, ]
     list_filter = ['is_active', 'created_at', 'updated_at']
-    list_editable = ['is_active', 'related_product', 'USA_product']
-    fields = ('name', 'slug', 'description', 'category', 'is_active', 'related_product', 'USA_product')
+    list_editable = ['is_active', 'is_recommended', 'USA_product']
+    fields = ('name', 'slug', 'description', 'category', 'is_active', 'is_recommended', 'USA_product')
 
 
 @admin.register(models.Category)
