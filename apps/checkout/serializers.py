@@ -1,7 +1,11 @@
 from rest_framework import serializers
-from .models import Order
+from .models import Checkout
+from apps.cart.serializers import CartItemSerializer
 
-class OrderSerializer(serializers.ModelSerializer):
+class CheckoutSerializer(serializers.ModelSerializer):
+
+    cart = CartItemSerializer(many=False, read_only=True)
+
     class Meta:
-        model = Order
-        fields = '__all__'
+        model = Checkout
+        fields = ['full_name','phone_number','region','town','address','comment','cart','PAY_STATUS','NAXT_STATUS','created_at']

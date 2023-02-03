@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .models import Order
-from .serializers import OrderSerializer
+from .models import Checkout
+from .serializers import CheckoutSerializer
 
-class OrderList(generics.ListCreateAPIView):
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer
+class CheckoutList(generics.ListCreateAPIView):
+    queryset = Checkout.objects.all()
+    serializer_class = CheckoutSerializer
 
-class OrderDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer
+class CheckoutDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Checkout.objects.all()
+    serializer_class = CheckoutSerializer
