@@ -1,70 +1,31 @@
-from rest_framework import viewsets, mixins
-from rest_framework import permissions, status
-from .models import OrderItem, Order
-from .permissions import IsOwner
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
+from .models import Order, OrderItem
 from .serializers import OrderSerializer, OrderItemSerializer
 
 
-class OrdersViewSet(viewsets.ModelViewSet):
-    """
-    Class responsible to process request to Orders
-    Provides the following view routes and methods:
-        orders_view (get - list)
-        orders_create_view (post - create)
-        order_view (get - retrieve, put - update)
-    """
-    # The model object to perform the queries
+class OrderListCreateAPIView(generics.ListCreateAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset = Order.objects.all()
-    # The serializer to process the data objects
     serializer_class = OrderSerializer
 
-    @classmethod
-    def orders_view(cls):
-        cls.permission_classes = (permissions.IsAuthenticated, permissions.IsAdminUser,)
-        return cls.as_view({
-            'get': 'list'
-        })
 
-    @classmethod
-    def orders_create_view(cls):
-        cls.permission_classes = (permissions.IsAuthenticated, permissions.IsAdminUser,)
-        return cls.as_view({
-            'post': 'create'
-        })
-
-    @classmethod
-    def order_view(cls):
-        cls.permission_classes = (((permissions.IsAuthenticated & IsOwner) |
-                                   (permissions.IsAuthenticated & permissions.IsAdminUser)),)
-        return cls.as_view({
-            'get': 'retrieve',
-            'put': 'update'
-        })
+class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticated,)
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
 
 
-class OrderItemViewSet(viewsets.ModelViewSet):
-    """
-    Class responsible to process Order Items
-    Provides the following view routes and methods:
-        order_items_view (get - list, post - create)
-        order_item_view (get - retrieve, put - update)
-    """
-    # the model object to perform the queries
+class OrderItemListCreateAPIView(generics.ListCreateAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset = OrderItem.objects.all()
-    # The serializer to process the data objects
     serializer_class = OrderItemSerializer
-    # Only allow if authenticated and is owner or if authenticated and is admin
 
-    @classmethod
-    def order_items_view(cls):
-        return cls.as_view({
-            'get': 'list',
-            'post': 'create'
-        })
+    def perform_create(self, serializer):
+        order = Order.objects.get(id=self.kwargs['order_pk'])
+        serializer.save(order=order)
 
-    @classmethod
-    def order_item_view(cls):
-        return cls.as_view({
-            'get': 'retrieve',
-            'put': 'update'
-        })
+class OrderItemDetailView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticated,)
+    queryset = OrderItem.objects.all()
+    serializer_class = OrderItemSerializer

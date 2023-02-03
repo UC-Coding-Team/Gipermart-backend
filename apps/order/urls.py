@@ -1,18 +1,11 @@
 from django.urls import path
-from .views import (
+from .views import OrderListCreateAPIView, OrderDetailView, OrderItemListCreateAPIView, OrderItemDetailView
 
-    OrdersViewSet,
-    OrderItemViewSet
-)
+app_name = 'order'
 
-
-urlpatterns = (
-
-    path('orders/', OrdersViewSet.orders_view(), name='orders'),
-    path('orders/create', OrdersViewSet.orders_create_view(), name='orders_create'),
-    path('order/<int:pk>', OrdersViewSet.order_view(), name='order'),
-
-    path('order_items/', OrderItemViewSet.order_items_view(), name='order_items'),
-    path('order_item/<int:pk>', OrderItemViewSet.order_item_view(), name='order_item'),
-
-)
+urlpatterns = [
+    path('orders/', OrderListCreateAPIView.as_view(), name='order-list'),
+    path('orders/<int:pk>/', OrderDetailView.as_view(), name='order-detail'),
+    path('orders/<int:order_pk>/items/', OrderItemListCreateAPIView.as_view(), name='order-item-list'),
+    path('orders/<int:order_pk>/items/<int:pk>/', OrderItemDetailView.as_view(), name='order-item-detail'),
+]
