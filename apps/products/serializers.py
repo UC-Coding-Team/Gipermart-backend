@@ -24,20 +24,13 @@ class BrandSerializer(serializers.ModelSerializer):
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    parent_name = serializers.StringRelatedField(source='parent.name')
+    parent_id = serializers.StringRelatedField(source='parent.id')
+
     class Meta:
         model = Category
-        fields = ["name", "slug", "description", "background_image", "is_active"]
+        fields = ['id', "name", "slug", "description", "background_image", "is_active", 'parent_name', 'parent_id']
         read_only = True
-
-
-class ProductSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Product
-        fields = '__all__'
-        # exclude = ["id"]
-        read_only = True
-        editable = False
 
 
 class ProductMediaSerializer(serializers.ModelSerializer):
@@ -53,8 +46,17 @@ class ProductMediaSerializer(serializers.ModelSerializer):
         return obj.img_url.url
 
 
-class ProductInventorySerializer(serializers.ModelSerializer):
+class ProductSerializer(serializers.ModelSerializer):
 
+    class Meta:
+        model = Product
+        fields = ('name', 'slug', 'description', 'category', 'is_active', 'related_product', 'USA_product', 'created_at')
+        # exclude = ["id"]
+        read_only = True
+        # editable = False
+
+
+class ProductInventorySerializer(serializers.ModelSerializer):
     product = ProductSerializer(many=False, read_only=True)
     media = ProductMediaSerializer(many=True, read_only=True)
     brand = BrandSerializer(read_only=True)
@@ -81,10 +83,10 @@ class ProductInventorySerializer(serializers.ModelSerializer):
 
 
 class ProductInventorySearchSerializer(serializers.ModelSerializer):
-
     product = ProductSerializer(many=False, read_only=True)
     # media = ProductMediaSerializer(many=True, read_only=True)
     brand = BrandSerializer(read_only=True)
+
     # attributes = ProductAttributeValueSerializer(
     #     source="attribute_values", many=True, read_only=True
     # )

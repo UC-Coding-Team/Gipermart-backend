@@ -1,16 +1,16 @@
 from django.urls import path
 
-from apps.products.views import CategoryList, ProductByCategory, ProductInventoryById, AllProductsView
+from apps.products.views import CategoryList, ProductByCategory, ProductDetailBySlug, AllProductsView
 
 app_name = "products"
 
 urlpatterns = [
-    path("api/category/all/", CategoryList.as_view()),
+    path("category/all/", CategoryList.as_view()),
     path(
-        "api/products/category/<str:query>/",
+        "category/<str:slug>/",
         ProductByCategory.as_view(),
     ),
-    path("api/<int:query>/", ProductInventoryById.as_view()),
+    path("product-detail/<str:slug>/", ProductDetailBySlug.as_view()),
     path("api/products/", AllProductsView.as_view()),
 
 ]
