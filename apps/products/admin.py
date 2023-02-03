@@ -24,7 +24,7 @@ class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductInventoryInline, ]
     list_filter = ['is_active', 'created_at', 'updated_at']
     list_editable = ['is_active']
-    fields = ('name', 'slug', 'description', 'is_active')
+    fields = ('name', 'slug', 'description','category', 'is_active')
 
 
 @admin.register(models.Category)

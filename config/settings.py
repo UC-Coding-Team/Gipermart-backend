@@ -182,7 +182,8 @@ REST_FRAMEWORK = {
 
 ELASTICSEARCH_DSL = {
     'default': {
-        'hosts': 'localhost:9200'
+        'hosts': 'localhost:9200',
+        'timeout': 60,
     },
 }
 
