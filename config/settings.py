@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_simplejwt.token_blacklist',
     'django_extensions',
     'drf_yasg',
     'corsheaders',
@@ -102,6 +103,11 @@ DATABASES = {
     }
 }
 
+
+SIMPLE_JWT = {
+    'AUTH_TOKEN_CLASSES': ('path_to_tokens_py.tokens.JWTAccessToken',),
+}
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -132,6 +138,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
