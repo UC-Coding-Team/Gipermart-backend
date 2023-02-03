@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     'apps.user_profile',
     'apps.products',
     'apps.cart',
-    'apps.order',
     'apps.checkout',
     # 'apps.paymart',
     'apps.dashboard_api',

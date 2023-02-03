@@ -1,5 +1,5 @@
 from rest_framework.routers import DefaultRouter
-from .views import CartViewSet, CartAPIView, ALLCartListAPIView, CartCreateAPIView, CartDeleteAPIView, CartUpdateAPIView
+from .views import  CartAPIView, ALLCartListAPIView, CartCreateAPIView, CartDeleteAPIView, CartUpdateAPIView
 
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter

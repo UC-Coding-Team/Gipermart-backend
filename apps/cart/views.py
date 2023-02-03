@@ -2,15 +2,11 @@ from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
 
-from .models import Cart, CartItem
+from .models import  CartItem
 from rest_framework import generics, mixins
 from rest_framework.response import Response
-from .serializers import CartSerializer, CartItemSerializer, CartCreateSerializer
+from .serializers import  CartItemSerializer, CartCreateSerializer
 
-
-class CartViewSet(viewsets.ModelViewSet):
-    queryset = Cart.objects.all()
-    serializer_class = CartSerializer
 
 
 # class CartItemViewSet(viewsets.ModelViewSet):

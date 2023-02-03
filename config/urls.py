@@ -38,7 +38,6 @@ urlpatterns = [
     path("outside/", include("apps.outside.urls")),
     path("user/", include("apps.user_profile.urls")),
     path("cart/", include("apps.cart.urls")),
-    path("order/", include("apps.order.urls")),
     path("checkout/", include("apps.checkout.urls")),
     # path("paymart/", include("apps.paymart.urls")),
     path('dashboard/', include('apps.dashboard_api.urls')),

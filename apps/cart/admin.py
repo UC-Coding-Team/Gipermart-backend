@@ -6,9 +6,5 @@ class CartItemInline(admin.TabularInline):
     model = CartItem
 
 
-@admin.register(Cart)
-class CartAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'created_at', 'updated_at')
-
 
 admin.site.register(CartItem)
