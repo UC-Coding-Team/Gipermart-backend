@@ -4,8 +4,8 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from mptt.models import MPTTModel, TreeForeignKey
 
+from ..user_profile.models import User
 
-from ..user_profile .models import User
 
 class Category(MPTTModel):
     name = models.CharField(
@@ -55,6 +55,12 @@ class Product(models.Model):
         blank=True,
     )
     is_active = models.BooleanField(
+        default=False,
+    )
+    related_product = models.BooleanField(
+        default=False,
+    )
+    USA_product = models.BooleanField(
         default=False,
     )
     created_at = models.DateTimeField(

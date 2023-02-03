@@ -26,19 +26,19 @@ class ProductByCategory(APIView):
     Return product by category
     """
 
-    def get(self, request, query=None):
-        queryset = Product.objects.filter(category__slug=query)
+    def get(self, request, slug=None):
+        queryset = Product.objects.filter(category__slug=slug)
         serializer = ProductSerializer(queryset, many=True)
         return Response(serializer.data)
 
 
-class ProductInventoryById(APIView):
+class ProductDetailBySlug(APIView):
     """
-    Return Sub Product by WebId
+    Return Sub Product by Slug
     """
 
-    def get(self, request, query=None):
-        queryset = ProductInventory.objects.filter(product__id=query)
+    def get(self, request, slug=None):
+        queryset = ProductInventory.objects.filter(product__slug=slug)
         serializer = ProductInventorySerializer(queryset, many=True)
         return Response(serializer.data)
 
