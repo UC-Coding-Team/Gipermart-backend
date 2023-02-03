@@ -12,6 +12,11 @@ class ProductAttributeValuesInline(admin.TabularInline):
     raw_id_fields = ['productinventory']
 
 
+class ProductMediaInline(admin.TabularInline):
+    model = models.Media
+    raw_id_fields = ['product_inventory']
+
+
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug', 'category', 'is_active', 'created_at', 'updated_at']
@@ -19,6 +24,7 @@ class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductInventoryInline, ]
     list_filter = ['is_active', 'created_at', 'updated_at']
     list_editable = ['is_active']
+    fields = ('name', 'slug', 'description', 'is_active')
 
 
 @admin.register(models.Category)
@@ -51,7 +57,7 @@ class ProductInventory(admin.ModelAdmin):
                     'price', 'weight', 'created_at', 'updated_at']
     list_filter = ['is_active', 'created_at', 'updated_at']
     list_editable = ['is_active', 'is_default', 'sale_price', 'price']
-    inlines = [ProductAttributeValuesInline]
+    inlines = [ProductAttributeValuesInline, ProductMediaInline]
 
 
 @admin.register(models.ProductAttributeValues)
