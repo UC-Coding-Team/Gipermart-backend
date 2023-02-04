@@ -43,7 +43,10 @@ class ProductMediaSerializer(serializers.ModelSerializer):
         editable = False
 
     def get_img_url(self, obj):
-        return self.context['request'].build_absolute_uri(obj.img_url.url)
+        try:
+            return self.context['request'].build_absolute_uri(obj.img_url.url)
+        except:
+            pass
 
 
 class ProductSerializer(serializers.ModelSerializer):
