@@ -175,6 +175,7 @@ class ProductInventory(models.Model):
     sale_price = models.DecimalField(
         max_digits=10, decimal_places=2, validators=[MinValueValidator(Decimal("0.01"))]
     )
+    installment_plan = models.CharField(max_length=250)
     is_on_sale = models.BooleanField(default=False)
     weight = models.FloatField()
     created_at = models.DateTimeField(

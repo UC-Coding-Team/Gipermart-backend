@@ -75,6 +75,8 @@ class ProductInventorySerializer(serializers.ModelSerializer):
             "id",
             "sku",
             "price",
+            'installment_plan',
+            'product_type',
             "is_default",
             "brand",
             "product",
