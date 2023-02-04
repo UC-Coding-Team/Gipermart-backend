@@ -43,7 +43,7 @@ class ProductMediaSerializer(serializers.ModelSerializer):
         editable = False
 
     def get_img_url(self, obj):
-        return obj.img_url.url
+        return self.context['request'].build_absolute_uri(obj.img_url.url)
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -88,9 +88,9 @@ class ProductInventorySearchSerializer(serializers.ModelSerializer):
     # media = ProductMediaSerializer(many=True, read_only=True)
     brand = BrandSerializer(read_only=True)
 
-    # attributes = ProductAttributeValueSerializer(
-    #     source="attribute_values", many=True, read_only=True
-    # )
+    attributes = ProductAttributeValueSerializer(
+        source="attribute_values", many=True, read_only=True
+    )
 
     class Meta:
         model = ProductInventory
@@ -102,4 +102,7 @@ class ProductInventorySearchSerializer(serializers.ModelSerializer):
             "is_default",
             "product",
             "brand",
+            'attributes',
         ]
+
+

@@ -48,5 +48,7 @@ class AllProductsView(ListAPIView):
     """
     Return products
     """
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+    queryset = ProductInventory.objects.all()
+    serializer_class = ProductInventorySerializer
+
+
