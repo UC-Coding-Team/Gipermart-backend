@@ -42,7 +42,6 @@ import random
 class User(AbstractUser):
     username = None
     date_birth = models.DateField(null=True, blank=True)
-    avatar_image = models.FileField(upload_to='custom_avatar_image', null=True, blank=True)
     phone_number = models.CharField(max_length=40, unique=True)
     created_at = models.DateField(auto_now_add=True, null=True)
     mycode = models.IntegerField(null=True)
