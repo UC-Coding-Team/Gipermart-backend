@@ -9,6 +9,12 @@ from apps.products.models import (
 from apps.outside import models
 
 
+class ProductBrandSerializers(serializers.ModelSerializer):
+    class Meta:
+        models = Brand
+        fields = '__all__'
+
+
 class ProductTypeSerializers(serializers.ModelSerializer):
     class Meta:
         models = ProductType
@@ -89,5 +95,5 @@ class StockSerializers(serializers.ModelSerializer):
 
 class BrandSerializers(serializers.ModelSerializer):
     class Meta:
-        model = Brand
+        model = models.Brand
         fields = ('id', 'slug', 'images', 'category', 'product', 'created_at', 'updated_at')
