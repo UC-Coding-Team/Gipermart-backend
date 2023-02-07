@@ -1,6 +1,6 @@
 from django.urls import path
 
-from apps.products.views import CategoryList, ProductByCategory, ProductDetailBySlug, AllProductsView
+from apps.products.views import CategoryList, ProductByCategory, ProductDetailBySlug, AllProductsView, RatingCreate
 
 app_name = "products"
 
@@ -12,5 +12,6 @@ urlpatterns = [
     ),
     path("product-detail/<int:pk>/", ProductDetailBySlug.as_view()),
     path("api/products/", AllProductsView.as_view()),
+    path('ratings/', RatingCreate.as_view(), name='rating-create'),
 
 ]

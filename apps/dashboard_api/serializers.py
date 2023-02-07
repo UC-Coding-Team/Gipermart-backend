@@ -11,61 +11,61 @@ from apps.outside import models
 
 class ProductBrandSerializers(serializers.ModelSerializer):
     class Meta:
-        models = Brand
+        model = Brand
         fields = '__all__'
 
 
 class ProductTypeSerializers(serializers.ModelSerializer):
     class Meta:
-        models = ProductType
+        model = ProductType
         fields = '__all__'
 
 
 class ProductTypeAttributeSerializers(serializers.ModelSerializer):
     class Meta:
-        models = ProductTypeAttribute
+        model = ProductTypeAttribute
         fields = '__all__'
 
 
 class WishlistSerializers(serializers.ModelSerializer):
     class Meta:
-        models = Wishlist
+        model = Wishlist
         fields = '__all__'
 
 
 class ProductAttributeValueSerializers(serializers.ModelSerializer):
     class Meta:
-        models = ProductAttributeValue
+        model = ProductAttributeValue
         fields = '__all__'
 
 
 class ProductInventorySerializers(serializers.ModelSerializer):
     class Meta:
-        models = ProductInventory
+        model = ProductInventory
         fields = '__all__'
 
 
 class MediaSerializers(serializers.ModelSerializer):
     class Meta:
-        models = Media
+        model = Media
         fields = '__all__'
 
 
 class ProductAttributeSerializers(serializers.ModelSerializer):
     class Meta:
-        models = ProductAttribute
+        model = ProductAttribute
         fields = '__all__'
 
 
 class StockProductSerializers(serializers.ModelSerializer):
     class Meta:
-        models = Stock
+        model = Stock
         fields = '__all__'
 
 
 class ProductAttributeValuesSerializers(serializers.ModelSerializer):
     class Meta:
-        models = ProductAttributeValues
+        model = ProductAttributeValues
         fields = '__all__'
 
 

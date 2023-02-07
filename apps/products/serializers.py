@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Product, Wishlist, ProductInventory, Media, Brand, ProductAttributeValue
+from .models import Category, Product, Wishlist, ProductInventory, Media, Brand, ProductAttributeValue, Rating
 
 
 class WishlistSerializer(serializers.ModelSerializer):
@@ -47,7 +47,7 @@ class ProductMediaSerializer(serializers.ModelSerializer):
         #     return self.context['request'].build_absolute_uri(obj.img_url.url)
         # except:
         return obj.img_url.url
-            # pass
+        # pass
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -112,3 +112,7 @@ class ProductInventorySearchSerializer(serializers.ModelSerializer):
         ]
 
 
+class RatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rating
+        fields = '__all__'

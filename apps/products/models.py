@@ -275,3 +275,12 @@ class Wishlist(models.Model):
 
     def __str__(self):
         return self.product
+
+
+class Rating(models.Model):
+    product = models.ForeignKey(ProductInventory, on_delete=models.CASCADE)
+    rating = models.PositiveSmallIntegerField()
+
+    def __str__(self):
+        return self.rating
+
