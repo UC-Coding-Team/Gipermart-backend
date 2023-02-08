@@ -149,3 +149,31 @@ class UpdateUserSerializer(serializers.ModelSerializer):
             'phone_number': {'required': False},
             'password': {'required': False},
         }
+
+
+from rest_framework.exceptions import ValidationError
+
+class ForgotPasswordSerializer(serializers.Serializer):
+    phone_number = serializers.CharField()
+
+    def validate_phone_number(self, value):
+        user = User.objects.filter(phone_number=value).first()
+        if not user:
+            raise ValidationError("User with this phone number does not exist")
+        return value
+
+
+class ResetPasswordSerializer(serializers.Serializer):
+    phone_number = serializers.CharField()
+    password = serializers.CharField()
+    confirm_password = serializers.CharField()
+
+    def validate(self, data):
+        if data['password'] != data['confirm_password']:
+            raise ValidationError("Passwords do not match")
+        return data
+
+    def update(self, instance, validated_data):
+        instance.set_password(validated_data['password'])
+        instance.save()
+        return instance

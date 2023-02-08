@@ -23,7 +23,7 @@ from .models import User, Map
 # from store.serializers import StoreModelSerializer
 
 from .serializers import RegistrationSerializer, UserSerializer, LoginSerializer, UserALLSerializer, \
-    UpdateUserSerializer, MapSerializer
+    UpdateUserSerializer, MapSerializer, ResetPasswordSerializer, ForgotPasswordSerializer
 
 
 class UserViewSet(GenericViewSet):
@@ -159,3 +159,37 @@ class MapView(mixins.CreateModelMixin, mixins.ListModelMixin, mixins.RetrieveMod
     queryset = Map.objects.all()
     serializer_class = MapSerializer
     permission_classes = (IsAuthenticated, )
+
+
+class ForgotPasswordView(generics.GenericAPIView):
+    serializer_class = ForgotPasswordSerializer
+    permission_classes = [AllowAny,]
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        phone_number = serializer.validated_data['phone_number']
+        try:
+            user = User.objects.get(phone_number=phone_number)
+        except User.DoesNotExist:
+            return Response({"error": "User with this Phone number does not exist."}, status=status.HTTP_400_BAD_REQUEST)
+        # send forgot password email or SMS here
+        return Response({"success": "Password reset instructions have been sent to the phone number."}, status=status.HTTP_200_OK)
+
+
+class ResetPasswordView(generics.GenericAPIView):
+    serializer_class = ResetPasswordSerializer
+    permission_classes = [AllowAny,]
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        phone_number = serializer.validated_data['phone_number']
+        password = serializer.validated_data['password']
+        try:
+            user = User.objects.get(phone_number=phone_number)
+        except User.DoesNotExist:
+            return Response({"error": "User with this Phone number does not exist."}, status=status.HTTP_400_BAD_REQUEST)
+        user.set_password(password)
+        user.save()
+        return Response({"success": "Password has been reset successfully."}, status=status.HTTP_200_OK)
