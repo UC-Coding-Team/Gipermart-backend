@@ -40,7 +40,7 @@ def calculate_rating(product_id):
     ratings = Rating.objects.filter(product=product_id)
     total_ratings = ratings.count()
     total_sum = ratings.aggregate(models.Sum('rating'))['rating__sum']
-    return total_sum / total_ratings
+    return int(total_sum) / int(total_ratings)
 
 
 class ProductDetailBySlug(APIView):
@@ -48,15 +48,11 @@ class ProductDetailBySlug(APIView):
     Return Sub Product by Slug
     """
 
-    def get_object(self, pk):
-        try:
-            return ProductInventory.objects.get(pk=pk)
-        except Product.DoesNotExist:
-            raise Http404
-
-    def get(self, request, pk, format=None):
-        product = self.get_object(pk)
-        product.rating = calculate_rating(product.id)
+    def get(self, request, pk=None):
+        product = ProductInventory.objects.filter(pk=pk)
+        # print(product.first().id)
+        product.rating = calculate_rating(product.first().id)
+        # print(product.rating)
         serializer = ProductInventorySerializer(product, many=True)
         return Response(serializer.data)
 

@@ -61,6 +61,12 @@ class ProductSerializer(serializers.ModelSerializer):
         # editable = False
 
 
+class RatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rating
+        fields = '__all__'
+
+
 class ProductInventorySerializer(serializers.ModelSerializer):
     product = ProductSerializer(many=False, read_only=True)
     media = ProductMediaSerializer(many=True, read_only=True)
@@ -68,6 +74,7 @@ class ProductInventorySerializer(serializers.ModelSerializer):
     attributes = ProductAttributeValueSerializer(
         source="attribute_values", many=True, read_only=True
     )
+    rating = serializers.FloatField(source='rating.rating', read_only=True)
 
     class Meta:
         model = ProductInventory
@@ -85,6 +92,7 @@ class ProductInventorySerializer(serializers.ModelSerializer):
             "media",
             "attributes",
             "product_type",
+            'rating',
         ]
         read_only = True
 
@@ -112,7 +120,3 @@ class ProductInventorySearchSerializer(serializers.ModelSerializer):
         ]
 
 
-class RatingSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Rating
-        fields = '__all__'
