@@ -1,5 +1,16 @@
 from rest_framework import serializers
 from .models import Category, Product, Wishlist, ProductInventory, Media, Brand, ProductAttributeValue, Rating
+from .models import Rating
+from django.db import models
+
+
+def calculate_rating(product_id):
+    ratings = Rating.objects.filter(product=product_id)
+    total_ratings = ratings.count()
+    if total_ratings == 0:
+        return 0
+    total_sum = ratings.aggregate(models.Sum('rating'))['rating__sum']
+    return int(total_sum) / int(total_ratings)
 
 
 class WishlistSerializer(serializers.ModelSerializer):
@@ -74,27 +85,36 @@ class ProductInventorySerializer(serializers.ModelSerializer):
     attributes = ProductAttributeValueSerializer(
         source="attribute_values", many=True, read_only=True
     )
-    rating = serializers.FloatField(source='rating.rating', read_only=True)
+    rating = serializers.SerializerMethodField()
+
+    def get_rating(self, obj):
+        product_id = obj.id
+        return calculate_rating(product_id)
 
     class Meta:
         model = ProductInventory
-        fields = [
-            "id",
-            "sku",
-            "price",
-            'installment_plan',
-            'product_type',
-            "is_default",
-            "brand",
-            "product",
-            "is_on_sale",
-            "weight",
-            "media",
-            "attributes",
-            "product_type",
-            'rating',
-        ]
-        read_only = True
+        # fields = [
+        #     "id",
+        #     "sku",
+        #     "price",
+        #     'installment_plan',
+        #     'product_type',
+        #     "is_default",
+        #     "brand",
+        #     "product",
+        #     "is_on_sale",
+        #     "weight",
+        #     "media",
+        #     "attributes",
+        #     "product_type",
+        #     'rating',
+        # ]
+        fields = '__all__'
+        # read_only = True
+
+
+
+
 
 
 class ProductInventorySearchSerializer(serializers.ModelSerializer):
@@ -118,5 +138,3 @@ class ProductInventorySearchSerializer(serializers.ModelSerializer):
             "brand",
             'attributes',
         ]
-
-
