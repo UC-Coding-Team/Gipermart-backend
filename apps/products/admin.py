@@ -62,22 +62,22 @@ class ProductInventory(admin.ModelAdmin):
 
 @admin.register(models.ProductAttributeValues)
 class ProductAttributeValuesAdmin(admin.ModelAdmin):
-    list_display = ['attributevalues', 'productinventory']
+    list_display = ['id', 'attributevalues', 'productinventory']
 
 
 @admin.register(models.ProductAttributeValue)
 class ProductAttributeValueAdmin(admin.ModelAdmin):
-    list_display = ['product_attribute', 'attribute_value']
+    list_display = ['id', 'product_attribute', 'attribute_value']
 
 
 @admin.register(models.ProductAttribute)
 class ProductAttributeAdmin(admin.ModelAdmin):
-    list_display = ['name', 'description']
+    list_display = ['id', 'name', 'description']
     
 
 @admin.register(models.ProductTypeAttribute)
 class ProductTypeAttributeAdmin(admin.ModelAdmin):
-    list_display = ['product_attribute', 'product_type']
+    list_display = ['id', 'product_attribute', 'product_type']
 
 @admin.register(models.ProductAllModel)
 class ProductTypeAttributeAdmin(admin.ModelAdmin):
