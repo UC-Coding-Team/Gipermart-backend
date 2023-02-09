@@ -51,8 +51,9 @@ class ProductDetailBySlug(APIView):
     def get(self, request, pk=None):
         product = ProductInventory.objects.filter(pk=pk)
         # print(product.first().id)
-        product.rating = calculate_rating(product.first().id)
-        print(product.rating)
+        if product.first().id==True:
+            product.rating = calculate_rating(product.first().id)
+            print(product.rating)
         serializer = ProductInventorySerializer(product, many=True)
         return Response(serializer.data)
 
