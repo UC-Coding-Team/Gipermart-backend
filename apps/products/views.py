@@ -52,7 +52,7 @@ class ProductDetailBySlug(APIView):
         product = ProductInventory.objects.filter(pk=pk)
         # print(product.first().id)
         product.rating = calculate_rating(product.first().id)
-        # print(product.rating)
+        print(product.rating)
         serializer = ProductInventorySerializer(product, many=True)
         return Response(serializer.data)
 
