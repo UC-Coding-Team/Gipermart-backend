@@ -61,7 +61,7 @@ class ProductDetailBySlug(APIView):
     def get(self, request, pk, format=None):
         product = self.get_object(pk)
         product.rating = calculate_rating(product.id)
-        serializer = ProductInventorySerializer(product, many=True)
+        serializer = ProductInventorySerializer(product)
         return Response(serializer.data)
 
 
