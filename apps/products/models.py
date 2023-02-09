@@ -72,7 +72,7 @@ class Product(models.Model):
     USA_product = models.BooleanField(
         default=False,
     )
-    # rating = models.FloatField(null=True, blank=True)
+    rating = models.FloatField(null=True, blank=True)
     status = models.CharField(
         max_length=50, choices=CHOICES, default=PROCESS
     )
@@ -280,4 +280,7 @@ class Wishlist(models.Model):
 class Rating(models.Model):
     product = models.ForeignKey(ProductInventory, on_delete=models.CASCADE)
     rating = models.PositiveSmallIntegerField()
+
+    def __str__(self):
+        return self.rating
 

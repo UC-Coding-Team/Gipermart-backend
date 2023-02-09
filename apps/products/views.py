@@ -7,9 +7,9 @@ from .serializers import (
     CategorySerializer,
     ProductInventorySerializer,
     ProductSerializer,
-    RatingSerializer,
+    RatingSerializer
 )
-from .models import Category, Product, ProductInventory, Rating
+from apps.products.models import Category, Product, ProductInventory, Rating
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -36,6 +36,13 @@ class ProductByCategory(APIView):
         return Response(serializer.data)
 
 
+def calculate_rating(product_id):
+    ratings = Rating.objects.filter(product=product_id)
+    total_ratings = ratings.count()
+    total_sum = ratings.aggregate(models.Sum('rating'))['rating__sum']
+    return int(total_sum) / int(total_ratings)
+
+
 class ProductDetailBySlug(APIView):
     """
     Return Sub Product by Slug
@@ -43,6 +50,10 @@ class ProductDetailBySlug(APIView):
 
     def get(self, request, pk=None):
         product = ProductInventory.objects.filter(pk=pk)
+        # print(product.first().id)
+        if product.first().id==True:
+            product.rating = calculate_rating(product.first().id)
+            print(product.rating)
         serializer = ProductInventorySerializer(product, many=True)
         return Response(serializer.data)
 

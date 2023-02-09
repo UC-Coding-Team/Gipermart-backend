@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 
 from .views import UserProfile, UserList, UpdateProfileView, UserViewSet, LoginView, UserProfileList, \
-        MapView, ForgotPasswordView, ResetPasswordView
+        MapView
 
 router = DefaultRouter()
 router.register('', LoginView, 'auth')
@@ -19,8 +19,6 @@ urlpatterns = [
         path('api/v1/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
         path('api/v1/update-user/<int:pk>/', UpdateProfileView.as_view()),
         path('profile/', UserProfile.as_view(), name='user-profile'),
-        path('forgot-password/', ForgotPasswordView.as_view(), name='forgot-password'),
-        path('reset-password/', ResetPasswordView.as_view(), name='reset-password'),
 ]
 
 urlpatterns += router.urls
