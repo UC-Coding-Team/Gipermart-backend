@@ -16,3 +16,7 @@ class CartItem(models.Model):
 
     # def __str__(self):
     #     return self.product
+
+    class Meta:
+        verbose_name = 'Cart'
+        verbose_name_plural = 'Carts'

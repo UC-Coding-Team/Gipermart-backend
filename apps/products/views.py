@@ -1,8 +1,12 @@
 from django.http import Http404
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import ListAPIView
-from rest_framework import generics
+from rest_framework import generics, mixins
 from rest_framework.permissions import IsAuthenticated
 from django.db import models
+from rest_framework.viewsets import GenericViewSet
+
+from .filter import ProductFilter
 from .serializers import (
     CategorySerializer,
     ProductInventorySerializer,
@@ -61,12 +65,15 @@ class ProductDetailBySlug(APIView):
         return Response(serializer.data)
 
 
-class AllProductsView(ListAPIView):
+class AllProductsView(mixins.ListModelMixin, GenericViewSet):
     """
     Return products
     """
     queryset = ProductInventory.objects.all()
     serializer_class = ProductInventorySerializer
+    filter_backends = [DjangoFilterBackend]
+    filter_class = ProductFilter
+
 
 
 class RatingCreate(generics.CreateAPIView):

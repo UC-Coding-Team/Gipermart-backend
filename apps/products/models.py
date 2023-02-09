@@ -6,7 +6,6 @@ from mptt.models import MPTTModel, TreeForeignKey
 
 from ..user_profile.models import User
 
-
 class Category(MPTTModel):
     name = models.CharField(
         max_length=100,
