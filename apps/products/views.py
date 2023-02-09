@@ -13,7 +13,7 @@ from .serializers import (
     ProductSerializer,
     RatingSerializer, ProductAttributeValueSerializerFiler, PrFilter
 )
-from apps.products.models import Category, Product, ProductInventory, Rating, ProductAttributeValue
+from apps.products.models import Category, Product, ProductInventory, Rating, ProductAttributeValue, ProductAllModel
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -81,6 +81,13 @@ class RatingCreate(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
 
 
-class ProductInventoryView(generics.ListAPIView):
-    queryset = ProductAttributeValue.objects.all()
+class ProductInventoryView(mixins.ListModelMixin, GenericViewSet):
+    queryset = ProductAllModel.objects.all()
     serializer_class = PrFilter
+
+class ProductInventoryAPIView(APIView):
+
+    def get(self, request, pk):
+        houses = ProductAllModel.objects.get(category__id=pk)
+        serializer = PrFilter(houses, context={'request': request}, )
+        return Response(serializer.data)

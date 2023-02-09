@@ -283,3 +283,15 @@ class Rating(models.Model):
     def __str__(self):
         return self.rating
 
+
+class ProductAllModel(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    products = models.ForeignKey(Product, on_delete=models.CASCADE)
+    atributes_value = models.ForeignKey(ProductAttributeValue,  on_delete=models.CASCADE)
+
+    # def __str__(self):
+    #     return self.pk
+
+    class Meta:
+        verbose_name = 'product_all'
+        verbose_name_plural = 'product_alls'
