@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Category, Product, Wishlist, ProductInventory, Media, Brand, ProductAttributeValue, Rating
+from .models import Category, Product, Wishlist, ProductInventory, Media, Brand, ProductAttributeValue, Rating, \
+    ProductAttribute
 
 
 class WishlistSerializer(serializers.ModelSerializer):
@@ -20,7 +21,6 @@ class ProductAttributeValueSerializerFiler(serializers.ModelSerializer):
     class Meta:
         model = ProductAttributeValue
         fields = '__all__'
-
 
 
 class BrandSerializer(serializers.ModelSerializer):
@@ -125,11 +125,15 @@ class RatingSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ProductAttributeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductAttribute
+        fields = '__all__'
+
+
 class PrFilter(serializers.ModelSerializer):
-    attributes = ProductAttributeValueSerializer(
-        source="attribute_values", many=True, read_only=True
-    )
+    product_attribute = ProductAttributeSerializer()
 
     class Meta:
-        model = ProductInventory
-        fields = ['attributes', 'id',]
+        model = ProductAttributeValue
+        fields = ['id', 'product_attribute', 'attribute_value']
