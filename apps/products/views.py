@@ -11,7 +11,7 @@ from .serializers import (
     CategorySerializer,
     ProductInventorySerializer,
     ProductSerializer,
-    RatingSerializer
+    RatingSerializer, ProductAttributeValueSerializerFiler, PrFilter
 )
 from apps.products.models import Category, Product, ProductInventory, Rating
 from rest_framework.response import Response
@@ -75,8 +75,12 @@ class AllProductsView(mixins.ListModelMixin, GenericViewSet):
     filter_class = ProductFilter
 
 
-
 class RatingCreate(generics.CreateAPIView):
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
     permission_classes = (IsAuthenticated,)
+
+
+class ProductInventoryView(generics.ListAPIView):
+    queryset = ProductInventory.objects.all()
+    serializer_class = PrFilter

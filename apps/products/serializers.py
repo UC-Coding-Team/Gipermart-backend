@@ -16,6 +16,13 @@ class ProductAttributeValueSerializer(serializers.ModelSerializer):
         read_only = True
 
 
+class ProductAttributeValueSerializerFiler(serializers.ModelSerializer):
+    class Meta:
+        model = ProductAttributeValue
+        fields = '__all__'
+
+
+
 class BrandSerializer(serializers.ModelSerializer):
     class Meta:
         model = Brand
@@ -116,3 +123,13 @@ class RatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rating
         fields = '__all__'
+
+
+class PrFilter(serializers.ModelSerializer):
+    attributes = ProductAttributeValueSerializer(
+        source="attribute_values", many=True, read_only=True
+    )
+
+    class Meta:
+        model = ProductInventory
+        fields = ['attributes', 'id',]
