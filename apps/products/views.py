@@ -7,7 +7,7 @@ from .serializers import (
     CategorySerializer,
     ProductInventorySerializer,
     ProductSerializer,
-    RatingSerializer
+    RatingSerializer,
 )
 from .models import Category, Product, ProductInventory, Rating
 from rest_framework.response import Response

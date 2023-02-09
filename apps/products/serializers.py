@@ -113,10 +113,6 @@ class ProductInventorySerializer(serializers.ModelSerializer):
         # read_only = True
 
 
-
-
-
-
 class ProductInventorySearchSerializer(serializers.ModelSerializer):
     product = ProductSerializer(many=False, read_only=True)
     # media = ProductMediaSerializer(many=True, read_only=True)
