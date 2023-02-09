@@ -134,7 +134,7 @@ class RatingSerializer(serializers.ModelSerializer):
 
 
 class PrFilter(serializers.ModelSerializer):
-    atributes_value = ProductAttributeValueSerializerFiler()
+    atributes_value = ProductAttributeValueSerializerFiler(many=True)
 
     class Meta:
         model = ProductAllModel
