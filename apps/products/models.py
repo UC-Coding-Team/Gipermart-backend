@@ -287,7 +287,7 @@ class Rating(models.Model):
 class ProductAllModel(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     products = models.ForeignKey(Product, on_delete=models.CASCADE)
-    atributes_value = models.ForeignKey(ProductAttributeValue,  on_delete=models.CASCADE)
+    atributes_value = models.ManyToManyField(ProductAttributeValue)
 
     # def __str__(self):
     #     return self.pk
