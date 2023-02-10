@@ -59,12 +59,6 @@ class StockProductSerializers(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ProductAttributeValuesSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = ProductAttributeValues
-        fields = '__all__'
-
-
 class CategorySerializers(serializers.ModelSerializer):
     class Meta:
         model = Category
@@ -105,4 +99,13 @@ class ProductInventorySerializers(serializers.ModelSerializer):
 
     class Meta:
         model = ProductInventory
+        fields = '__all__'
+
+
+class ProductAttributeValuesSerializers(serializers.ModelSerializer):
+    attribute_values = ProductAttributeValueSerializers(source='attributevalues', many=False, read_only=True)
+    product_inventory = ProductInventorySerializers(source='productinventory', many=False, read_only=True)
+
+    class Meta:
+        model = ProductAttributeValues
         fields = '__all__'
