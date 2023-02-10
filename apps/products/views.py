@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import GenericViewSet
 
 from .filter import ProductFilter
+from .filters import ProductInventoryFilter
 from .serializers import (
     CategorySerializer,
     ProductInventorySerializer,
@@ -80,3 +81,9 @@ class ProductInventoryAPIView(APIView):
         houses = ProductAllModel.objects.get(category__id=pk)
         serializer = PrFilter(houses, context={'request': request}, )
         return Response(serializer.data)
+
+class ProductFilterView(generics.ListCreateAPIView):
+    queryset = ProductInventory.objects.all()
+    serializer_class = ProductInventorySerializer
+    filter_backends = [DjangoFilterBackend]
+    filter_class = ProductInventoryFilter
