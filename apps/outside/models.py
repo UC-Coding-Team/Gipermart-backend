@@ -38,8 +38,8 @@ class Stock(models.Model):
 class Brand(models.Model):
     slug = models.SlugField(max_length=40)
     images = models.ImageField(upload_to='Brands_img/', default='image.png')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

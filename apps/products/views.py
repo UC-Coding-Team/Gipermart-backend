@@ -3,7 +3,6 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import ListAPIView
 from rest_framework import generics, mixins
 from rest_framework.permissions import IsAuthenticated
-from django.db import models
 from rest_framework.viewsets import GenericViewSet
 
 from .filter import ProductFilter
