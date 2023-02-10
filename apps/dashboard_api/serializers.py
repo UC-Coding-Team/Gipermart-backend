@@ -33,27 +33,23 @@ class WishlistSerializers(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ProductAttributeSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = ProductAttribute
+        fields = '__all__'
+
+
 class ProductAttributeValueSerializers(serializers.ModelSerializer):
+    product_attributes = ProductAttributeSerializers(source='product_attribute', many=False, read_only=True)
+
     class Meta:
         model = ProductAttributeValue
-        fields = '__all__'
-
-
-class ProductInventorySerializers(serializers.ModelSerializer):
-    class Meta:
-        model = ProductInventory
-        fields = '__all__'
+        fields = ('id', 'attribute_value', 'product_attributes')
 
 
 class MediaSerializers(serializers.ModelSerializer):
     class Meta:
         model = Media
-        fields = '__all__'
-
-
-class ProductAttributeSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = ProductAttribute
         fields = '__all__'
 
 
@@ -97,3 +93,16 @@ class BrandSerializers(serializers.ModelSerializer):
     class Meta:
         model = models.Brand
         fields = ('id', 'slug', 'images', 'category', 'product', 'created_at', 'updated_at')
+
+
+class ProductInventorySerializers(serializers.ModelSerializer):
+    product = ProductSerializers(many=False, read_only=True)
+    media = MediaSerializers(many=True, read_only=True)
+    brand = ProductBrandSerializers(read_only=True)
+    attributes = ProductAttributeValueSerializers(
+        source="attribute_values", many=True, read_only=True
+    )
+
+    class Meta:
+        model = ProductInventory
+        fields = '__all__'
