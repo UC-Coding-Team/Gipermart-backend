@@ -71,7 +71,6 @@ class Product(models.Model):
     USA_product = models.BooleanField(
         default=False,
     )
-    rating = models.FloatField(null=True, blank=True)
     status = models.CharField(
         max_length=50, choices=CHOICES, default=PROCESS
     )

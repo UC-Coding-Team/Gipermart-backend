@@ -40,27 +40,13 @@ class ProductByCategory(APIView):
         return Response(serializer.data)
 
 
-def calculate_rating(product_id):
-    ratings = Rating.objects.filter(product=product_id)
-    total_ratings = ratings.count()
-    total_sum = ratings.aggregate(models.Sum('rating'))['rating__sum']
-    return total_sum / total_ratings
-
-
 class ProductDetailBySlug(APIView):
     """
     Return Sub Product by Slug
     """
 
-    def get_object(self, pk):
-        try:
-            return ProductInventory.objects.get(pk=pk)
-        except Product.DoesNotExist:
-            raise Http404
-
-    def get(self, request, pk, format=None):
-        product = self.get_object(pk)
-        product.rating = calculate_rating(product.id)
+    def get(self, request, pk=None):
+        product = ProductInventory.objects.get(pk=pk)
         serializer = ProductInventorySerializer(product)
         return Response(serializer.data)
 
@@ -76,6 +62,9 @@ class AllProductsView(mixins.ListModelMixin, GenericViewSet):
 
 
 class RatingCreate(generics.CreateAPIView):
+    """
+    Create Rating
+    """
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
     permission_classes = (IsAuthenticated,)
@@ -84,6 +73,7 @@ class RatingCreate(generics.CreateAPIView):
 class ProductInventoryView(mixins.ListModelMixin, GenericViewSet):
     queryset = ProductAllModel.objects.all()
     serializer_class = PrFilter
+
 
 class ProductInventoryAPIView(APIView):
 
