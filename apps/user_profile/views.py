@@ -84,18 +84,22 @@ class LoginView(GenericViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         phone_number = serializer.validated_data['phone_number']
-        code = serializer.validated_data['code']
+        password = serializer.validated_data['password']
         try:
             user = User.objects.get(phone_number=phone_number)
         except User.DoesNotExist:
             return Response({'error': 'User with this phone number does not exist'})
-        if int(code) == int(User.objects.get(phone_number=phone_number).mycode):
+        if int(password) == int(User.objects.get(phone_number=phone_number).password):
 
             token, created = User.objects.get_or_create(phone_number=phone_number)
             return Response({'token': token.tokens()})
         else:
             return Response(
-                {'error': f"Code is not valid! {code}=!{User.objects.get(phone_number=phone_number).mycode}"})
+                {'error': f"Code is not valid!"})
+            # return Response(
+            #     {'error': f"Code is not valid! {password}=!{User.objects.get(phone_number=phone_number).password}"})
+
+
 
     @action(['POST'], detail=False, permission_classes=[permissions.IsAuthenticated])
     def logout(self, request):

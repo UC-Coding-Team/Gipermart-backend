@@ -108,9 +108,8 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 
 class LoginSerializer(serializers.Serializer):
-    phone_number = serializers.CharField(required=True)
-    code = serializers.CharField()
-
+    phone_number = serializers.CharField(max_length=15)
+    password = serializers.CharField(max_length=128)
 
 class UserSerializer(serializers.ModelSerializer):
     checkout = CheckoutSerializer(many=True)
