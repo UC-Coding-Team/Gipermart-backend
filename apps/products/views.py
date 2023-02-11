@@ -87,3 +87,9 @@ class ProductFilterView(generics.ListCreateAPIView):
     serializer_class = ProductInventorySerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = ProductInventoryFilter
+
+# class ProductFilterView(mixins.ListModelMixin, GenericViewSet):
+#     queryset = ProductInventory.objects.all()
+#     serializer_class = ProductInventorySerializer
+#     filter_backends = [DjangoFilterBackend]
+#     filter_class = ProductFilter
