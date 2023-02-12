@@ -1,4 +1,6 @@
 from rest_framework import serializers
+from rest_framework.relations import StringRelatedField
+
 from .models import Category, Product, Wishlist, ProductInventory, Media, Brand, ProductAttributeValue, Rating, \
     ProductAttribute, ProductAllModel
 from django.db import models
@@ -94,6 +96,7 @@ class ProductInventorySerializer(serializers.ModelSerializer):
         source="attribute_values", many=True, read_only=True
     )
     rating = serializers.SerializerMethodField()
+    # category = StringRelatedField(source='product.category')
 
     def get_rating(self, obj):
         product_id = obj.id

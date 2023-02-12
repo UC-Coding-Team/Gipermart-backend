@@ -1,5 +1,5 @@
 from django.http import Http404
-from rest_framework.filters import OrderingFilter
+from rest_framework.filters import OrderingFilter, SearchFilter
 
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import ListAPIView
@@ -87,8 +87,9 @@ class ProductInventoryAPIView(APIView):
 class ProductFilterView(generics.ListCreateAPIView):
     queryset = ProductInventory.objects.all()
     serializer_class = ProductInventorySerializer
-    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
     filterset_class = ProductInventoryFilter
+    search_fields = ('product__category__slug',)
     ordering_fields = ('price',)
     ordering = ('price',)
 # class ProductFilterView(mixins.ListModelMixin, GenericViewSet):
