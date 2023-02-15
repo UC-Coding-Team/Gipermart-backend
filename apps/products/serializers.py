@@ -104,23 +104,8 @@ class ProductInventorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductInventory
-        # fields = [
-        #     "id",
-        #     "sku",
-        #     "price",
-        #     'installment_plan',
-        #     'product_type',
-        #     "is_default",
-        #     "brand",
-        #     "product",
-        #     "is_on_sale",
-        #     "weight",
-        #     "media",
-        #     "attributes",
-        #     "product_type",
-        # ]
+
         fields = '__all__'
-        # read_only = True
 
 
 class ProductInventorySearchSerializer(serializers.ModelSerializer):

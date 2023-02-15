@@ -13,17 +13,13 @@ class SearchProductInventory(APIView, LimitOffsetPagination):
     def get(self, request, query=None):
         try:
             q = Q(
-                "multi_match",
-                query=query,
-                fields=["product.name","product.description", "brand.name",],
-                fuzziness="auto",
-            ) & Q(
+                "bool",
                 should=[
-                    Q("match", is_default=True),
+                    Q("match_phrase_prefix", product__name=query),
+                    Q("match_phrase_prefix", product__description=query),
+                    Q("match_phrase_prefix", brand__name=query),
                 ],
-                minimum_should_match=1,
             )
-
             search = self.search_document.search().query(q)
             response = search.execute()
 
