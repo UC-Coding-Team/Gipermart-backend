@@ -1,12 +1,10 @@
 from django.http import Http404
 from rest_framework.filters import OrderingFilter, SearchFilter
-
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import ListAPIView
 from rest_framework import generics, mixins
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import GenericViewSet
-
 from .filter import ProductFilter
 from .filters import ProductInventoryFilter
 from .serializers import (
@@ -37,8 +35,8 @@ class ProductByCategory(APIView):
     """
 
     def get(self, request, slug=None):
-        queryset = Product.objects.filter(category__slug=slug)
-        serializer = ProductSerializer(queryset, many=True)
+        queryset = ProductInventory.objects.filter(product__category__slug=slug)
+        serializer = ProductInventorySerializer(queryset, many=True)
         return Response(serializer.data)
 
 
@@ -83,6 +81,7 @@ class ProductInventoryAPIView(APIView):
         houses = ProductAllModel.objects.get(category__id=pk)
         serializer = PrFilter(houses, context={'request': request}, )
         return Response(serializer.data)
+
 
 class ProductFilterView(generics.ListCreateAPIView):
     queryset = ProductInventory.objects.all()

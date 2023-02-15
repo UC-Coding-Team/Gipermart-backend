@@ -4,6 +4,7 @@ from apps.cart.models import CartItem
 
 User = get_user_model()
 
+
 class Checkout(models.Model):
     full_name = models.CharField(max_length=250)
     phone_number = models.CharField(max_length=100)
@@ -12,7 +13,7 @@ class Checkout(models.Model):
     address = models.CharField(max_length=200)
     comment = models.TextField()
     cart = models.ManyToManyField(CartItem, null=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='checkout',  null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='checkout', null=True)
     PAY_STATUS = models.BooleanField(
         default=False, )
     NAXT_STATUS = models.BooleanField(

@@ -25,7 +25,7 @@ class ProductAttributeValueSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductAttributeValue
         depth = 2
-        exclude = ["id"]
+        fields = '__all__'
         read_only = True
 
 

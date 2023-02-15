@@ -167,13 +167,8 @@ class ProductInventory(models.Model):
     is_default = models.BooleanField(
         default=False,
     )
-    price = models.DecimalField(
-        max_digits=5,
-        decimal_places=2,
-    )
-    sale_price = models.DecimalField(
-        max_digits=10, decimal_places=2, validators=[MinValueValidator(Decimal("0.01"))]
-    )
+    price = models.PositiveIntegerField()
+    sale_price = models.PositiveIntegerField()
     installment_plan = models.CharField(max_length=250)
     is_on_sale = models.BooleanField(default=False)
     weight = models.FloatField()
