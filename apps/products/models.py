@@ -171,7 +171,12 @@ class ProductInventory(models.Model):
     sale_price = models.PositiveIntegerField()
     installment_plan = models.CharField(max_length=250)
     is_on_sale = models.BooleanField(default=False)
-    weight = MeasurementField(measurement=Weight, unit_choices=WeightUnits.CHOICES, default=0.0)
+    weight = MeasurementField(
+        measurement=Weight,
+        unit_choices=WeightUnits.CHOICES,  # type: ignore
+        blank=True,
+        null=True,
+    )
     created_at = models.DateTimeField(
         auto_now_add=True,
         editable=False,
