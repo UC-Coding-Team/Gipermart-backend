@@ -46,7 +46,7 @@ class ProductInventoryDocument(Document):
             "is_active",
             "is_on_sale",
             "sale_price",
-            "weight",
+            # "weight",
             "created_at",
             "updated_at",
         ]

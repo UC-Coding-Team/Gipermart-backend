@@ -1,9 +1,9 @@
-from decimal import Decimal
-from django.core.validators import MinValueValidator
+from django_measurement.models import MeasurementField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from mptt.models import MPTTModel, TreeForeignKey
 
+from .utils.units import Weight, WeightUnits, zero_weight
 from ..user_profile.models import User
 
 
@@ -171,7 +171,7 @@ class ProductInventory(models.Model):
     sale_price = models.PositiveIntegerField()
     installment_plan = models.CharField(max_length=250)
     is_on_sale = models.BooleanField(default=False)
-    weight = models.FloatField()
+    weight = MeasurementField(measurement=Weight, unit_choices=WeightUnits.CHOICES, default=0.0)
     created_at = models.DateTimeField(
         auto_now_add=True,
         editable=False,
