@@ -14,6 +14,7 @@ class Category(MPTTModel):
     slug = models.SlugField(max_length=150, unique=True)
     description = models.TextField()
     background_image = models.ImageField(upload_to='category-backgrounds', blank=True, null=True)
+    test_image = models.CharField(max_length=700, null=True, blank=True)
     is_active = models.BooleanField(
         default=False,
     )
