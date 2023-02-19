@@ -1,4 +1,6 @@
 from rest_framework import viewsets
+from rest_framework.filters import SearchFilter
+
 from . import serializers
 from apps.products.models import (
     Category, Product, Brand,
@@ -7,7 +9,7 @@ from apps.products.models import (
     Media, Stock, ProductAttributeValues, ProductTypeAttribute,
     Wishlist,
 )
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from apps.outside import models
 
 
@@ -44,58 +46,77 @@ class WishlistViewSet(viewsets.ModelViewSet):
 class ProductInventoryViewSet(viewsets.ModelViewSet):
     queryset = ProductInventory.objects.all()
     serializer_class = serializers.ProductInventorySerializers
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
+    filter_backends = [SearchFilter]
+    search_fields = ['sku',]
 
 
 class MediaViewSet(viewsets.ModelViewSet):
     queryset = Media.objects.all()
     serializer_class = serializers.MediaSerializers
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 
 class ProductAttributeViewSet(viewsets.ModelViewSet):
     queryset = ProductAttribute.objects.all()
     serializer_class = serializers.ProductAttributeSerializers
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
+    filter_backends = [SearchFilter]
+    search_fields = ['id', 'name']
 
 
 class ProductTypeViewSet(viewsets.ModelViewSet):
     queryset = ProductType.objects.all()
     serializer_class = serializers.ProductTypeSerializers
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
+    filter_backends = [SearchFilter]
+    search_fields = ['id', 'name']
+
 
 
 class BrandProductViewSet(viewsets.ModelViewSet):
     queryset = Brand.objects.all()
     serializer_class = serializers.ProductBrandSerializers
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
+    filter_backends = [SearchFilter]
+    search_fields = ['id', 'name']
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = serializers.CategorySerializers
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
+    filter_backends = [SearchFilter]
+    search_fields = ['id', 'name']
 
 
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = serializers.ProductSerializers
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
+    filter_backends = [SearchFilter]
+    search_fields = ['id', 'name']
 
 
 class SliderViewSet(viewsets.ModelViewSet):
     queryset = models.Slider.objects.all()
     serializer_class = serializers.SliderSerializers
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
+    filter_backends = [SearchFilter]
+    search_fields = ['id', 'slug']
 
 
 class StockViewSet(viewsets.ModelViewSet):
     queryset = models.Stock.objects.all()
     serializer_class = serializers.StockSerializers
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
+    filter_backends = [SearchFilter]
+    search_fields = ['id', 'slug']
 
 
 class BrandViewSet(viewsets.ModelViewSet):
     queryset = models.Brand.objects.all()
     serializer_class = serializers.BrandSerializers
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
+    filter_backends = [SearchFilter]
+    search_fields = ['id', 'slug']
