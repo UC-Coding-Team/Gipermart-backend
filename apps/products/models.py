@@ -9,14 +9,15 @@ from ..user_profile.models import User
 
 class Category(MPTTModel):
     name = models.CharField(
-        max_length=100,
+        max_length=100, verbose_name=_('name')
     )
-    slug = models.SlugField(max_length=150, unique=True)
-    description = models.TextField()
-    background_image = models.ImageField(upload_to='category-backgrounds', blank=True, null=True)
-    test_image = models.CharField(max_length=700, null=True, blank=True)
+    slug = models.SlugField(max_length=150, unique=True, verbose_name=_('slug'))
+    description = models.TextField(verbose_name=_('description'))
+    background_image = models.ImageField(upload_to='category-backgrounds', blank=True, null=True, verbose_name=_('background_image'))
+    test_image = models.CharField(max_length=700, null=True, blank=True, verbose_name=_('test_image'))
     is_active = models.BooleanField(
         default=False,
+        verbose_name=_('is_active')
     )
     parent = TreeForeignKey(
         "self",
@@ -24,6 +25,7 @@ class Category(MPTTModel):
         related_name="children",
         null=True,
         blank=True,
+        verbose_name=_('parent')
     )
 
     class MPTTMeta:
@@ -49,39 +51,46 @@ class Product(models.Model):
         (FAILED, "Failed"),
         (DELETED, "Deleted"),
     ]
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='products', null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='products', null=True, verbose_name=_('user'))
     name = models.CharField(
         max_length=255,
+        verbose_name=_('name')
     )
     slug = models.SlugField(
         # null=True,
         # blank=True,
         max_length=255,
+        verbose_name=_('slug'),
     )
-    description = models.TextField(blank=True)
+    description = models.TextField(blank=True, verbose_name=_('description'))
     category = models.ForeignKey(
         Category,
         related_name="product",
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
+        verbose_name=_('category')
     )
     is_active = models.BooleanField(
         default=False,
+        verbose_name=_('is_active')
     )
-    is_recommended = models.BooleanField(default=False)
+    is_recommended = models.BooleanField(default=False, verbose_name=_('is_recommended'))
     USA_product = models.BooleanField(
         default=False,
+        verbose_name=_('USA_product')
     )
     status = models.CharField(
-        max_length=50, choices=CHOICES, default=PROCESS
+        max_length=50, choices=CHOICES, default=PROCESS, verbose_name=_('status')
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
         editable=False,
+        verbose_name=_('created_at')
     )
     updated_at = models.DateTimeField(
         auto_now=True,
+        verbose_name=_('updated_at')
     )
 
     def __str__(self):
@@ -92,6 +101,7 @@ class Brand(models.Model):
     name = models.CharField(
         max_length=255,
         unique=True,
+        verbose_name=_('name')
     )
 
     def __str__(self):
@@ -102,8 +112,9 @@ class ProductAttribute(models.Model):
     name = models.CharField(
         max_length=255,
         unique=True,
+        verbose_name=_('name')
     )
-    description = models.TextField(blank=True)
+    description = models.TextField(blank=True, verbose_name=_('description'))
 
     def __str__(self):
         return self.name
@@ -113,12 +124,14 @@ class ProductType(models.Model):
     name = models.CharField(
         max_length=255,
         unique=True,
+        verbose_name=_('name')
     )
 
     product_type_attributes = models.ManyToManyField(
         ProductAttribute,
         related_name="product_type_attributes",
         through="ProductTypeAttribute",
+        verbose_name=_('product_type_attributes')
     )
 
     def __str__(self):
@@ -130,9 +143,11 @@ class ProductAttributeValue(models.Model):
         ProductAttribute,
         related_name="product_attribute",
         on_delete=models.PROTECT,
+        verbose_name=_('product_attribute')
     )
     attribute_value = models.CharField(
         max_length=255,
+        verbose_name=_('attribute_value')
     )
 
     def __str__(self):
@@ -143,47 +158,62 @@ class ProductInventory(models.Model):
     sku = models.CharField(
         max_length=20,
         unique=True,
+        verbose_name=_('sku')
     )
     upc = models.CharField(
         max_length=12,
         unique=True,
+        verbose_name=_('upc')
     )
-    product_type = models.ForeignKey(ProductType, related_name="product_type", on_delete=models.PROTECT)
-    product = models.ForeignKey(Product, related_name="product", on_delete=models.PROTECT)
+    product_type = models.ForeignKey(ProductType, related_name="product_type", on_delete=models.PROTECT,
+                                     verbose_name=_('product_type'))
+    product = models.ForeignKey(Product, related_name="product", on_delete=models.PROTECT,
+                                verbose_name=_('product'))
     brand = models.ForeignKey(
         Brand,
         related_name="brand",
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
+        verbose_name=_('brand')
     )
     attribute_values = models.ManyToManyField(
         ProductAttributeValue,
         related_name="product_attribute_values",
         through="ProductAttributeValues",
+        verbose_name=_('attribute_values')
     )
     is_active = models.BooleanField(
         default=False,
+        verbose_name=_('is_active')
     )
     is_default = models.BooleanField(
         default=False,
+        verbose_name=_('is_default')
     )
-    price = models.PositiveIntegerField()
-    sale_price = models.PositiveIntegerField()
-    installment_plan = models.CharField(max_length=250)
-    is_on_sale = models.BooleanField(default=False)
+    price = models.PositiveIntegerField(
+        verbose_name=_('price')
+    )
+    sale_price = models.PositiveIntegerField(
+        verbose_name=_('sale_price')
+    )
+    installment_plan = models.CharField(max_length=250,verbose_name=_('installment_plan'))
+    is_on_sale = models.BooleanField(default=False, verbose_name=_('is_on_sale'))
     weight = MeasurementField(
         measurement=Weight,
         unit_choices=WeightUnits.CHOICES,  # type: ignore
         blank=True,
         null=True,
+        verbose_name=_('weight')
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
         editable=False,
+        verbose_name=_('created_at')
     )
     updated_at = models.DateTimeField(
         auto_now=True,
+        verbose_name=_('updated_at')
     )
 
     def __str__(self):
@@ -195,20 +225,25 @@ class Media(models.Model):
         ProductInventory,
         on_delete=models.PROTECT,
         related_name="media",
+        verbose_name=_('product_inventory')
     )
     img_url = models.ImageField()
     alt_text = models.CharField(
         max_length=255,
+        verbose_name=_('img_url')
     )
     is_feature = models.BooleanField(
         default=False,
+        verbose_name=_('alt_text')
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
         editable=False,
+        verbose_name=_('is_feature')
     )
     updated_at = models.DateTimeField(
         auto_now=True,
+        verbose_name=_('created_at')
     )
 
 
@@ -217,16 +252,20 @@ class Stock(models.Model):
         ProductInventory,
         related_name="product_inventory",
         on_delete=models.PROTECT,
+        verbose_name=_('product_inventory')
     )
     last_checked = models.DateTimeField(
         null=True,
         blank=True,
+        verbose_name=_('last_checked')
     )
     units = models.IntegerField(
         default=0,
+        verbose_name=_('units')
     )
     units_sold = models.IntegerField(
         default=0,
+        verbose_name=_('units_sold')
     )
 
 
@@ -235,11 +274,13 @@ class ProductAttributeValues(models.Model):
         "ProductAttributeValue",
         related_name="attributevaluess",
         on_delete=models.PROTECT,
+        verbose_name=_('attributevalues')
     )
     productinventory = models.ForeignKey(
         ProductInventory,
         related_name="productattributevaluess",
         on_delete=models.PROTECT,
+        verbose_name=_('productinventory')
     )
 
     class Meta:
@@ -254,11 +295,13 @@ class ProductTypeAttribute(models.Model):
         ProductAttribute,
         related_name="productattribute",
         on_delete=models.PROTECT,
+        verbose_name=_('attributevalues')
     )
     product_type = models.ForeignKey(
         ProductType,
         related_name="producttype",
         on_delete=models.PROTECT,
+        verbose_name=_('productinventory')
     )
 
     class Meta:
@@ -269,17 +312,17 @@ class ProductTypeAttribute(models.Model):
 
 
 class Wishlist(models.Model):
-    user = models.ForeignKey('user_profile.User', on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    date_added = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey('user_profile.User', on_delete=models.CASCADE, verbose_name=_('user'))
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name=_('product'))
+    date_added = models.DateTimeField(auto_now_add=True, verbose_name=_('date_added'))
 
     def __str__(self):
         return self.product
 
 
 class Rating(models.Model):
-    product = models.ForeignKey(ProductInventory, on_delete=models.CASCADE)
-    rating = models.PositiveSmallIntegerField()
+    product = models.ForeignKey(ProductInventory, on_delete=models.CASCADE, verbose_name=_('product'))
+    rating = models.PositiveSmallIntegerField(verbose_name=_('rating'))
 
     def __str__(self):
         return self.rating

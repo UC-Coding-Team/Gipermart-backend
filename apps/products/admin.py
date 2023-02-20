@@ -78,7 +78,3 @@ class ProductAttributeAdmin(admin.ModelAdmin):
 @admin.register(models.ProductTypeAttribute)
 class ProductTypeAttributeAdmin(admin.ModelAdmin):
     list_display = ['id', 'product_attribute', 'product_type']
-
-@admin.register(models.ProductAllModel)
-class ProductTypeAttributeAdmin(admin.ModelAdmin):
-    list_display = ['pk']

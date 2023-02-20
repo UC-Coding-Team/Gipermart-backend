@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager, PermissionsMixin
 from django.db import models
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.utils.translation import gettext_lazy as _
 
 from django.core.exceptions import ValidationError
 
@@ -42,8 +43,8 @@ import random
 class User(AbstractUser):
     username = None
     date_birth = models.DateField(null=True, blank=True)
-    phone_number = models.CharField(max_length=40, unique=True)
-    created_at = models.DateField(auto_now_add=True, null=True)
+    phone_number = models.CharField(max_length=40, unique=True, verbose_name=_('phone_number'))
+    created_at = models.DateField(auto_now_add=True, null=True, verbose_name=_('created_at'))
     mycode = models.IntegerField(null=True)
     USERNAME_FIELD = 'phone_number'
     REQUIRED_FIELDS = []
@@ -71,17 +72,17 @@ class User(AbstractUser):
 
 
 class Map(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    title = models.CharField(max_length=120, )
-    phone_number = models.IntegerField()
-    address = models.CharField(max_length=300, )
-    town = models.CharField(max_length=200, )
-    created_at = models.DateField(auto_now_add=True)
-    update_at = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, verbose_name=_('user'))
+    title = models.CharField(max_length=120, verbose_name=_('title'))
+    phone_number = models.IntegerField(verbose_name=_('phone_number'))
+    address = models.CharField(max_length=300, verbose_name=_('address'))
+    town = models.CharField(max_length=200, verbose_name=_('town'))
+    created_at = models.DateField(auto_now_add=True, verbose_name=_('created_at'))
+    update_at = models.DateTimeField(auto_now=True, verbose_name=_('update_at'))
 
     def __str__(self):
         return self.title
 
     class Meta:
-        verbose_name = 'Map'
-        verbose_name_plural = 'Maps'
+        verbose_name = _('Map')
+        verbose_name_plural = _('Maps')
