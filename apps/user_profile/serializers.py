@@ -111,19 +111,22 @@ class LoginSerializer(serializers.Serializer):
     phone_number = serializers.CharField(max_length=15)
     password = serializers.CharField(max_length=128)
 
-class UserSerializer(serializers.ModelSerializer):
-    checkout = CheckoutSerializer(many=True)
-
-    class Meta:
-        model = User
-        fields = '__all__'
-
 
 class MapSerializer(serializers.ModelSerializer):
     class Meta:
         model = Map
         fields = '__all__'
-        extra_kwargs = {"user": {"read_only": True}}
+        # extra_kwargs = {"user": {"read_only": True}}
+
+
+class UserSerializer(serializers.ModelSerializer):
+    checkout = CheckoutSerializer(many=True)
+    map = MapSerializer(many=True)
+
+    class Meta:
+        model = User
+        fields = '__all__'
+
 
 # class UserProductsSerializer(serializers.ModelSerializer):
 #     maklers = MasterSerializer(many=True)

@@ -72,7 +72,7 @@ class User(AbstractUser):
 
 
 class Map(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, verbose_name=_('user'))
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='map', verbose_name=_('user'))
     title = models.CharField(max_length=120, verbose_name=_('title'))
     phone_number = models.IntegerField(verbose_name=_('phone_number'))
     address = models.CharField(max_length=300, verbose_name=_('address'))

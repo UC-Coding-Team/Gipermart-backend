@@ -159,7 +159,7 @@ class UserProfileList(APIView):
 
 
 class MapView(mixins.CreateModelMixin, mixins.ListModelMixin, mixins.RetrieveModelMixin,
-              mixins.DestroyModelMixin, GenericViewSet):
+              mixins.DestroyModelMixin, mixins.UpdateModelMixin, GenericViewSet):
     queryset = Map.objects.all()
     serializer_class = MapSerializer
     permission_classes = (IsAuthenticated, )
