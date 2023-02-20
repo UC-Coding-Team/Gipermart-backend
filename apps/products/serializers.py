@@ -5,6 +5,8 @@ from .models import Category, Product, Wishlist, ProductInventory, Media, Brand,
     ProductAttribute, ProductAllModel
 from django.db import models
 
+from .utils.units import Weight
+
 
 def calculate_rating(product_id):
     ratings = Rating.objects.filter(product=product_id)
@@ -97,10 +99,17 @@ class ProductInventorySerializer(serializers.ModelSerializer):
     )
     rating = serializers.SerializerMethodField()
     # category = StringRelatedField(source='product.category')
+    weight = serializers.SerializerMethodField()
 
     def get_rating(self, obj):
         product_id = obj.id
         return calculate_rating(product_id)
+
+    def get_weight(self, obj):
+        weight_obj = obj.weight
+        if isinstance(weight_obj, Weight):
+            return float(weight_obj.value)
+        return 0.0  # or any default value you want
 
     class Meta:
         model = ProductInventory
