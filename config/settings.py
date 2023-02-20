@@ -232,8 +232,8 @@ PAYMART_URL = "https://cabinet.paymart.uz/api/v1/"
 PAYMART_TOKEN = "c299b59322b426a25357a5d0c3d05b2f"
 
 JAZZMIN_SETTINGS = {
-    "site_header": "Gipermart.uz", "site_brand": "a",
-    "site_logo": "logoo.svg", "login_logo": "logoo.svg", "login_logo_dark": None,
+    "site_header": "Gipermart.uz", "site_brand": "Gipermart.uz",
+    "site_logo": "logo3.png", "login_logo": "logoo.svg", "login_logo_dark": None,
     "site_icon": "logoo.svg", "welcome_sign": "Gipermart.uz", "copyright": "Gipermart.uz", "user_avatar": None,
     "show_ui_builder": True, "topmenu_links": [
 
