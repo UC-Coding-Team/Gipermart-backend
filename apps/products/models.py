@@ -38,6 +38,10 @@ class Category(MPTTModel):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = _('Category')
+        verbose_name_plural = _('Categories')
+
 
 class Product(models.Model):
     PROCESS = "process"
@@ -96,6 +100,9 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = _('Product')
+        verbose_name_plural = _('Products')
 
 class Brand(models.Model):
     name = models.CharField(
@@ -106,6 +113,10 @@ class Brand(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = _('Brand')
+        verbose_name_plural = _('Brands')
 
 
 class ProductAttribute(models.Model):
@@ -118,6 +129,10 @@ class ProductAttribute(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = _('ProductAttribute')
+        verbose_name_plural = _('ProductAttributes')
 
 
 class ProductType(models.Model):
@@ -137,6 +152,10 @@ class ProductType(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = _('ProductType')
+        verbose_name_plural = _('ProductTypes')
+
 
 class ProductAttributeValue(models.Model):
     product_attribute = models.ForeignKey(
@@ -152,6 +171,10 @@ class ProductAttributeValue(models.Model):
 
     def __str__(self):
         return str(self.attribute_value)
+
+    class Meta:
+        verbose_name = _('ProductAttributeValue')
+        verbose_name_plural = _('ProductAttributeValue')
 
 
 class ProductInventory(models.Model):
@@ -219,6 +242,10 @@ class ProductInventory(models.Model):
     def __str__(self):
         return self.sku
 
+    class Meta:
+        verbose_name = _('ProductInventory')
+        verbose_name_plural = _('ProductInventory')
+
 
 class Media(models.Model):
     product_inventory = models.ForeignKey(
@@ -246,6 +273,10 @@ class Media(models.Model):
         verbose_name=_('created_at')
     )
 
+    class Meta:
+        verbose_name = _('Media')
+        verbose_name_plural = _('Media')
+
 
 class Stock(models.Model):
     product_inventory = models.OneToOneField(
@@ -268,6 +299,10 @@ class Stock(models.Model):
         verbose_name=_('units_sold')
     )
 
+    class Meta:
+        verbose_name = _('Stock')
+        verbose_name_plural = _('Stock')
+
 
 class ProductAttributeValues(models.Model):
     attributevalues = models.ForeignKey(
@@ -285,6 +320,8 @@ class ProductAttributeValues(models.Model):
 
     class Meta:
         unique_together = (("attributevalues", "productinventory"),)
+        verbose_name = _('ProductAttributeValues')
+        verbose_name_plural = _('ProductAttributeValues')
 
     def __str__(self):
         return str(self.productinventory)
@@ -306,6 +343,8 @@ class ProductTypeAttribute(models.Model):
 
     class Meta:
         unique_together = (("product_attribute", "product_type"),)
+        verbose_name = _('ProductTypeAttribute')
+        verbose_name_plural = _('ProductTypeAttribute')
 
     def __str__(self):
         return str(self.product_attribute)

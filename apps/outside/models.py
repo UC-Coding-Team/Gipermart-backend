@@ -21,6 +21,10 @@ class Slider(models.Model):
         else:
             return ""
 
+    class Meta:
+        verbose_name = _('Slider')
+        verbose_name_plural = _('Sliders')
+
 
 class Stock(models.Model):
     slug = models.SlugField(max_length=40, verbose_name=_('slug'))
@@ -36,6 +40,10 @@ class Stock(models.Model):
             return mark_safe('<img src="{}" height="50"/>'.format(self.images.url))
         else:
             return ""
+
+    class Meta:
+        verbose_name = _('Stock')
+        verbose_name_plural = _('Stocks')
 
 
 class Brand(models.Model):
@@ -54,6 +62,10 @@ class Brand(models.Model):
             return mark_safe('<img src="{}" height="50"/>'.format(self.images.url))
         else:
             return ""
+
+    class Meta:
+        verbose_name = _('Brand')
+        verbose_name_plural = _('Brands')
 
 
 class Add_to_wishlist(models.Model):

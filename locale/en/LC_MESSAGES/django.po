@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-20 19:20+0500\n"
+"POT-Creation-Date: 2023-02-20 23:09+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,15 +22,15 @@ msgstr ""
 msgid "cart"
 msgstr ""
 
-#: apps/cart/models.py:10 apps/checkout/models.py:17 apps/outside/models.py:61
-#: apps/products/models.py:54 apps/products/models.py:315
+#: apps/cart/models.py:10 apps/checkout/models.py:17 apps/outside/models.py:73
+#: apps/products/models.py:58 apps/products/models.py:354
 #: apps/user_profile/models.py:75
 msgid "user"
 msgstr ""
 
-#: apps/cart/models.py:11 apps/outside/models.py:45 apps/outside/models.py:60
-#: apps/products/models.py:171 apps/products/models.py:316
-#: apps/products/models.py:324
+#: apps/cart/models.py:11 apps/outside/models.py:53 apps/outside/models.py:72
+#: apps/products/models.py:194 apps/products/models.py:355
+#: apps/products/models.py:363
 msgid "product"
 msgstr ""
 
@@ -43,16 +43,16 @@ msgid "total"
 msgstr ""
 
 #: apps/cart/models.py:14 apps/checkout/models.py:22 apps/outside/models.py:12
-#: apps/outside/models.py:28 apps/outside/models.py:46
-#: apps/outside/models.py:62 apps/products/models.py:89
-#: apps/products/models.py:212 apps/products/models.py:246
+#: apps/outside/models.py:32 apps/outside/models.py:54
+#: apps/outside/models.py:74 apps/products/models.py:93
+#: apps/products/models.py:235 apps/products/models.py:273
 #: apps/user_profile/models.py:47 apps/user_profile/models.py:80
 msgid "created_at"
 msgstr ""
 
-#: apps/cart/models.py:15 apps/outside/models.py:13 apps/outside/models.py:29
-#: apps/outside/models.py:47 apps/outside/models.py:63
-#: apps/products/models.py:93 apps/products/models.py:216
+#: apps/cart/models.py:15 apps/outside/models.py:13 apps/outside/models.py:33
+#: apps/outside/models.py:55 apps/outside/models.py:75
+#: apps/products/models.py:97 apps/products/models.py:239
 msgid "updated_at"
 msgstr ""
 
@@ -113,19 +113,44 @@ msgstr ""
 msgid "outside"
 msgstr ""
 
-#: apps/outside/models.py:10 apps/outside/models.py:26
-#: apps/outside/models.py:42 apps/products/models.py:14
-#: apps/products/models.py:63
+#: apps/outside/models.py:10 apps/outside/models.py:30
+#: apps/outside/models.py:50 apps/products/models.py:14
+#: apps/products/models.py:67
 msgid "slug"
 msgstr ""
 
-#: apps/outside/models.py:11 apps/outside/models.py:27
-#: apps/outside/models.py:43
+#: apps/outside/models.py:11 apps/outside/models.py:31
+#: apps/outside/models.py:51
 msgid "images"
 msgstr ""
 
-#: apps/outside/models.py:44 apps/products/models.py:72
+#: apps/outside/models.py:25
+msgid "Slider"
+msgstr ""
+
+#: apps/outside/models.py:26
+msgid "Sliders"
+msgstr ""
+
+#: apps/outside/models.py:45 apps/products/models.py:303
+#: apps/products/models.py:304
+msgid "Stock"
+msgstr ""
+
+#: apps/outside/models.py:46
+msgid "Stocks"
+msgstr ""
+
+#: apps/outside/models.py:52 apps/products/models.py:76
 msgid "category"
+msgstr ""
+
+#: apps/outside/models.py:67 apps/products/models.py:118
+msgid "Brand"
+msgstr ""
+
+#: apps/outside/models.py:68 apps/products/models.py:119
+msgid "Brands"
 msgstr ""
 
 #: apps/paymart/apps.py:8
@@ -136,14 +161,14 @@ msgstr ""
 msgid "products"
 msgstr ""
 
-#: apps/products/models.py:12 apps/products/models.py:57
-#: apps/products/models.py:104 apps/products/models.py:115
-#: apps/products/models.py:127
+#: apps/products/models.py:12 apps/products/models.py:61
+#: apps/products/models.py:111 apps/products/models.py:126
+#: apps/products/models.py:142
 msgid "name"
 msgstr ""
 
-#: apps/products/models.py:15 apps/products/models.py:65
-#: apps/products/models.py:117
+#: apps/products/models.py:15 apps/products/models.py:69
+#: apps/products/models.py:128
 msgid "description"
 msgstr ""
 
@@ -155,8 +180,8 @@ msgstr ""
 msgid "test_image"
 msgstr ""
 
-#: apps/products/models.py:20 apps/products/models.py:76
-#: apps/products/models.py:188
+#: apps/products/models.py:20 apps/products/models.py:80
+#: apps/products/models.py:211
 msgid "is_active"
 msgstr ""
 
@@ -168,115 +193,167 @@ msgstr ""
 msgid "categories"
 msgstr ""
 
-#: apps/products/models.py:78
+#: apps/products/models.py:42
+msgid "Category"
+msgstr ""
+
+#: apps/products/models.py:43
+msgid "Categories"
+msgstr ""
+
+#: apps/products/models.py:82
 msgid "is_recommended"
 msgstr ""
 
-#: apps/products/models.py:81
+#: apps/products/models.py:85
 msgid "USA_product"
 msgstr ""
 
-#: apps/products/models.py:84
+#: apps/products/models.py:88
 msgid "status"
 msgstr ""
 
+#: apps/products/models.py:104
+msgid "Product"
+msgstr ""
+
+#: apps/products/models.py:105
+msgid "Products"
+msgstr ""
+
 #: apps/products/models.py:134
+msgid "ProductAttribute"
+msgstr ""
+
+#: apps/products/models.py:135
+msgid "ProductAttributes"
+msgstr ""
+
+#: apps/products/models.py:149
 msgid "product_type_attributes"
 msgstr ""
 
-#: apps/products/models.py:146
+#: apps/products/models.py:156
+msgid "ProductType"
+msgstr ""
+
+#: apps/products/models.py:157
+msgid "ProductTypes"
+msgstr ""
+
+#: apps/products/models.py:165
 msgid "product_attribute"
 msgstr ""
 
-#: apps/products/models.py:150
+#: apps/products/models.py:169
 msgid "attribute_value"
 msgstr ""
 
-#: apps/products/models.py:161
-msgid "sku"
-msgstr ""
-
-#: apps/products/models.py:166
-msgid "upc"
-msgstr ""
-
-#: apps/products/models.py:169
-msgid "product_type"
-msgstr ""
-
-#: apps/products/models.py:178
-msgid "brand"
+#: apps/products/models.py:176 apps/products/models.py:177
+msgid "ProductAttributeValue"
 msgstr ""
 
 #: apps/products/models.py:184
-msgid "attribute_values"
+msgid "sku"
+msgstr ""
+
+#: apps/products/models.py:189
+msgid "upc"
 msgstr ""
 
 #: apps/products/models.py:192
-msgid "is_default"
-msgstr ""
-
-#: apps/products/models.py:195
-msgid "price"
-msgstr ""
-
-#: apps/products/models.py:198
-msgid "sale_price"
-msgstr ""
-
-#: apps/products/models.py:200
-msgid "installment_plan"
+msgid "product_type"
 msgstr ""
 
 #: apps/products/models.py:201
-msgid "is_on_sale"
+msgid "brand"
 msgstr ""
 
 #: apps/products/models.py:207
+msgid "attribute_values"
+msgstr ""
+
+#: apps/products/models.py:215
+msgid "is_default"
+msgstr ""
+
+#: apps/products/models.py:218
+msgid "price"
+msgstr ""
+
+#: apps/products/models.py:221
+msgid "sale_price"
+msgstr ""
+
+#: apps/products/models.py:223
+msgid "installment_plan"
+msgstr ""
+
+#: apps/products/models.py:224
+msgid "is_on_sale"
+msgstr ""
+
+#: apps/products/models.py:230
 msgid "weight"
 msgstr ""
 
-#: apps/products/models.py:228 apps/products/models.py:255
+#: apps/products/models.py:246 apps/products/models.py:247
+msgid "ProductInventory"
+msgstr ""
+
+#: apps/products/models.py:255 apps/products/models.py:286
 msgid "product_inventory"
 msgstr ""
 
-#: apps/products/models.py:233
+#: apps/products/models.py:260
 msgid "img_url"
 msgstr ""
 
-#: apps/products/models.py:237
+#: apps/products/models.py:264
 msgid "alt_text"
 msgstr ""
 
-#: apps/products/models.py:242
+#: apps/products/models.py:269
 msgid "is_feature"
 msgstr ""
 
-#: apps/products/models.py:260
+#: apps/products/models.py:277 apps/products/models.py:278
+msgid "Media"
+msgstr ""
+
+#: apps/products/models.py:291
 msgid "last_checked"
 msgstr ""
 
-#: apps/products/models.py:264
+#: apps/products/models.py:295
 msgid "units"
 msgstr ""
 
-#: apps/products/models.py:268
+#: apps/products/models.py:299
 msgid "units_sold"
 msgstr ""
 
-#: apps/products/models.py:277 apps/products/models.py:298
+#: apps/products/models.py:312 apps/products/models.py:335
 msgid "attributevalues"
 msgstr ""
 
-#: apps/products/models.py:283 apps/products/models.py:304
+#: apps/products/models.py:318 apps/products/models.py:341
 msgid "productinventory"
 msgstr ""
 
-#: apps/products/models.py:317
+#: apps/products/models.py:323 apps/products/models.py:324
+msgid "ProductAttributeValues"
+msgstr ""
+
+#: apps/products/models.py:346 apps/products/models.py:347
+msgid "ProductTypeAttribute"
+msgstr ""
+
+#: apps/products/models.py:356
 msgid "date_added"
 msgstr ""
 
-#: apps/products/models.py:325
+#: apps/products/models.py:364
 msgid "rating"
 msgstr ""
 
