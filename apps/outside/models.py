@@ -47,7 +47,7 @@ class Stock(models.Model):
 
 
 class Brand(models.Model):
-    url = models.SlugField(max_length=250, verbose_name=_('slug'))
+    url = models.URLField(max_length=250, verbose_name=_('slug'))
     images = models.ImageField(upload_to='Brands_img/', default='image.png', verbose_name=_('images'))
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True, verbose_name=_('category'))
     product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, null=True, verbose_name=_('product'))

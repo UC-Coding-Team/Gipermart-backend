@@ -6,8 +6,10 @@ from .models import CartItem
 from ..products.models import Product, ProductInventory
 from django.forms.models import model_to_dict
 
+
 from ..products.serializers import ProductSerializer, ProductMediaSerializer, BrandSerializer, \
     ProductAttributeValueSerializer, calculate_rating
+from ..products.utils.units import Weight
 
 User = get_user_model()
 
@@ -27,10 +29,17 @@ class CartProductSerializer(serializers.ModelSerializer):
     )
     rating = serializers.SerializerMethodField()
     # category = StringRelatedField(source='product.category')
+    weight = serializers.SerializerMethodField()
 
     def get_rating(self, obj):
         product_id = obj.id
         return calculate_rating(product_id)
+
+    def get_weight(self, obj):
+        weight_obj = obj.weight
+        if isinstance(weight_obj, Weight):
+            return float(weight_obj.value)
+        return 0.0  # or any default value you want
 
     class Meta:
         model = ProductInventory
@@ -60,4 +69,3 @@ class CartCreateSerializer(serializers.ModelSerializer):
         # data['product'] = serialized_obj
         data['user'] = serialized_obj2
         return data
-
