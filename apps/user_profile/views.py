@@ -89,7 +89,7 @@ class LoginView(GenericViewSet):
             user = User.objects.get(phone_number=phone_number)
         except User.DoesNotExist:
             return Response({'error': 'User with this phone number does not exist'})
-        if int(password) == int(User.objects.get(phone_number=phone_number).password):
+        if password == User.objects.get(phone_number=phone_number).password:
 
             token, created = User.objects.get_or_create(phone_number=phone_number)
             return Response({'token': token.tokens()})
