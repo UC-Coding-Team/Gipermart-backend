@@ -134,7 +134,7 @@ class UsersViewSet(viewsets.ModelViewSet):
 
 class CheckoutViewSet(viewsets.ModelViewSet):
     queryset = Checkout.objects.all()
-    serializer_class = CheckoutAllSerializer
+    serializer_class = CheckoutSerializer
     permission_classes = [AllowAny]
     filter_backends = [SearchFilter]
     search_fields = ['id', 'slug']
