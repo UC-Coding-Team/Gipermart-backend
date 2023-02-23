@@ -20,6 +20,11 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'phone_number', 'created_at', 'is_staff', 'is_active']
 
 
+class DashUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'phone_number', 'first_name', 'created_at', 'is_staff', 'is_active']
+
 class CartProductSerializer(serializers.ModelSerializer):
     product = ProductSerializer(many=False, read_only=True)
     media = ProductMediaSerializer(many=True, read_only=True)
