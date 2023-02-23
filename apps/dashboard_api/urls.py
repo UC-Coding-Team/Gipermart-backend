@@ -20,6 +20,7 @@ router.register(r'sliders', views.SliderViewSet, basename='slider')
 router.register(r'stocks', views.StockViewSet, basename='stock')
 router.register(r'brands', views.BrandViewSet, basename='brand')
 router.register(r'users', views.UsersViewSet, basename='user')
+router.register(r'checkout', views.CheckoutViewSet, basename='checkout')
 
 urlpatterns = [
     path('', include(router.urls)),

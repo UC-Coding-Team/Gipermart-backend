@@ -12,6 +12,8 @@ from apps.products.models import (
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from apps.outside import models
 from ..cart.serializers import UserSerializer
+from ..checkout.models import Checkout
+from ..checkout.serializers import CheckoutSerializer, CheckoutAllSerializer
 
 
 class ProductStockViewSet(viewsets.ModelViewSet):
@@ -125,6 +127,14 @@ class BrandViewSet(viewsets.ModelViewSet):
 class UsersViewSet(viewsets.ModelViewSet):
     queryset = models.User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [AllowAny]
+    filter_backends = [SearchFilter]
+    search_fields = ['id', 'slug']
+
+
+class CheckoutViewSet(viewsets.ModelViewSet):
+    queryset = Checkout.objects.all()
+    serializer_class = CheckoutAllSerializer
     permission_classes = [AllowAny]
     filter_backends = [SearchFilter]
     search_fields = ['id', 'slug']
