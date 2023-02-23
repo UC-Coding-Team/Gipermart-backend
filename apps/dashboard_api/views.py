@@ -17,31 +17,31 @@ from ..cart.serializers import UserSerializer
 class ProductStockViewSet(viewsets.ModelViewSet):
     queryset = Stock.objects.all()
     serializer_class = serializers.StockProductSerializers
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 
 class ProductAttributeValuesViewSet(viewsets.ModelViewSet):
     queryset = ProductAttributeValues.objects.all()
     serializer_class = serializers.ProductAttributeValuesSerializers
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 
 class ProductTypeAttributeViewSet(viewsets.ModelViewSet):
     queryset = ProductTypeAttribute.objects.all()
     serializer_class = serializers.ProductTypeAttributeSerializers
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 
 class ProductAttributeValueViewSet(viewsets.ModelViewSet):
     queryset = ProductAttributeValue.objects.all()
     serializer_class = serializers.ProductAttributeValueSerializers
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 
 class WishlistViewSet(viewsets.ModelViewSet):
     queryset = Wishlist.objects.all()
     serializer_class = serializers.WishlistSerializers
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 
 class ProductInventoryViewSet(viewsets.ModelViewSet):
