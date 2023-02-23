@@ -113,13 +113,7 @@ class ProductInventorySerializers(serializers.ModelSerializer):
 class ProductAttributeValuesSerializers(serializers.ModelSerializer):
     attribute_values = ProductAttributeValueSerializers(source='attributevalues', many=False, read_only=True)
     product_inventory = ProductInventorySerializers(source='productinventory', many=False, read_only=True)
-    weight = serializers.SerializerMethodField()
 
-    def get_weight(self, obj):
-        weight_obj = obj.weight
-        if isinstance(weight_obj, Weight):
-            return float(weight_obj.value)
-        return 0.0  # or any default value you want
 
     class Meta:
         model = ProductAttributeValues
