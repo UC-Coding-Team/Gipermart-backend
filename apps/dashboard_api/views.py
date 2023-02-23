@@ -11,6 +11,7 @@ from apps.products.models import (
 )
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from apps.outside import models
+from ..cart.serializers import UserSerializer
 
 
 class ProductStockViewSet(viewsets.ModelViewSet):
@@ -48,7 +49,7 @@ class ProductInventoryViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ProductInventorySerializers
     permission_classes = [AllowAny]
     filter_backends = [SearchFilter]
-    search_fields = ['sku',]
+    search_fields = ['sku', ]
 
 
 class MediaViewSet(viewsets.ModelViewSet):
@@ -71,7 +72,6 @@ class ProductTypeViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     filter_backends = [SearchFilter]
     search_fields = ['id', 'name']
-
 
 
 class BrandProductViewSet(viewsets.ModelViewSet):
@@ -117,6 +117,14 @@ class StockViewSet(viewsets.ModelViewSet):
 class BrandViewSet(viewsets.ModelViewSet):
     queryset = models.Brand.objects.all()
     serializer_class = serializers.BrandSerializers
+    permission_classes = [AllowAny]
+    filter_backends = [SearchFilter]
+    search_fields = ['id', 'slug']
+
+
+class UsersViewSet(viewsets.ModelViewSet):
+    queryset = models.User.objects.all()
+    serializer_class = UserSerializer
     permission_classes = [AllowAny]
     filter_backends = [SearchFilter]
     search_fields = ['id', 'slug']
