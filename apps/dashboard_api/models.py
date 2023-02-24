@@ -13,4 +13,4 @@ class SiteSettings(models.Model):
     youtube = models.URLField(null=True, blank=True, verbose_name=_('youtube link'))
 
     def __str__(self):
-        return self.site_type
+        return str(self.pk)
