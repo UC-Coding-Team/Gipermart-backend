@@ -8,6 +8,7 @@ from apps.products.models import (
 )
 from apps.outside import models
 from apps.products.utils.units import Weight
+from .models import SiteSettings
 
 
 class ProductBrandSerializers(serializers.ModelSerializer):
@@ -114,7 +115,12 @@ class ProductAttributeValuesSerializers(serializers.ModelSerializer):
     attribute_values = ProductAttributeValueSerializers(source='attributevalues', many=False, read_only=True)
     product_inventory = ProductInventorySerializers(source='productinventory', many=False, read_only=True)
 
-
     class Meta:
         model = ProductAttributeValues
+        fields = '__all__'
+
+
+class SiteSettingsSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = SiteSettings
         fields = '__all__'

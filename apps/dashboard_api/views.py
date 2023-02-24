@@ -9,8 +9,10 @@ from apps.products.models import (
     Media, Stock, ProductAttributeValues, ProductTypeAttribute,
     Wishlist,
 )
+from .models import SiteSettings
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from apps.outside import models
+from .serializers import SiteSettingsSerializers
 from ..cart.serializers import UserSerializer, DashUserSerializer
 from ..checkout.models import Checkout
 from ..checkout.serializers import CheckoutSerializer, CheckoutAllSerializer
@@ -138,3 +140,9 @@ class CheckoutViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     filter_backends = [SearchFilter]
     search_fields = ['id', 'slug']
+
+
+class SiteSettingsViewSet(viewsets.ModelViewSet):
+    queryset = SiteSettings.objects.all()
+    serializer_class = SiteSettingsSerializers
+    permission_classes = [AllowAny]
