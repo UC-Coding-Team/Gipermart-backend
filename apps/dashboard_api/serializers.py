@@ -123,10 +123,10 @@ class ProductAttributeValuesSerializers(serializers.ModelSerializer):
 class SiteSettingsSerializers(serializers.ModelSerializer):
     class Meta:
         model = SiteSettings
-        exclude = ('phonenumbers',)
+        exclude = ('phonenumbers', 'site_type')
 
 
 class PhoneSiteSettingsSerializers(serializers.ModelSerializer):
     class Meta:
         model = SiteSettings
-        fields = ('id', 'phonenumbers',)
+        fields = ('id', 'phonenumbers', 'site_type')
