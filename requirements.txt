@@ -54,7 +54,6 @@ httpcore==0.9.1
 httplib2==0.21.0
 httpx==0.23.0
 hyperframe==5.2.0
-idna==2.10
 inflection==0.5.1
 itypes==1.2.0
 jet-bridge-base==1.6.3

@@ -308,13 +308,15 @@ class ProductAttributeValues(models.Model):
     attributevalues = models.ForeignKey(
         "ProductAttributeValue",
         related_name="attributevaluess",
-        on_delete=models.PROTECT,
+        on_delete=models.SET_NULL,
+        null=True,
         verbose_name=_('attributevalues')
     )
     productinventory = models.ForeignKey(
         ProductInventory,
         related_name="productattributevaluess",
-        on_delete=models.PROTECT,
+        on_delete=models.SET_NULL,
+        null=True,
         verbose_name=_('productinventory')
     )
 
@@ -331,13 +333,15 @@ class ProductTypeAttribute(models.Model):
     product_attribute = models.ForeignKey(
         ProductAttribute,
         related_name="productattribute",
-        on_delete=models.PROTECT,
+        on_delete=models.SET_NULL,
+        null=True,
         verbose_name=_('attributevalues')
     )
     product_type = models.ForeignKey(
         ProductType,
         related_name="producttype",
-        on_delete=models.PROTECT,
+        on_delete=models.SET_NULL,
+        null=True,
         verbose_name=_('productinventory')
     )
 
