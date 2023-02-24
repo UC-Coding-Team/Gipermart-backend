@@ -7,10 +7,10 @@ class SiteSettings(models.Model):
     phonenumbers = models.CharField(max_length=20, blank=True, null=True, verbose_name=_('phone number'))
     site_type = models.CharField(max_length=100, null=True, blank=True, verbose_name=_('site type'))
     description = models.CharField(max_length=200, null=True, blank=True, verbose_name=_('description'))
-    instagram = models.URLField(null=True, blank=True, verbose_name=_('instagram link'))
-    facebook = models.URLField(null=True, blank=True, verbose_name=_('facebook link'))
-    telegram = models.URLField(null=True, blank=True, verbose_name=_('telegram link'))
-    youtube = models.URLField(null=True, blank=True, verbose_name=_('youtube link'))
+    link = models.URLField(null=True, blank=True, verbose_name=_('instagram link'))
+    # facebook = models.URLField(null=True, blank=True, verbose_name=_('facebook link'))
+    # telegram = models.URLField(null=True, blank=True, verbose_name=_('telegram link'))
+    # youtube = models.URLField(null=True, blank=True, verbose_name=_('youtube link'))
 
     def __str__(self):
         return str(self.pk)
