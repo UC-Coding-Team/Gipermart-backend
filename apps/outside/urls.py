@@ -3,7 +3,7 @@ from .views import Sliderviews, Stockviews, Brandviews, WishlistCreateAPIView, W
     WishlistDeleteAPIView, WishlistAPIView
 # from
 from rest_framework.routers import DefaultRouter
-from ..dashboard_api.views import SiteSettingsViewSet
+from ..dashboard_api.views import SiteSettingsViewSet, PhoneSiteSettingsViewSet
 
 router = DefaultRouter()
 
@@ -12,6 +12,8 @@ router.register(r"stock", Stockviews)
 router.register(r"brand", Brandviews)
 router.register(r"delete-wishlist", WishlistDeleteAPIView)
 router.register(r'site-settings', SiteSettingsViewSet, basename='site-settings')
+router.register(r'phone-site-settings', PhoneSiteSettingsViewSet, basename='site-settings')
+
 
 
 

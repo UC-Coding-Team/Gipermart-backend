@@ -22,6 +22,7 @@ router.register(r'brands', views.BrandViewSet, basename='brand')
 router.register(r'users', views.UsersViewSet, basename='user')
 router.register(r'checkout', views.CheckoutViewSet, basename='checkout')
 router.register(r'site-settings', views.SiteSettingsViewSet, basename='site-settings')
+router.register(r'phone-site-settings', views.PhoneSiteSettingsViewSet, basename='site-settings')
 
 urlpatterns = [
     path('', include(router.urls)),

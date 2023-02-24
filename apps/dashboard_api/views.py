@@ -12,7 +12,7 @@ from apps.products.models import (
 from .models import SiteSettings
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from apps.outside import models
-from .serializers import SiteSettingsSerializers
+from .serializers import SiteSettingsSerializers, PhoneSiteSettingsSerializers
 from ..cart.serializers import UserSerializer, DashUserSerializer
 from ..checkout.models import Checkout
 from ..checkout.serializers import CheckoutSerializer, CheckoutAllSerializer
@@ -145,4 +145,10 @@ class CheckoutViewSet(viewsets.ModelViewSet):
 class SiteSettingsViewSet(viewsets.ModelViewSet):
     queryset = SiteSettings.objects.all()
     serializer_class = SiteSettingsSerializers
+    permission_classes = [AllowAny]
+
+
+class PhoneSiteSettingsViewSet(viewsets.ModelViewSet):
+    queryset = SiteSettings.objects.all()
+    serializer_class = PhoneSiteSettingsSerializers
     permission_classes = [AllowAny]
