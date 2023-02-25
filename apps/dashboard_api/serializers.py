@@ -92,7 +92,7 @@ class BrandSerializers(serializers.ModelSerializer):
 
 
 class ProductInventorySerializers(serializers.ModelSerializer):
-    product = ProductSerializers(many=False, read_only=True)
+    products = ProductSerializers(source='product', many=False, read_only=True)
     media = MediaSerializers(many=True, read_only=True)
     brand = ProductBrandSerializers(read_only=True)
     attributes = ProductAttributeValueSerializers(
