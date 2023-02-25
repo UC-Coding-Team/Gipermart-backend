@@ -128,6 +128,11 @@ class PhoneSiteSettingsSerializers(serializers.ModelSerializer):
         fields = ('id', 'phonenumbers', 'site_type')
 
 
+class SellingStatusSerializer(serializers.Serializer):
+    checkout_count = serializers.IntegerField()
+
+
+
 class ProductTypeAttributeSerializers(serializers.ModelSerializer):
     product_attributes = ProductAttributeSerializers(source='product_attribute', many=False, read_only=True)
     product_types = ProductTypeSerializers(source='product_type', many=False, read_only=True)
