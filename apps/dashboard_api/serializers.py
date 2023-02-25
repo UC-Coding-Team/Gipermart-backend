@@ -9,6 +9,7 @@ from apps.products.models import (
 from apps.outside import models
 from apps.products.utils.units import Weight
 from .models import SiteSettings
+from django.contrib.auth import authenticate
 
 
 class ProductBrandSerializers(serializers.ModelSerializer):
@@ -16,28 +17,23 @@ class ProductBrandSerializers(serializers.ModelSerializer):
         model = Brand
         fields = '__all__'
 
-
-class ProductTypeSerializers(serializers.ModelSerializer):
+class ProductAttributeSerializers(serializers.ModelSerializer):
     class Meta:
-        model = ProductType
+        model = ProductAttribute
         fields = '__all__'
 
 
-class ProductTypeAttributeSerializers(serializers.ModelSerializer):
+class ProductTypeSerializers(serializers.ModelSerializer):
+    product_type_attribute = ProductAttributeSerializers(source='product_type_attributes', many=True, read_only=True)
+
     class Meta:
-        model = ProductTypeAttribute
+        model = ProductType
         fields = '__all__'
 
 
 class WishlistSerializers(serializers.ModelSerializer):
     class Meta:
         model = Wishlist
-        fields = '__all__'
-
-
-class ProductAttributeSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = ProductAttribute
         fields = '__all__'
 
 
@@ -130,3 +126,62 @@ class PhoneSiteSettingsSerializers(serializers.ModelSerializer):
     class Meta:
         model = SiteSettings
         fields = ('id', 'phonenumbers', 'site_type')
+
+
+class ProductTypeAttributeSerializers(serializers.ModelSerializer):
+    product_attributes = ProductAttributeSerializers(source='product_attribute', many=False, read_only=True)
+    product_types = ProductTypeSerializers(source='product_type', many=False, read_only=True)
+
+    class Meta:
+        model = ProductTypeAttribute
+        fields = '__all__'
+
+
+from django.contrib.auth import authenticate, get_user_model
+
+User = get_user_model()
+
+
+class UserLoginSerializer(serializers.Serializer):
+    phone_number = serializers.CharField()
+    password = serializers.CharField()
+
+    def validate(self, data):
+        phone_number = data.get('phone_number')
+        password = data.get('password')
+
+        if phone_number and password:
+            user = authenticate(username=phone_number, password=password)
+            if user:
+                if user.is_superuser:
+                    data['user'] = user
+                else:
+                    raise serializers.ValidationError("User is not a superuser or admin.")
+            else:
+                raise serializers.ValidationError("Unable to log in with provided credentials.")
+        else:
+            raise serializers.ValidationError("Must provide phone_number and password.")
+
+        return data
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+    confirm_password = serializers.CharField(required=True)
+
+    def validate_old_password(self, value):
+        user = self.context['request'].user
+        if not user.check_password(value):
+            raise serializers.ValidationError("The old password is incorrect")
+        return value
+
+    def validate(self, data):
+        if data['new_password'] != data['confirm_password']:
+            raise serializers.ValidationError("The new password and confirmation do not match")
+        return data
+
+    def save(self):
+        user = self.context['request'].user
+        user.set_password(self.validated_data['new_password'])
+        user.save()

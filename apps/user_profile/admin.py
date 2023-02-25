@@ -9,14 +9,16 @@ class CustomUserAdmin(UserAdmin):
     ordering = ['id']
     add_fieldsets = (
         (None, {
-            'fields': ('phone_number', 'is_superuser'),
+            'fields': (
+                'first_name', 'last_name', 'email', 'phone_number', 'password', 'is_superuser', 'is_staff', 'mycode',
+                'is_active'),
         }),
     )
     fieldsets = (
         (None, {
-            "fields": (
-                ('first_name', 'phone_number', 'mycode', 'is_superuser', 'is_staff'),
-            ),
+            'fields': (
+                'first_name', 'last_name', 'email', 'phone_number', 'password', 'is_superuser', 'is_staff', 'mycode',
+                'is_active'),
         }),
     )
 

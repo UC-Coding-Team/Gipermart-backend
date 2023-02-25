@@ -1,6 +1,7 @@
 from rest_framework.routers import DefaultRouter
 from django.urls import path, include
 from . import views
+from .views import UserLoginView, ChangePasswordView
 
 router = DefaultRouter()
 
@@ -26,4 +27,7 @@ router.register(r'phone-site-settings', views.PhoneSiteSettingsViewSet, basename
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('login/', UserLoginView.as_view(), name='user_login'),
+    path('change-password/', ChangePasswordView.as_view(), name='change-password'),
+
 ]
