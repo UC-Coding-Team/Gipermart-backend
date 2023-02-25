@@ -45,7 +45,7 @@ class IncorrectAmount(BasePaymeException):
     error_code = -31001
     message = {
         'ru': 'Неверная сумма',
-        'uz': 'Incorrect amount',
+        'uz': "Noto'g'ri miqdor",
         'en': 'Incorrect amount',
     }
 

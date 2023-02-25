@@ -21,15 +21,15 @@ class ProductInventoryDocument(Document):
 )
     brand = fields.ObjectField(properties={"name": fields.TextField()})
     product_type = fields.ObjectField(properties={"name": fields.TextField(),"slug": fields.TextField(),"description": fields.TextField()})
-    attribute_values = fields.ObjectField(
-        properties={
-        "name": fields.TextField(),
-        "value": fields.TextField(),
-        "slug": fields.TextField(),
-        "description": fields.TextField(),
-        "background_image": fields.FileField(),
-    }
-)
+    # attribute_values = fields.ObjectField(
+    #     properties={
+    #     "name": fields.TextField(),
+    #     "value": fields.TextField(),
+    #     "slug": fields.TextField(),
+    #     "description": fields.TextField(),
+    #     "background_image": fields.FileField(),
+    # }
+# )
 
     class Index:
         name = "productinventory"
