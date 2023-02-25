@@ -1,4 +1,5 @@
 from django.contrib.auth import login
+from django.db.models import Sum
 from django.utils import timezone
 from rest_framework import viewsets, status
 from rest_framework.decorators import api_view
@@ -204,8 +205,14 @@ class ChangePasswordView(UpdateAPIView):
 
 @api_view(['GET'])
 def selling_status(request):
-    today = timezone.now().date()
-    checkout_count = Checkout.objects.filter(PAY_STATUS=True, NAXT_STATUS=True, created_at__date=today).count()
-    data = {'checkout_count': checkout_count}
+    today = timezone.now()
+    checkout_items = Checkout.objects.filter(PAY_STATUS=True, NAXT_STATUS=True, created_at__date=today)
+    recommended_products = Product.objects.filter(is_recommended=True)[:8]
+    checkout_items_total = checkout_items.aggregate(total_price=Sum('cart__total'))['total_price']
+    data = {
+        'checkout_count': checkout_items.aggregate(total=Sum('cart__quantity')).get('total') or 0,
+        'total_sum': checkout_items_total,
+        'popular_products': recommended_products
+    }
     serializer = SellingStatusSerializer(data)
     return Response(serializer.data)

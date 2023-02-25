@@ -1,7 +1,7 @@
 from rest_framework.routers import DefaultRouter
 from django.urls import path, include
 from . import views
-from .views import UserLoginView, ChangePasswordView
+from .views import UserLoginView, ChangePasswordView, selling_status
 
 router = DefaultRouter()
 
@@ -29,5 +29,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('login/', UserLoginView.as_view(), name='user_login'),
     path('change-password/', ChangePasswordView.as_view(), name='change-password'),
+    path('selling-count/', selling_status, name='selling-count'),
 
 ]

@@ -17,6 +17,7 @@ class ProductBrandSerializers(serializers.ModelSerializer):
         model = Brand
         fields = '__all__'
 
+
 class ProductAttributeSerializers(serializers.ModelSerializer):
     class Meta:
         model = ProductAttribute
@@ -130,7 +131,8 @@ class PhoneSiteSettingsSerializers(serializers.ModelSerializer):
 
 class SellingStatusSerializer(serializers.Serializer):
     checkout_count = serializers.IntegerField()
-
+    total_sum = serializers.IntegerField()
+    popular_products = ProductSerializers(many=True)
 
 
 class ProductTypeAttributeSerializers(serializers.ModelSerializer):
