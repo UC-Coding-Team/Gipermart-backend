@@ -214,7 +214,9 @@ class ProductInventory(models.Model):
         default=False,
         verbose_name=_('is_default')
     )
-    price = models.PositiveIntegerField(
+    price = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
         verbose_name=_('price')
     )
     sale_price = models.PositiveIntegerField(
@@ -254,7 +256,7 @@ class Media(models.Model):
         related_name="media",
         verbose_name=_('product_inventory')
     )
-    img_url = models.ImageField()
+    img_url = models.ImageField(upload_to='product/images', verbose_name=_('image_url'))
     alt_text = models.CharField(
         max_length=255,
         verbose_name=_('img_url')
