@@ -258,16 +258,25 @@ JAZZMIN_SETTINGS = {
     "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"}
 }
 
-PAYME: dict = {
-    'PAYME_ID': '1234', # merchant_id
-    'PAYME_KEY': '@Ez32Kxc2s7PK03q0HQQ&inf#IH5aVutEh&o', # merchant_key
+# PAYME: dict = {
+#     'PAYME_ID': 'payme-id',
+#     'PAYME_KEY': 'payme-key',
+#     'PAYME_URL': 'payme-checkout-url',
+#     'PAYME_CALL_BACK_URL': 'your-callback-url', # merchant api callback url
+#     'PAYME_MIN_AMOUNT': 'payme-min-amount', # integer field
+#     'PAYME_ACCOUNT': 'order-id',
+# }
+
+PAYME = {
+
+    'PAYME_ID': 'sizning-payme-id-niz',
+    'PAYME_KEY': 'sizning-payme-KEY-niz',
     'PAYME_URL': 'https://checkout.paycom.uz',
-    'PAYME_CALL_BACK_URL': 'your-callback-url', # merchant api callback url
-    'PAYME_MIN_AMOUNT': 'payme-min-amount', # integer field
-    'PAYME_ACCOUNT': 'order-id',  # payme kassa rekviziti
+    'PAYME_CALL_BACK_URL': 'sizning-mijozning-api-qaytish-manzilingiz', # merchant api callback url
+    'PAYME_MIN_AMOUNT': 1000, # butun sonlar
+    'PAYME_ACCOUNT': 'sizning-buyurtmangiz-id-si',
+
 }
-
-
 # PAYCOM_SETTINGS = {
 #     "KASSA_ID": "1234",
 #     "TOKEN": "6221f9548dccd302156b739f",  # token
