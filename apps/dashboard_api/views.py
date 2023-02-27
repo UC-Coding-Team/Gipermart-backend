@@ -1,5 +1,5 @@
 from django.contrib.auth import login
-from django.db.models import Sum
+from django.db.models import Sum, Q
 from django.utils import timezone
 from rest_framework import viewsets, status
 from rest_framework.decorators import api_view
@@ -205,14 +205,28 @@ class ChangePasswordView(UpdateAPIView):
 
 @api_view(['GET'])
 def selling_status(request):
+    """
+    A view that returns the selling status for the current day.
+
+    The selling status includes the number of checkouts, the total sum of all checkouts,
+    and the last 10 checkouts sorted by creation date.
+    """
+    # Get checkouts that are paid and have next status
+
     today = timezone.now()
-    checkout_items = Checkout.objects.filter(PAY_STATUS=True, NAXT_STATUS=True, created_at__date=today)
-    recommended_products = Product.objects.filter(is_recommended=True)[:8]
-    checkout_items_total = checkout_items.aggregate(total_price=Sum('cart__total'))['total_price']
+    checkout_items = Checkout.objects.filter(Q(PAY_STATUS=True) | Q(NAXT_STATUS=True), created_at__date=today)
+    checkout_items_total = checkout_items.aggregate(total_price=Sum('cart__total'))['total_price'] or 0
+    checkout_list = Checkout.objects.filter(Q(PAY_STATUS=True) | Q(NAXT_STATUS=True)).order_by('-created_at')[:10]
+
+    # Calculate total checkout items and total checkout price
     data = {
         'checkout_count': checkout_items.aggregate(total=Sum('cart__quantity')).get('total') or 0,
         'total_sum': checkout_items_total,
-        'popular_products': recommended_products
+        'checkout_list': checkout_list
     }
+
+    # Serialize the data
     serializer = SellingStatusSerializer(data)
+
+    # Return the response
     return Response(serializer.data)
