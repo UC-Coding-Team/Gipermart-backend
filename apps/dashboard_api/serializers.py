@@ -11,6 +11,8 @@ from apps.products.utils.units import Weight
 from .models import SiteSettings
 from django.contrib.auth import authenticate
 
+from ..checkout.models import Checkout
+
 
 class ProductBrandSerializers(serializers.ModelSerializer):
     class Meta:
@@ -129,10 +131,16 @@ class PhoneSiteSettingsSerializers(serializers.ModelSerializer):
         fields = ('id', 'phonenumbers', 'site_type')
 
 
+class CheckoutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Checkout
+        fields = ('id', 'created_at')
+
+
 class SellingStatusSerializer(serializers.Serializer):
     checkout_count = serializers.IntegerField()
     total_sum = serializers.IntegerField()
-    popular_products = ProductSerializers(many=True)
+    checkout_list = CheckoutSerializer(many=True)
 
 
 class ProductTypeAttributeSerializers(serializers.ModelSerializer):

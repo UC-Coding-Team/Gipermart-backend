@@ -188,9 +188,9 @@ class ProductInventory(models.Model):
         unique=True,
         verbose_name=_('upc')
     )
-    product_type = models.ForeignKey(ProductType, related_name="product_type", on_delete=models.PROTECT,
+    product_type = models.ForeignKey(ProductType, related_name="product_type", on_delete=models.CASCADE,
                                      verbose_name=_('product_type'))
-    product = models.ForeignKey(Product, related_name="product", on_delete=models.PROTECT,
+    product = models.ForeignKey(Product, related_name="product", on_delete=models.CASCADE,
                                 verbose_name=_('product'))
     brand = models.ForeignKey(
         Brand,
@@ -219,7 +219,9 @@ class ProductInventory(models.Model):
         decimal_places=2,
         verbose_name=_('price')
     )
-    sale_price = models.PositiveIntegerField(
+    sale_price = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
         verbose_name=_('sale_price')
     )
     installment_plan = models.CharField(max_length=250,verbose_name=_('installment_plan'))
@@ -252,7 +254,7 @@ class ProductInventory(models.Model):
 class Media(models.Model):
     product_inventory = models.ForeignKey(
         ProductInventory,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         related_name="media",
         verbose_name=_('product_inventory')
     )
