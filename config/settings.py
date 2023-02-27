@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rosetta',
 
     'apps.outside',
+    # 'apps.paymentuz',
     'apps.PaYme.apps.PaymentConfig',
     'apps.user_profile',
     'apps.products',
@@ -258,10 +259,25 @@ JAZZMIN_SETTINGS = {
 }
 
 PAYME: dict = {
-    'PAYME_ID': 'payme-id', # merchant_id
-    'PAYME_KEY': 'payme-key', # merchant_key
-    'PAYME_URL': 'payme-checkout-url',
+    'PAYME_ID': '1234', # merchant_id
+    'PAYME_KEY': '@Ez32Kxc2s7PK03q0HQQ&inf#IH5aVutEh&o', # merchant_key
+    'PAYME_URL': 'https://checkout.paycom.uz',
     'PAYME_CALL_BACK_URL': 'your-callback-url', # merchant api callback url
     'PAYME_MIN_AMOUNT': 'payme-min-amount', # integer field
     'PAYME_ACCOUNT': 'order-id',  # payme kassa rekviziti
 }
+
+
+# PAYCOM_SETTINGS = {
+#     "KASSA_ID": "1234",
+#     "TOKEN": "6221f9548dccd302156b739f",  # token
+#     "PHONE": "+998901234567",
+#     "SECRET_KEY": "@Ez32Kxc2s7PK03q0HQQ&inf#IH5aVutEh&o",  # password
+#     "ACCOUNTS": {
+#         "KEY": "payment_id"
+#     }
+# }
+#
+# DEFAULT_DECIMAL_PLACES = 3
+# DEFAULT_MAX_DIGITS = 12
+# DEFAULT_CURRENCY_CODE_LENGTH = 3

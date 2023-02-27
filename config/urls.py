@@ -39,6 +39,7 @@ urlpatterns = [
     path("user/", include("apps.user_profile.urls")),
     path("cart/", include("apps.cart.urls")),
     path("checkout/", include("apps.checkout.urls")),
+    # path("paymentuz/", include("apps.paymentuz.urls")),
     # path("paymart/", include("apps.paymart.urls")),
     path('', include('apps.PaYme.urls')),
     path('dashboard/', include('apps.dashboard_api.urls')),

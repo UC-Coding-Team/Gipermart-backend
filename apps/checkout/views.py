@@ -12,3 +12,7 @@ class CheckoutList(generics.CreateAPIView):
 class CheckoutDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Checkout.objects.all()
     serializer_class = CheckoutAllSerializer
+
+class CheckoutDetailAll(generics.ListAPIView):
+    queryset = Checkout.objects.all()
+    serializer_class = CheckoutAllSerializer
