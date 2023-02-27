@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.forms import model_to_dict
 from rest_framework import serializers
 from .models import Slider, Stock, Brand, Add_to_wishlist
-from ..cart.serializers import UserSerializer, CartProductSerializer
+from ..cart.serializers import UserSerializer, ProductInventorySerializer
 from ..products.models import Product
 
 User = get_user_model()
@@ -27,7 +27,7 @@ class Brand_serializer(serializers.ModelSerializer):
 
 class WishlistItemSerializer(serializers.ModelSerializer):
     user = UserSerializer()
-    product = CartProductSerializer()
+    product = ProductInventorySerializer()
 
     class Meta:
         model = Add_to_wishlist
