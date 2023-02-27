@@ -214,10 +214,12 @@ class ProductInventory(models.Model):
         default=False,
         verbose_name=_('is_default')
     )
-    price = models.PositiveIntegerField(
+    price = models.DecimalField(
+        max_digits=12, decimal_places=2,
         verbose_name=_('price')
     )
-    sale_price = models.PositiveIntegerField(
+    sale_price = models.DecimalField(
+        max_digits=12, decimal_places=2,
         verbose_name=_('sale_price')
     )
     installment_plan = models.CharField(max_length=250,verbose_name=_('installment_plan'))
