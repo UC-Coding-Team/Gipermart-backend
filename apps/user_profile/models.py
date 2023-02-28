@@ -2,8 +2,7 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager, Permission
 from django.db import models
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.utils.translation import gettext_lazy as _
-
-from django.core.exceptions import ValidationError
+import random
 
 
 class MyUserManager(BaseUserManager):
@@ -35,9 +34,6 @@ class MyUserManager(BaseUserManager):
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
         return self.create_user(phone_number, password, **extra_fields)
-
-
-import random
 
 
 class User(AbstractUser):

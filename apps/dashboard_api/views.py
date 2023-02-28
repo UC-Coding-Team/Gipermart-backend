@@ -1,15 +1,19 @@
-from django.contrib.auth import login
 from django.db.models import Sum, Q, DecimalField
 from django.db.models.functions import Cast
 from django.utils import timezone
-from rest_framework import viewsets, status
+from rest_framework import viewsets
 from rest_framework.decorators import api_view
 from rest_framework.filters import SearchFilter
-from rest_framework.generics import UpdateAPIView
-from rest_framework.response import Response
 from rest_framework.views import APIView
-
-from . import serializers
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.response import Response
+from rest_framework_simplejwt.views import TokenObtainPairView
+from django.core.mail import send_mail
+from django.conf import settings
+from django.utils.translation import gettext_lazy as _
+from django.contrib.auth import get_user_model
+from .serializers import LoginSerializer, ChangePasswordSerializer, ForgetPasswordSerializer
+from . import serializers as serial
 from apps.products.models import (
     Category, Product, Brand,
     ProductAttribute, ProductType,
@@ -17,49 +21,52 @@ from apps.products.models import (
     Media, Stock, ProductAttributeValues, ProductTypeAttribute,
     Wishlist,
 )
+from rest_framework import serializers
 from .models import SiteSettings
-from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
+from rest_framework.permissions import AllowAny
 from apps.outside import models
-from .serializers import SiteSettingsSerializers, PhoneSiteSettingsSerializers, ChangePasswordSerializer, \
-    UserLoginSerializer, SellingStatusSerializer
+from .serializers import SiteSettingsSerializers, PhoneSiteSettingsSerializers, \
+    SellingStatusSerializer
 from ..cart.serializers import DashUserSerializer
 from ..checkout.models import Checkout
 from ..checkout.serializers import CheckoutSerializer
 
+User = get_user_model()
+
 
 class ProductStockViewSet(viewsets.ModelViewSet):
     queryset = Stock.objects.all()
-    serializer_class = serializers.StockProductSerializers
+    serializer_class = serial.StockProductSerializers
     permission_classes = [AllowAny]
 
 
 class ProductAttributeValuesViewSet(viewsets.ModelViewSet):
     queryset = ProductAttributeValues.objects.all()
-    serializer_class = serializers.ProductAttributeValuesSerializers
+    serializer_class = serial.ProductAttributeValuesSerializers
     permission_classes = [AllowAny]
 
 
 class ProductTypeAttributeViewSet(viewsets.ModelViewSet):
     queryset = ProductTypeAttribute.objects.all()
-    serializer_class = serializers.ProductTypeAttributeSerializers
+    serializer_class = serial.ProductTypeAttributeSerializers
     permission_classes = [AllowAny]
 
 
 class ProductAttributeValueViewSet(viewsets.ModelViewSet):
     queryset = ProductAttributeValue.objects.all()
-    serializer_class = serializers.ProductAttributeValueSerializers
+    serializer_class = serial.ProductAttributeValueSerializers
     permission_classes = [AllowAny]
 
 
 class WishlistViewSet(viewsets.ModelViewSet):
     queryset = Wishlist.objects.all()
-    serializer_class = serializers.WishlistSerializers
+    serializer_class = serial.WishlistSerializers
     permission_classes = [AllowAny]
 
 
 class ProductInventoryViewSet(viewsets.ModelViewSet):
     queryset = ProductInventory.objects.all()
-    serializer_class = serializers.ProductInventorySerializers
+    serializer_class = serial.ProductInventorySerializers
     permission_classes = [AllowAny]
     filter_backends = [SearchFilter]
     search_fields = ['sku', ]
@@ -67,13 +74,13 @@ class ProductInventoryViewSet(viewsets.ModelViewSet):
 
 class MediaViewSet(viewsets.ModelViewSet):
     queryset = Media.objects.all()
-    serializer_class = serializers.MediaSerializers
+    serializer_class = serial.MediaSerializers
     permission_classes = [AllowAny]
 
 
 class ProductAttributeViewSet(viewsets.ModelViewSet):
     queryset = ProductAttribute.objects.all()
-    serializer_class = serializers.ProductAttributeSerializers
+    serializer_class = serial.ProductAttributeSerializers
     permission_classes = [AllowAny]
     filter_backends = [SearchFilter]
     search_fields = ['id', 'name']
@@ -81,7 +88,7 @@ class ProductAttributeViewSet(viewsets.ModelViewSet):
 
 class ProductTypeViewSet(viewsets.ModelViewSet):
     queryset = ProductType.objects.all()
-    serializer_class = serializers.ProductTypeSerializers
+    serializer_class = serial.ProductTypeSerializers
     permission_classes = [AllowAny]
     filter_backends = [SearchFilter]
     search_fields = ['id', 'name']
@@ -89,7 +96,7 @@ class ProductTypeViewSet(viewsets.ModelViewSet):
 
 class BrandProductViewSet(viewsets.ModelViewSet):
     queryset = Brand.objects.all()
-    serializer_class = serializers.ProductBrandSerializers
+    serializer_class = serial.ProductBrandSerializers
     permission_classes = [AllowAny]
     filter_backends = [SearchFilter]
     search_fields = ['id', 'name']
@@ -97,7 +104,7 @@ class BrandProductViewSet(viewsets.ModelViewSet):
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
-    serializer_class = serializers.CategorySerializers
+    serializer_class = serial.CategorySerializers
     permission_classes = [AllowAny]
     filter_backends = [SearchFilter]
     search_fields = ['id', 'name']
@@ -105,7 +112,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
-    serializer_class = serializers.ProductSerializers
+    serializer_class = serial.ProductSerializers
     permission_classes = [AllowAny]
     filter_backends = [SearchFilter]
     search_fields = ['id', 'name']
@@ -113,7 +120,7 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 class SliderViewSet(viewsets.ModelViewSet):
     queryset = models.Slider.objects.all()
-    serializer_class = serializers.SliderSerializers
+    serializer_class = serial.SliderSerializers
     permission_classes = [AllowAny]
     filter_backends = [SearchFilter]
     search_fields = ['id', 'slug']
@@ -121,7 +128,7 @@ class SliderViewSet(viewsets.ModelViewSet):
 
 class StockViewSet(viewsets.ModelViewSet):
     queryset = models.Stock.objects.all()
-    serializer_class = serializers.StockSerializers
+    serializer_class = serial.StockSerializers
     permission_classes = [AllowAny]
     filter_backends = [SearchFilter]
     search_fields = ['id', 'slug']
@@ -129,7 +136,7 @@ class StockViewSet(viewsets.ModelViewSet):
 
 class BrandViewSet(viewsets.ModelViewSet):
     queryset = models.Brand.objects.all()
-    serializer_class = serializers.BrandSerializers
+    serializer_class = serial.BrandSerializers
     permission_classes = [AllowAny]
     filter_backends = [SearchFilter]
     search_fields = ['id', 'slug']
@@ -163,47 +170,6 @@ class PhoneSiteSettingsViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
 
 
-class UserLoginView(APIView):
-    """
-    A view that handles user login requests.
-    """
-
-    def post(self, request):
-        """
-        Handle POST requests to the view.
-        """
-        serializer = UserLoginSerializer(data=request.data)
-        if serializer.is_valid():
-            user = serializer.validated_data['user']
-            login(request, user)
-            return Response({"message": "Login successful."}, status=status.HTTP_200_OK)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class ChangePasswordView(UpdateAPIView):
-    serializer_class = ChangePasswordSerializer
-    permission_classes = [AllowAny]
-
-    def get_object(self):
-        return self.request.user
-
-    def update(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        serializer = self.get_serializer(data=request.data)
-
-        if serializer.is_valid():
-            old_password = serializer.data.get('old_password')
-            if not self.object.check_password(old_password):
-                return Response({'old_password': ['Wrong password.']}, status=status.HTTP_400_BAD_REQUEST)
-
-            self.object.set_password(serializer.data.get('new_password'))
-            self.object.save()
-            return Response({'status': 'password set'}, status=status.HTTP_200_OK)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 @api_view(['GET'])
 def selling_status(request):
     """
@@ -234,3 +200,42 @@ def selling_status(request):
 
     # Return the response
     return Response(serializer.data)
+
+
+class LoginView(TokenObtainPairView):
+    serializer_class = LoginSerializer
+
+
+class ChangePasswordView(APIView):
+    permission_classes = (IsAuthenticated, IsAdminUser)
+    serializer_class = ChangePasswordSerializer
+
+    def put(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'detail': _('Password changed successfully.')})
+
+
+class ForgetPasswordView(APIView):
+    serializer_class = ForgetPasswordSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        try:
+            user = User.objects.get(phone_number=serializer.validated_data['phone_number'])
+        except User.DoesNotExist:
+            msg = _('User with provided phone number does not exist.')
+            raise serializers.ValidationError(msg, code='authorization')
+        new_password = User.objects.make_random_password()
+        user.set_password(new_password)
+        user.save()
+        send_mail(
+            _('Your new password'),
+            _('Your new password is: ') + new_password,
+            settings.DEFAULT_FROM_EMAIL,
+            [user.email],
+            fail_silently=False,
+        )
+        return Response({'detail': _('Your new password has been sent to your email.')})

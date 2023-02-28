@@ -3,7 +3,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from mptt.models import MPTTModel, TreeForeignKey
 
-from .utils.units import Weight, WeightUnits, zero_weight
+from .utils.units import Weight, WeightUnits
 from ..user_profile.models import User
 
 

@@ -1,14 +1,9 @@
-import json
-
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from .models import CartItem
 from ..products.models import Product, ProductInventory, Media
 from django.forms.models import model_to_dict
-
-from ..products.serializers import ProductSerializer, ProductMediaSerializer, BrandSerializer, \
-    ProductAttributeValueSerializer, calculate_rating, ProductInventorySerializer
-from ..products.utils.units import Weight
+from ..products.serializers import ProductInventorySerializer
 
 User = get_user_model()
 
@@ -27,7 +22,7 @@ class DashUserSerializer(serializers.ModelSerializer):
 
 class CartItemSerializer(serializers.ModelSerializer):
     user = UserSerializer()
-    product = ProductInventorySerializer(many=True)
+    product = ProductInventorySerializer()
 
     class Meta:
         model = CartItem
@@ -43,10 +38,16 @@ class CartCreateSerializer(serializers.ModelSerializer):
         data = super().to_representation(instance)
         us = User.objects.get(id=data['user'])
         pr = ProductInventory.objects.get(id=data['product'])
-        media = Media.objects.filter(product_inventory=data['product']).values_list('img_url', flat=True) or 'не найден'
+        media = Media.objects.filter(product_inventory=data['product'])
+        if media.exists():
+            request = self.context.get('request')
+            host = request.get_host() if request else 'localhost'
+            media_urls = [f"http://{host}{m.img_url.url}" for m in media]
+        else:
+            media_urls = 'не найден'
         serialized_obj = model_to_dict(pr, exclude=['created_at', 'updated_at', 'weight'])
         serialized_obj2 = model_to_dict(us)
-        data['media'] = media
+        data['media'] = media_urls
         data['product'] = serialized_obj
         data['user'] = serialized_obj2
         return data
