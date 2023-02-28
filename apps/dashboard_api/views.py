@@ -1,5 +1,6 @@
 from django.contrib.auth import login
-from django.db.models import Sum, Q
+from django.db.models import Sum, Q, DecimalField
+from django.db.models.functions import Cast
 from django.utils import timezone
 from rest_framework import viewsets, status
 from rest_framework.decorators import api_view
@@ -215,7 +216,10 @@ def selling_status(request):
 
     today = timezone.now()
     checkout_items = Checkout.objects.filter(Q(PAY_STATUS=True) | Q(NAXT_STATUS=True), created_at__date=today)
-    checkout_items_total = checkout_items.aggregate(total_price=Sum('cart__total'))['total_price'] or 0
+    # checkout_items_total = checkout_items.aggregate(total_price=Sum('cart__total'))['total_price'] or 0
+    checkout_items_total = checkout_items.annotate(
+        total_decimal=Cast('cart__total', output_field=DecimalField())
+    ).aggregate(total_price=Sum('total_decimal'))['total_price'] or 0
     checkout_list = Checkout.objects.filter(Q(PAY_STATUS=True) | Q(NAXT_STATUS=True)).order_by('-created_at')[:10]
 
     # Calculate total checkout items and total checkout price

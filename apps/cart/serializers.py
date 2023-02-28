@@ -41,12 +41,12 @@ class CartCreateSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        pr = ProductInventory.objects.get(id=data['product'])
         us = User.objects.get(id=data['user'])
-        # pr.media.set(Media.objects.filter(product_inventory=data['product']).values_list('img_url', flat=True)[0])
-        # pr.media = str(Media.objects.filter(product_inventory=data['product']).values_list('img_url', flat=True)[0])
+        pr = ProductInventory.objects.get(id=data['product'])
+        media = Media.objects.filter(product_inventory=data['product']).values_list('img_url', flat=True) or 'не найден'
         serialized_obj = model_to_dict(pr, exclude=['created_at', 'updated_at', 'weight'])
         serialized_obj2 = model_to_dict(us)
+        data['media'] = media
         data['product'] = serialized_obj
         data['user'] = serialized_obj2
         return data
