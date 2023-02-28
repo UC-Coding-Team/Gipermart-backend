@@ -13,7 +13,7 @@ class Checkout(models.Model):
     town = models.CharField(max_length=100, verbose_name=_('town'))
     address = models.CharField(max_length=200, verbose_name=_('address'))
     comment = models.TextField(verbose_name=_('comment'))
-    cart = models.ManyToManyField(CartItem, null=True, verbose_name=_('cart'))
+    cart = models.ManyToManyField(CartItem, blank=True, verbose_name=_('cart'))
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='checkout', null=True, verbose_name=_('user'))
     PAY_STATUS = models.BooleanField(
         default=False, verbose_name=_('PAY_STATUS'))
