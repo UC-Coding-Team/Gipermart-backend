@@ -22,8 +22,8 @@ from .methods.check_perform_transaction import CheckPerformTransaction
 
 
 class MerchantAPIView(APIView):
-    # permission_classes = ()
-    # authentication_classes = ()
+    permission_classes = ()
+    authentication_classes = ()
     serializer_class = MerchatTransactionsModelSerializer
 
     def post(self, request, *args, **kwargs):

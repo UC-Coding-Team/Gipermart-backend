@@ -2,7 +2,7 @@ import base64
 from decimal import Decimal
 from dataclasses import dataclass
 
-from django.conf import settings
+from config import settings
 
 PAYME_ID = settings.PAYME.get('PAYME_ID')
 PAYME_ACCOUNT = settings.PAYME.get('PAYME_ACCOUNT')

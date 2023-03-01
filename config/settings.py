@@ -41,13 +41,11 @@ INSTALLED_APPS = [
     'rosetta',
 
     'apps.outside',
-    # 'apps.paymentuz',
     'apps.PaYme.apps.PaymentConfig',
     'apps.user_profile',
     'apps.products',
     'apps.cart',
     'apps.checkout',
-    # 'apps.paymart',
     'apps.dashboard_api',
     'apps.search',
 
@@ -230,8 +228,7 @@ ELASTICSEARCH_DSL_SIGNAL_PROCESSOR = 'django_elasticsearch_dsl.signals.RealTimeS
 CKEDITOR_UPLOAD_PATH = 'ck-uploads/'
 CKEDITOR_ALLOW_NONIMAGE_FILES = False
 
-PAYMART_URL = "https://cabinet.paymart.uz/api/v1/"
-PAYMART_TOKEN = "c299b59322b426a25357a5d0c3d05b2f"
+
 
 JAZZMIN_SETTINGS = {
     "site_header": "Gipermart.uz", "site_brand": "Gipermart.uz",
@@ -267,26 +264,15 @@ JAZZMIN_SETTINGS = {
 #     'PAYME_ACCOUNT': 'order-id',
 # }
 
+
+
 PAYME = {
 
-    'PAYME_ID': 'sizning-payme-id-niz',
-    'PAYME_KEY': 'sizning-payme-KEY-niz',
-    'PAYME_URL': 'https://checkout.paycom.uz',
-    'PAYME_CALL_BACK_URL': 'sizning-mijozning-api-qaytish-manzilingiz', # merchant api callback url
-    'PAYME_MIN_AMOUNT': 1000, # butun sonlar
-    'PAYME_ACCOUNT': 'sizning-buyurtmangiz-id-si',
+    'PAYME_ID': '6221f9548dccd302156b739f',
+    'PAYME_KEY': '0UyzTv?teb1IqR486Nt1&q06t?F@4TqgQC5p',
+    'PAYME_URL': 'https://test.paycom.uz',
+    'PAYME_CALL_BACK_URL': 'https://test.paycom.uz', # merchant api callback url
+    'PAYME_MIN_AMOUNT': 1, # butun sonlar
+    'PAYME_ACCOUNT': 'order_id',
 
 }
-# PAYCOM_SETTINGS = {
-#     "KASSA_ID": "1234",
-#     "TOKEN": "6221f9548dccd302156b739f",  # token
-#     "PHONE": "+998901234567",
-#     "SECRET_KEY": "@Ez32Kxc2s7PK03q0HQQ&inf#IH5aVutEh&o",  # password
-#     "ACCOUNTS": {
-#         "KEY": "payment_id"
-#     }
-# }
-#
-# DEFAULT_DECIMAL_PLACES = 3
-# DEFAULT_MAX_DIGITS = 12
-# DEFAULT_CURRENCY_CODE_LENGTH = 3

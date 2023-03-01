@@ -4,5 +4,5 @@ from .views import MerchantAPIView
 
 
 urlpatterns = [
-    path("merchant/", MerchantAPIView.as_view())
+    path("paycom/", MerchantAPIView.as_view())
 ]
