@@ -273,6 +273,6 @@ PAYME = {
     'PAYME_URL': 'https://test.paycom.uz',
     'PAYME_CALL_BACK_URL': 'https://test.paycom.uz', # merchant api callback url
     'PAYME_MIN_AMOUNT': 1, # butun sonlar
-    'PAYME_ACCOUNT': 'order_id',
+    'PAYME_ACCOUNT': 'payment_id',
 
 }

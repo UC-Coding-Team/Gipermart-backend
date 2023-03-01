@@ -12,7 +12,7 @@ PAYME_URL = settings.PAYME.get("PAYME_URL")
 
 @dataclass
 class GeneratePayLink:
-    order_id: str
+    payment_id: str
     amount: Decimal
 
     def generate_link(self) -> str:
@@ -25,7 +25,7 @@ class GeneratePayLink:
         PARAMS = PARAMS.format(
             payme_id=PAYME_ID,
             payme_account=PAYME_ACCOUNT,
-            order_id=self.order_id,
+            order_id=self.payment_id,
             amount=self.amount,
             call_back_url=PAYME_CALL_BACK_URL
         )

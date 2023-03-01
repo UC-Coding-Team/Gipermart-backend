@@ -7,7 +7,7 @@ class CheckoutSerializer(serializers.ModelSerializer):
     class Meta:
         model = Checkout
         fields = ['full_name', 'phone_number', 'region', 'town', 'address', 'comment', 'cart', 'user', 'PAY_STATUS',
-                  'NAXT_STATUS', 'created_at']
+                  'NAXT_STATUS','total_price', 'created_at']
 
 
 class CheckoutAllSerializer(serializers.ModelSerializer):
@@ -16,4 +16,4 @@ class CheckoutAllSerializer(serializers.ModelSerializer):
     class Meta:
         model = Checkout
         fields = ['id','full_name', 'phone_number', 'region', 'town', 'address', 'comment', 'cart', 'PAY_STATUS',
-                  'NAXT_STATUS', 'created_at','generate_link']
+                  'NAXT_STATUS', 'created_at','total_price','generate_link']

@@ -25,17 +25,17 @@ class Checkout(models.Model):
         default=False,  verbose_name=_('NAXT_STATUS'))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('created_at'))
     generate_link = models.CharField(max_length=300, blank=True)
+    total_price = models.CharField(max_length=300, blank=True)
 
     def __str__(self):
         return self.full_name
 
 
     def generate_pay_link(self):
-        total_price = sum(item.total_price() for item in self.cart.all())
         if self.PAY_STATUS:
             pay_link = GeneratePayLink(
-                order_id=self.pk,
-                amount=total_price
+                payment_id=self.pk,
+                amount=self.total_price
             ).generate_link()
             self.generate_link = pay_link
             self.save()
