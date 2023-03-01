@@ -1,5 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+from apps.PaYme.methods.generate_link import GeneratePayLink
 from apps.cart.models import CartItem
 from django.utils.translation import gettext_lazy as _
 
@@ -20,10 +24,29 @@ class Checkout(models.Model):
     NAXT_STATUS = models.BooleanField(
         default=False,  verbose_name=_('NAXT_STATUS'))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('created_at'))
+    generate_link = models.CharField(max_length=300, blank=True)
 
     def __str__(self):
         return self.full_name
 
+
+    def generate_pay_link(self):
+        total_price = sum(item.total_price() for item in self.cart.all())
+        if self.PAY_STATUS:
+            pay_link = GeneratePayLink(
+                order_id=self.pk,
+                amount=total_price
+            ).generate_link()
+            self.generate_link = pay_link
+            self.save()
+        # print(total_price)
+
     class Meta:
         verbose_name = _('Checkout')
         verbose_name_plural = _('Checkout')
+
+
+@receiver(post_save, sender=Checkout)
+def checkout_post_save(sender, instance, **kwargs):
+    if instance.PAY_STATUS and not instance.generate_link:
+        instance.generate_pay_link()

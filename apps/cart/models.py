@@ -14,9 +14,16 @@ class CartItem(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('created_at'))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_('updated_at'))
 
+    def total_price(self):
+        return self.total
+
+
+
     def __str__(self):
         return str(self.product.product.name)
 
     class Meta:
         verbose_name = _('Cart')
         verbose_name_plural = _('Carts')
+
+
