@@ -6,5 +6,4 @@ class CartItemInline(admin.TabularInline):
     model = CartItem
 
 
-
 admin.site.register(CartItem)

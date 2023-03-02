@@ -184,7 +184,7 @@ def selling_status(request):
     checkout_items = Checkout.objects.filter(Q(PAY_STATUS=True) | Q(NAXT_STATUS=True), created_at__date=today)
     # checkout_items_total = checkout_items.aggregate(total_price=Sum('cart__total'))['total_price'] or 0
     checkout_items_total = checkout_items.annotate(
-        total_decimal=Cast('cart__total', output_field=DecimalField())
+        total_decimal=Cast('cart__total', output_field=DecimalField(default=0))
     ).aggregate(total_price=Sum('total_decimal'))['total_price'] or 0
     checkout_list = Checkout.objects.filter(Q(PAY_STATUS=True) | Q(NAXT_STATUS=True)).order_by('-created_at')[:10]
 
