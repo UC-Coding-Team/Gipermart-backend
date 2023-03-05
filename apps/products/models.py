@@ -386,3 +386,10 @@ class ProductAllModel(models.Model):
     class Meta:
         verbose_name = 'product_all'
         verbose_name_plural = 'product_alls'
+
+# адрес доставки убрать и сделать null True
+# исправить добавления категории
+# alifshop добавить для добавлении товаров
+# сделать удобным для добавления изображений
+# добавить название товаров в списке product-attribute-values
+# search users by name
