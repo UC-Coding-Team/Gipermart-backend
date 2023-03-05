@@ -20,7 +20,9 @@ class ProductInventoryFilter(django_filters.FilterSet):
         field_name='attribute_values',
         to_field_name='id',
     )
+    min_price = django_filters.NumberFilter(field_name='price', lookup_expr='gte')
+    max_price = django_filters.NumberFilter(field_name='price', lookup_expr='lte')
 
     class Meta:
         model = ProductInventory
-        fields = ['attribute_values']
+        fields = ['attribute_values', 'price']
