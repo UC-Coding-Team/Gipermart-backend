@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.safestring import mark_safe
 # from apps.user_profile.models import User
 from apps.cart.models import User
-from apps.products.models import Category, Product
+from apps.products.models import Category, Product, ProductInventory
 from django.utils.translation import gettext_lazy as _
 
 
@@ -69,7 +69,7 @@ class Brand(models.Model):
 
 
 class Add_to_wishlist(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name=_('product'))
+    product = models.ForeignKey(ProductInventory, on_delete=models.CASCADE, verbose_name=_('product'))
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('user'))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('created_at'))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_('updated_at'))

@@ -27,7 +27,7 @@ class Brand_serializer(serializers.ModelSerializer):
 
 class WishlistItemSerializer(serializers.ModelSerializer):
     user = UserSerializer()
-    product = ProductInventorySerializer()
+    product = ProductInventorySerializer(read_only=True)
 
     class Meta:
         model = Add_to_wishlist
