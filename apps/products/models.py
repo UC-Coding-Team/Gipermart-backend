@@ -393,3 +393,116 @@ class ProductAllModel(models.Model):
 # сделать удобным для добавления изображений
 # добавить название товаров в списке product-attribute-values
 # search users by name
+
+
+class NewProductModel(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='new_products', null=True, verbose_name=_('user'))
+    sku = models.CharField(max_length=100, verbose_name=_('sku'))
+    title = models.CharField(max_length=300, verbose_name=_('title'))
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name=_('category'))
+    brand = models.ForeignKey(
+        Brand,
+        related_name="new_brand",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        verbose_name=_('brand')
+    )
+    attribute_values = models.ManyToManyField(
+        ProductAttributeValue,
+        related_name="new_product_attribute_values",
+        # through="ProductAttributeValues",
+        verbose_name=_('attribute_values')
+    )
+    product_type = models.ForeignKey(ProductType, on_delete=models.CASCADE, related_name='new_product_type', verbose_name=_('product_type'))
+    is_active = models.BooleanField(
+        default=False,
+        verbose_name=_('is_active')
+    )
+    is_default = models.BooleanField(
+        default=False,
+        verbose_name=_('is_default')
+    )
+    price = models.DecimalField(
+        max_digits=12,
+        decimal_places=0,
+        verbose_name=_('price')
+    )
+    sale_price = models.DecimalField(
+        max_digits=12,
+        decimal_places=0,
+        verbose_name=_('sale_price')
+    )
+    installment_plan = models.CharField(max_length=250, verbose_name=_('installment_plan'))
+    is_on_sale = models.BooleanField(default=False, verbose_name=_('is_on_sale'))
+    alifshop = models.BooleanField(default=False, verbose_name=_('alifshop'))
+    weight = MeasurementField(
+        measurement=Weight,
+        unit_choices=WeightUnits.CHOICES,  # type: ignore
+        blank=True,
+        null=True,
+        verbose_name=_('weight')
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        editable=False,
+        verbose_name=_('created_at')
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        verbose_name=_('updated_at')
+    )
+
+    PROCESS = "В прогрессе"
+    SUCCESS = "Успешно"
+    FAILED = "Ошибка"
+    DELETED = "Удалено"
+
+    CHOICES = [
+        (PROCESS, "Process"),
+        (SUCCESS, "Success"),
+        (FAILED, "Failed"),
+        (DELETED, "Deleted"),
+    ]
+
+    status = models.CharField(
+        max_length=50, choices=CHOICES, default=PROCESS, verbose_name=_('status')
+    )
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = _('NewProduct')
+        verbose_name_plural = _('NewProducts')
+
+
+class NewMedia(models.Model):
+    product = models.ForeignKey(
+        NewProductModel,
+        on_delete=models.CASCADE,
+        related_name="new_media",
+        verbose_name=_('product_inventory')
+    )
+    img_url = models.ImageField(upload_to='product/images', verbose_name=_('image_url'))
+    alt_text = models.CharField(
+        max_length=255,
+        verbose_name=_('img_url')
+    )
+    is_feature = models.BooleanField(
+        default=False,
+        verbose_name=_('alt_text')
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        editable=False,
+        verbose_name=_('is_feature')
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        verbose_name=_('created_at')
+    )
+
+    class Meta:
+        verbose_name = _('Media')
+        verbose_name_plural = _('Media')

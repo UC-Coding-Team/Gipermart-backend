@@ -17,9 +17,15 @@ class ProductMediaInline(admin.TabularInline):
     raw_id_fields = ['product_inventory']
 
 
+class NewProductMediaInline(admin.TabularInline):
+    model = models.NewMedia
+    raw_id_fields = ['product']
+
+
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug', 'category', 'is_active', 'is_recommended', 'status', 'USA_product', 'created_at', 'updated_at']
+    list_display = ['name', 'slug', 'category', 'is_active', 'is_recommended', 'status', 'USA_product', 'created_at',
+                    'updated_at']
     prepopulated_fields = {'slug': ('name',)}
     inlines = [ProductInventoryInline, ]
     list_filter = ['is_active', 'created_at', 'updated_at']
@@ -73,8 +79,14 @@ class ProductAttributeValueAdmin(admin.ModelAdmin):
 @admin.register(models.ProductAttribute)
 class ProductAttributeAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'description']
-    
+
 
 @admin.register(models.ProductTypeAttribute)
 class ProductTypeAttributeAdmin(admin.ModelAdmin):
     list_display = ['id', 'product_attribute', 'product_type']
+
+
+@admin.register(models.NewProductModel)
+class NewProductModelAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'created_at']
+    inlines = [NewProductMediaInline]
