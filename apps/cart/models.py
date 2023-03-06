@@ -1,5 +1,5 @@
 from django.db import models
-from apps.products.models import ProductInventory
+from apps.products.models import NewProductModel
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
@@ -8,7 +8,7 @@ User = get_user_model()
 
 class CartItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, verbose_name=_('user'))
-    product = models.ForeignKey(ProductInventory, on_delete=models.CASCADE, verbose_name=_('product'))
+    product = models.ForeignKey(NewProductModel, on_delete=models.CASCADE, verbose_name=_('product'))
     quantity = models.PositiveIntegerField(verbose_name=_('quantity'))
     total = models.CharField(max_length=250, verbose_name=_('total'))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('created_at'))

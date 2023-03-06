@@ -178,27 +178,21 @@ def selling_status(request):
     The selling status includes the number of checkouts, the total sum of all checkouts,
     and the last 10 checkouts sorted by creation date.
     """
-    # Get checkouts that are paid and have next status
-
-    today = timezone.now()
+    today = timezone.now().date()
     checkout_items = Checkout.objects.filter(Q(PAY_STATUS=True) | Q(NAXT_STATUS=True), created_at__date=today)
-    # checkout_items_total = checkout_items.aggregate(total_price=Sum('cart__total'))['total_price'] or 0
-    checkout_items_total = checkout_items.annotate(
-        total_decimal=Cast('cart__total', output_field=DecimalField(default=0))
-    ).aggregate(total_price=Sum('total_decimal'))['total_price'] or 0
-    checkout_list = Checkout.objects.filter(Q(PAY_STATUS=True) | Q(NAXT_STATUS=True)).order_by('-created_at')[:10]
 
-    # Calculate total checkout items and total checkout price
+    checkout_items_total = checkout_items.aggregate(total_price=Sum(Cast('cart__total', output_field=DecimalField())))['total_price'] or 0
+
+    checkout_list = checkout_items.order_by('-created_at')[:10]
+
     data = {
         'checkout_count': checkout_items.aggregate(total=Sum('cart__quantity')).get('total') or 0,
         'total_sum': checkout_items_total,
-        'checkout_list': checkout_list
+        'checkout_list': checkout_list.values()
     }
 
-    # Serialize the data
     serializer = SellingStatusSerializer(data)
 
-    # Return the response
     return Response(serializer.data)
 
 

@@ -228,8 +228,6 @@ ELASTICSEARCH_DSL_SIGNAL_PROCESSOR = 'django_elasticsearch_dsl.signals.RealTimeS
 CKEDITOR_UPLOAD_PATH = 'ck-uploads/'
 CKEDITOR_ALLOW_NONIMAGE_FILES = False
 
-
-
 JAZZMIN_SETTINGS = {
     "site_header": "Gipermart.uz", "site_brand": "Gipermart.uz",
     "site_logo": "logo3.png", "login_logo": "logoo.svg", "login_logo_dark": None,
@@ -249,7 +247,7 @@ JAZZMIN_SETTINGS = {
     ], "usermenu_links": [
         {"model": "auth.user"}
     ], "show_sidebar": True, "navigation_expanded": True, "hide_apps": [], "hide_models": [],
-    "order_with_respect_to": ["outside", "checkout", "user_profile", "products", "cart",  "works"],
+    "order_with_respect_to": ["outside", "checkout", "user_profile", "products", "cart", "works"],
     "related_modal_active": False, "custom_css": None, "custom_js": None,
     "changeform_format": "horizontal_tabs",
     "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"}
@@ -265,14 +263,13 @@ JAZZMIN_SETTINGS = {
 # }
 
 
-
 PAYME = {
 
     'PAYME_ID': '6221f9548dccd302156b739f',
     'PAYME_KEY': '0UyzTv?teb1IqR486Nt1&q06t?F@4TqgQC5p',
     'PAYME_URL': 'https://test.paycom.uz',
-    'PAYME_CALL_BACK_URL': 'https://test.paycom.uz', # merchant api callback url
-    'PAYME_MIN_AMOUNT': 1, # butun sonlar
+    'PAYME_CALL_BACK_URL': 'https://test.paycom.uz',  # merchant api callback url
+    'PAYME_MIN_AMOUNT': 1,  # butun sonlar
     'PAYME_ACCOUNT': 'payment_id',
 
 }

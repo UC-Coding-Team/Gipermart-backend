@@ -1,6 +1,6 @@
 import django_filters
 from django_filters import rest_framework as filters
-from .models import ProductInventory, ProductAttributeValue
+from .models import NewProductModel, ProductAttributeValue
 
 
 
@@ -24,5 +24,5 @@ class ProductInventoryFilter(django_filters.FilterSet):
     max_price = django_filters.NumberFilter(field_name='price', lookup_expr='lte')
 
     class Meta:
-        model = ProductInventory
+        model = NewProductModel
         fields = ['attribute_values', 'price']

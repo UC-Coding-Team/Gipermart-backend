@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.safestring import mark_safe
 # from apps.user_profile.models import User
 from apps.cart.models import User
-from apps.products.models import Category, Product, ProductInventory, NewProductModel
+from apps.products.models import Category, NewProductModel
 from django.utils.translation import gettext_lazy as _
 
 

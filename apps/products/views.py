@@ -9,11 +9,9 @@ from .filter import ProductFilter
 from .filters import ProductInventoryFilter
 from .serializers import (
     CategorySerializer,
-    ProductInventorySerializer,
-    ProductSerializer,
-    RatingSerializer, ProductAttributeValueSerializerFiler, PrFilter
+    RatingSerializer, NewProductSerializer
 )
-from apps.products.models import Category, Product, ProductInventory, Rating, ProductAttributeValue, ProductAllModel
+from apps.products.models import Category, Rating, ProductAttributeValue, NewProductModel
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -35,8 +33,8 @@ class ProductByCategory(APIView):
     """
 
     def get(self, request, slug=None):
-        queryset = ProductInventory.objects.filter(product__category__slug=slug)
-        serializer = ProductInventorySerializer(queryset, many=True)
+        queryset = NewProductModel.objects.filter(product__category__slug=slug)
+        serializer = NewProductSerializer(queryset, many=True)
         return Response(serializer.data)
 
 
@@ -46,8 +44,8 @@ class ProductDetailBySlug(APIView):
     """
 
     def get(self, request, pk=None):
-        product = ProductInventory.objects.get(pk=pk)
-        serializer = ProductInventorySerializer(product)
+        product = NewProductModel.objects.get(pk=pk)
+        serializer = NewProductSerializer(product)
         return Response(serializer.data)
 
 
@@ -55,8 +53,8 @@ class AllProductsView(mixins.ListModelMixin, GenericViewSet):
     """
     Return products
     """
-    queryset = ProductInventory.objects.all()
-    serializer_class = ProductInventorySerializer
+    queryset = NewProductModel.objects.all()
+    serializer_class = NewProductSerializer
     filter_backends = [DjangoFilterBackend]
     filter_class = ProductFilter
 
@@ -70,22 +68,9 @@ class RatingCreate(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
 
 
-class ProductInventoryView(mixins.ListModelMixin, GenericViewSet):
-    queryset = ProductAllModel.objects.all()
-    serializer_class = PrFilter
-
-
-class ProductInventoryAPIView(APIView):
-
-    def get(self, request, pk):
-        houses = ProductAllModel.objects.get(category__id=pk)
-        serializer = PrFilter(houses, context={'request': request}, )
-        return Response(serializer.data)
-
-
 class ProductFilterView(generics.ListCreateAPIView):
-    queryset = ProductInventory.objects.all()
-    serializer_class = ProductInventorySerializer
+    queryset = NewProductModel.objects.all()
+    serializer_class = NewProductSerializer
     filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
     filterset_class = ProductInventoryFilter
     search_fields = ('product__category__slug',)

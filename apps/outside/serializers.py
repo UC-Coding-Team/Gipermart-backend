@@ -2,10 +2,12 @@ from django.contrib.auth import get_user_model
 from django.forms import model_to_dict
 from rest_framework import serializers
 from .models import Slider, Stock, Brand, Add_to_wishlist
-from ..cart.serializers import UserSerializer, ProductInventorySerializer
-from ..products.models import Product
+from ..cart.serializers import UserSerializer
+from ..products.models import NewProductModel
+from ..products.serializers import NewProductSerializer
 
 User = get_user_model()
+
 
 class Slider_serializer(serializers.ModelSerializer):
     class Meta:
@@ -27,7 +29,7 @@ class Brand_serializer(serializers.ModelSerializer):
 
 class WishlistItemSerializer(serializers.ModelSerializer):
     user = UserSerializer()
-    product = ProductInventorySerializer(read_only=True)
+    product = NewProductSerializer(read_only=True)
 
     class Meta:
         model = Add_to_wishlist
@@ -41,7 +43,7 @@ class WishlistCreateSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        pr = Product.objects.get(id=data['product'])
+        pr = NewProductModel.objects.get(id=data['id'])
         us = User.objects.get(id=data['user'])
         serialized_obj = model_to_dict(pr)
         serialized_obj2 = model_to_dict(us)

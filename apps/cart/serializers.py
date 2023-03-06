@@ -1,9 +1,9 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from .models import CartItem
-from ..products.models import Product, ProductInventory, Media
+from ..products.models import NewProductModel, NewMedia
 from django.forms.models import model_to_dict
-from ..products.serializers import ProductInventorySerializer
+from ..products.serializers import NewProductSerializer
 
 User = get_user_model()
 
@@ -22,7 +22,7 @@ class DashUserSerializer(serializers.ModelSerializer):
 
 class CartItemSerializer(serializers.ModelSerializer):
     user = UserSerializer()
-    product = ProductInventorySerializer()
+    product = NewProductSerializer()
 
     class Meta:
         model = CartItem
@@ -37,8 +37,8 @@ class CartCreateSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
         us = User.objects.get(id=data['user'])
-        pr = ProductInventory.objects.get(id=data['product'])
-        media = Media.objects.filter(product_inventory=data['product'])
+        pr = NewProductModel.objects.get(id=data['product'])
+        media = NewMedia.objects.filter(product_inventory=data['product'])
         if media.exists():
             request = self.context.get('request')
             host = request.get_host() if request else 'localhost'

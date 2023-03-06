@@ -1,8 +1,8 @@
 from rest_framework import serializers
 from rest_framework.relations import StringRelatedField
 
-from .models import Category, Product, Wishlist, ProductInventory, Media, Brand, ProductAttributeValue, Rating, \
-    ProductAttribute, ProductAllModel
+from .models import Category, Wishlist, Brand, ProductAttributeValue, Rating, \
+    ProductAttribute, NewProductModel, NewMedia
 from django.db import models
 
 from .utils.units import Weight
@@ -66,7 +66,7 @@ class ProductMediaSerializer(serializers.ModelSerializer):
     img_url = serializers.SerializerMethodField()
 
     class Meta:
-        model = Media
+        model = NewMedia
         fields = ["img_url", "alt_text"]
         read_only = True
         editable = False
@@ -79,19 +79,7 @@ class ProductMediaSerializer(serializers.ModelSerializer):
         # pass
 
 
-class ProductSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Product
-        # fields = (
-        #     'id', 'name', 'slug', 'description', 'category', 'is_active', 'is_recommended', 'USA_product', 'created_at')
-        # exclude = ["id"]
-        fields = '__all__'
-        read_only = True
-        # editable = False
-
-
-class ProductInventorySerializer(serializers.ModelSerializer):
-    product = ProductSerializer(many=False, read_only=True)
+class NewProductSerializer(serializers.ModelSerializer):
     media = ProductMediaSerializer(many=True, read_only=True)
     brand = BrandSerializer(read_only=True)
     attributes = ProductAttributeValueSerializer(
@@ -112,13 +100,12 @@ class ProductInventorySerializer(serializers.ModelSerializer):
         return 0.0  # or any default value you want
 
     class Meta:
-        model = ProductInventory
+        model = NewProductModel
 
         fields = '__all__'
 
 
 class ProductInventorySearchSerializer(serializers.ModelSerializer):
-    product = ProductSerializer(many=False, read_only=True)
     # media = ProductMediaSerializer(many=True, read_only=True)
     brand = BrandSerializer(read_only=True)
 
@@ -127,7 +114,7 @@ class ProductInventorySearchSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = ProductInventory
+        model = NewProductModel
         # fields = '__all__'
         fields = [
             "id",
@@ -143,12 +130,4 @@ class ProductInventorySearchSerializer(serializers.ModelSerializer):
 class RatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rating
-        fields = '__all__'
-
-
-class PrFilter(serializers.ModelSerializer):
-    atributes_value = ProductAttributeValueSerializerFiler(many=True)
-
-    class Meta:
-        model = ProductAllModel
         fields = '__all__'
