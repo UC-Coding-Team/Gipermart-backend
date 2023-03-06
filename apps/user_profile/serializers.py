@@ -1,20 +1,12 @@
 from collections import defaultdict
-
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import update_last_login
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from rest_framework_simplejwt.settings import api_settings
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-
-# from masters.serializers import MasterSerializer
-# from mebel.serializers import AllMebelSerializer
-# from products.serializers import HomeSerializer, NewAllWebHomeCreateSerializer
-# from store.serializers import StoreModelSerializer, ProfileStoreModelSerializer
 from .models import User, Map
-from ..cart.serializers import ProductInventorySerializer
 from ..checkout.serializers import CheckoutSerializer
-from ..products.serializers import ProductSerializer
 
 
 class CheckTokenSerializer(serializers.Serializer):

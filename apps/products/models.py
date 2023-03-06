@@ -271,11 +271,11 @@ class ProductAttributeValues(models.Model):
         related_name="productattributevaluess",
         on_delete=models.SET_NULL,
         null=True,
-        verbose_name=_('productinventory')
+        verbose_name=_('product')
     )
 
     class Meta:
-        unique_together = (("attributevalues", "productinventory"),)
+        unique_together = (("attributevalues", "product"),)
         verbose_name = _('ProductAttributeValues')
         verbose_name_plural = _('ProductAttributeValues')
 
@@ -296,7 +296,7 @@ class ProductTypeAttribute(models.Model):
         related_name="producttype",
         on_delete=models.SET_NULL,
         null=True,
-        verbose_name=_('productinventory')
+        verbose_name=_('product')
     )
 
     class Meta:

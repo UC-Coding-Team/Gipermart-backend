@@ -6,7 +6,7 @@ from apps.products.views import CategoryList, ProductByCategory, ProductDetailBy
 app_name = "products"
 router = DefaultRouter()
 # router.register('product_filter', ProductFilterView, basename='produc_filter')
-router.register('api/products', AllProductsView.as_view(), 'products')
+router.register('api/products', AllProductsView, 'products')
 # router.register('api/products/filter', ProductInventoryView, 'products-filter')
 
 urlpatterns = [

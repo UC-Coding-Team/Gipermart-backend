@@ -4,7 +4,7 @@ from . import models
 
 class ProductAttributeValuesInline(admin.TabularInline):
     model = models.ProductAttributeValues
-    raw_id_fields = ['productinventory']
+    raw_id_fields = ['product']
 
 
 class NewProductMediaInline(admin.TabularInline):
@@ -31,7 +31,7 @@ class BrandAdmin(admin.ModelAdmin):
 
 @admin.register(models.ProductAttributeValues)
 class ProductAttributeValuesAdmin(admin.ModelAdmin):
-    list_display = ['id', 'attributevalues', 'productinventory']
+    list_display = ['id', 'attributevalues', 'product']
 
 
 @admin.register(models.ProductAttributeValue)

@@ -1,6 +1,6 @@
 import django_filters
 
-from apps.products.models import ProductInventory
+from apps.products.models import NewProductModel
 
 
 class ProductFilter(django_filters.FilterSet):
@@ -10,7 +10,7 @@ class ProductFilter(django_filters.FilterSet):
     max_price = django_filters.NumberFilter(field_name='price', lookup_expr='lte')
 
     class Meta:
-        model = ProductInventory
+        model = NewProductModel
         fields = ['attribute_values', 'price']
 
     @staticmethod
