@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Slider, Stock, Brand
+from .models import Slider, Stock, Brand, Add_to_wishlist
 
 
 @admin.register(Slider)
