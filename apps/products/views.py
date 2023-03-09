@@ -1,7 +1,5 @@
-from django.http import Http404
 from rest_framework.filters import OrderingFilter, SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.generics import ListAPIView
 from rest_framework import generics, mixins
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import GenericViewSet
@@ -11,7 +9,7 @@ from .serializers import (
     CategorySerializer,
     RatingSerializer, NewProductSerializer
 )
-from apps.products.models import Category, Rating, ProductAttributeValue, NewProductModel
+from apps.products.models import Category, Rating, NewProductModel
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -33,7 +31,7 @@ class ProductByCategory(APIView):
     """
 
     def get(self, request, slug=None):
-        queryset = NewProductModel.objects.filter(product__category__slug=slug)
+        queryset = NewProductModel.objects.filter(category__slug=slug)
         serializer = NewProductSerializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -73,7 +71,7 @@ class ProductFilterView(generics.ListCreateAPIView):
     serializer_class = NewProductSerializer
     filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
     filterset_class = ProductInventoryFilter
-    search_fields = ('product__category__slug',)
+    search_fields = ('category__slug',)
     ordering_fields = ('price',)
     ordering = ('price',)
 # class ProductFilterView(mixins.ListModelMixin, GenericViewSet):

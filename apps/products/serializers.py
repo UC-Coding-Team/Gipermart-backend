@@ -80,7 +80,7 @@ class ProductMediaSerializer(serializers.ModelSerializer):
 
 
 class NewProductSerializer(serializers.ModelSerializer):
-    media = ProductMediaSerializer(many=True, read_only=True)
+    new_media = ProductMediaSerializer(many=True, read_only=True)
     brand = BrandSerializer(read_only=True)
     attributes = ProductAttributeValueSerializer(
         source="attribute_values", many=True, read_only=True
@@ -101,7 +101,6 @@ class NewProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = NewProductModel
-
         fields = '__all__'
 
 

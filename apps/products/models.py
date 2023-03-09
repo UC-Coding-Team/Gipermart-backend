@@ -206,7 +206,7 @@ class NewMedia(models.Model):
         NewProductModel,
         on_delete=models.CASCADE,
         related_name="new_media",
-        verbose_name=_('product_inventory')
+        verbose_name=_('media')
     )
     img_url = models.ImageField(upload_to='product/images', verbose_name=_('image_url'))
     alt_text = models.CharField(
