@@ -21,7 +21,6 @@ class GeneratePayLink:
         """
         GENERETED_PAY_LINK: str = "{payme_url}/{encode_params}"
         PARAMS: str = 'm={payme_id};ac.{payme_account}={order_id};a={amount};c={call_back_url}'
-
         PARAMS = PARAMS.format(
             payme_id=PAYME_ID,
             payme_account=PAYME_ACCOUNT,
@@ -34,7 +33,6 @@ class GeneratePayLink:
             payme_url=PAYME_URL,
             encode_params=str(encode_params, 'utf-8')
         )
-    
     @staticmethod
     def to_soum(amount: Decimal) -> Decimal:
         """

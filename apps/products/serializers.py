@@ -106,6 +106,8 @@ class NewProductSerializer(serializers.ModelSerializer):
 
 class ProductInventorySearchSerializer(serializers.ModelSerializer):
     # media = ProductMediaSerializer(many=True, read_only=True)
+    # new_media = ProductMediaSerializer(many=True, read_only=True)
+
     brand = BrandSerializer(read_only=True)
 
     attributes = ProductAttributeValueSerializer(
@@ -117,12 +119,17 @@ class ProductInventorySearchSerializer(serializers.ModelSerializer):
         # fields = '__all__'
         fields = [
             "id",
+            "title",
             "sku",
             "price",
             "is_default",
-            "product",
+            "is_active",
+            "is_on_sale",
+            "sale_price",
             "brand",
             'attributes',
+            "created_at",
+            "updated_at",
         ]
 
 

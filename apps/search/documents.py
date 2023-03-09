@@ -3,12 +3,12 @@ from django_elasticsearch_dsl.registries import registry
 from apps.products.models import NewProductModel
 
 @registry.register_document
-class ProductInventoryDocument(Document):
-    product = fields.ObjectField(
-        properties={
-            "name": fields.TextField(),
-            "slug": fields.TextField(),
-            "description": fields.TextField(),
+class NewProductDocument(Document):
+    # product = fields.ObjectField(
+    #     properties={
+    #         "name": fields.TextField(),
+    #         "slug": fields.TextField(),
+    #         "description": fields.TextField(),
         #     "category": fields.ObjectField(
         # properties={
         # "name": fields.TextField(),
@@ -17,8 +17,8 @@ class ProductInventoryDocument(Document):
         # "background_image": fields.FileField(),
         # }
     # )
-}
-)
+# }
+# )
     brand = fields.ObjectField(properties={"name": fields.TextField()})
     product_type = fields.ObjectField(properties={"name": fields.TextField(),"slug": fields.TextField(),"description": fields.TextField()})
     # attribute_values = fields.ObjectField(
@@ -39,6 +39,7 @@ class ProductInventoryDocument(Document):
 
         fields = [
             "id",
+            "title",
             "sku",
             "price",
             "is_default",
@@ -49,3 +50,28 @@ class ProductInventoryDocument(Document):
             "created_at",
             "updated_at",
         ]
+
+
+# @registry.register_document
+# class NewProductDocument(Document):
+#     class Index:
+#         # Name of the Elasticsearch index
+#         name = 'new_product'
+#         # See Elasticsearch Indices API reference for available settings
+#         settings = {
+#             'number_of_shards': 1,
+#             'number_of_replicas': 0
+#         }
+#
+#     class Django:
+#         model = NewProductModel
+#         fields = [
+#             'title',
+#             'category',
+#             'brand',
+#             'product_type',
+#             'price',
+#             'is_on_sale',
+#             'weight',
+#             'status'
+#         ]
