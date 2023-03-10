@@ -43,7 +43,7 @@ class ProductDetailBySlug(APIView):
 
     def get(self, request, pk=None):
         product = NewProductModel.objects.get(pk=pk)
-        serializer = NewProductSerializer(product)
+        serializer = NewProductSerializer(product, context={'request': request})
         return Response(serializer.data)
 
 

@@ -82,11 +82,9 @@ class ProductMediaSerializer(serializers.ModelSerializer):
 class NewProductSerializer(serializers.ModelSerializer):
     new_media = ProductMediaSerializer(many=True, read_only=True)
     brand = BrandSerializer(read_only=True)
-    attributes = ProductAttributeValueSerializer(
-        source="attribute_values", many=True, read_only=True
-    )
+    attribute_values = ProductAttributeValueSerializer(many=True, read_only=True)
     rating = serializers.SerializerMethodField()
-    # category = StringRelatedField(source='product.category')
+    category_name = StringRelatedField(source='category.name')
     weight = serializers.SerializerMethodField()
     product_type = serializers.StringRelatedField(source='product_type.name')
 
@@ -109,9 +107,7 @@ class ProductInventorySearchSerializer(serializers.ModelSerializer):
     # media = ProductMediaSerializer(many=True, read_only=True)
     # new_media = ProductMediaSerializer(many=True, read_only=True)
     new_media = ProductMediaSerializer(many=True, read_only=True)
-
     brand = BrandSerializer(read_only=True)
-
     attributes = ProductAttributeValueSerializer(
         source="attribute_values", many=True, read_only=True
     )

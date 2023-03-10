@@ -123,7 +123,7 @@ class NewProductModel(models.Model):
     sku = models.CharField(max_length=100, verbose_name=_('sku'))
     title_en = models.CharField(max_length=300, verbose_name=_('title_en'))
     title_ru = models.CharField(max_length=300, verbose_name=_('title_ru'))
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name=_('category'))
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products', verbose_name=_('category'))
     brand = models.ForeignKey(
         Brand,
         related_name="new_brand",
