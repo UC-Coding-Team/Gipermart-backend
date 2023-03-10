@@ -159,6 +159,7 @@ class NewProductModel(models.Model):
         verbose_name=_('sale_price')
     )
     installment_plan = models.CharField(max_length=250, verbose_name=_('installment_plan'))
+    descriptions = models.TextField(verbose_name=_('descriptions'), null=True)
     is_on_sale = models.BooleanField(default=False, verbose_name=_('is_on_sale'))
     alifshop = models.BooleanField(default=False, verbose_name=_('alifshop'))
     weight = MeasurementField(
