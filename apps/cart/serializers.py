@@ -38,14 +38,14 @@ class CartCreateSerializer(serializers.ModelSerializer):
         data = super().to_representation(instance)
         us = User.objects.get(id=data['user'])
         pr = NewProductModel.objects.get(id=data['product'])
-        media = NewMedia.objects.filter(product_inventory=data['product'])
+        media = NewMedia.objects.filter(product=data['product'])
         if media.exists():
             request = self.context.get('request')
             host = request.get_host() if request else 'localhost'
             media_urls = [f"http://{host}{m.img_url.url}" for m in media]
         else:
             media_urls = 'не найден'
-        serialized_obj = model_to_dict(pr, exclude=['created_at', 'updated_at', 'weight'])
+        serialized_obj = model_to_dict(pr, exclude=['created_at', 'updated_at', 'weight', 'attribute_values'])
         serialized_obj2 = model_to_dict(us)
         data['media'] = media_urls
         data['product'] = serialized_obj

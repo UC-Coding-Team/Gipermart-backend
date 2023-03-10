@@ -20,7 +20,7 @@ class CartItem(models.Model):
 
 
     def __str__(self):
-        return str(self.product.product.name)
+        return str(self.product.title_en)
 
     class Meta:
         verbose_name = _('Cart')
