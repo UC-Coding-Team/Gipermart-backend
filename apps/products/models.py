@@ -134,9 +134,9 @@ class NewProductModel(models.Model):
     )
     attribute_values = models.ManyToManyField(
         ProductAttributeValue,
-        related_name="new_product_attribute_values",
+        related_name="attributes",
         # through="ProductAttributeValues",
-        verbose_name=_('attribute_values')
+        verbose_name=_('attributes')
     )
     product_type = models.ForeignKey(ProductType, on_delete=models.CASCADE, related_name='new_product_type',
                                      verbose_name=_('product_type'))

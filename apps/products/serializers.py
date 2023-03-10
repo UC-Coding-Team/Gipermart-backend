@@ -88,6 +88,7 @@ class NewProductSerializer(serializers.ModelSerializer):
     rating = serializers.SerializerMethodField()
     # category = StringRelatedField(source='product.category')
     weight = serializers.SerializerMethodField()
+    product_type = serializers.StringRelatedField(source='product_type.name')
 
     def get_rating(self, obj):
         product_id = obj.id
