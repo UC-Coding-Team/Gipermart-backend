@@ -121,7 +121,8 @@ class ProductInventorySearchSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "new_media",
-            "title",
+            "title_en",
+            # "title_ru",
             "sku",
             "price",
             "is_default",

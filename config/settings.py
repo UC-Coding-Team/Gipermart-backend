@@ -266,9 +266,9 @@ JAZZMIN_SETTINGS = {
 PAYME = {
 
     'PAYME_ID': '6221f9548dccd302156b739f',
-    'PAYME_KEY': '0UyzTv?teb1IqR486Nt1&q06t?F@4TqgQC5p',
-    'PAYME_URL': 'https://test.paycom.uz',
-    'PAYME_CALL_BACK_URL': 'https://test.paycom.uz',  # merchant api callback url
+    'PAYME_KEY': '@Ez32Kxc2s7PK03q0HQQ&inf#IH5aVutEh&o',
+    'PAYME_URL': 'https://checkout.paycom.uz/',
+    'PAYME_CALL_BACK_URL': 'https://checkout.paycom.uz/',  # merchant api callback url
     'PAYME_MIN_AMOUNT': 1,  # butun sonlar
     'PAYME_ACCOUNT': 'payment_id',
 

@@ -39,7 +39,8 @@ class NewProductDocument(Document):
 
         fields = [
             "id",
-            "title",
+            "title_en",
+            "title_ru",
             "sku",
             "price",
             "is_default",

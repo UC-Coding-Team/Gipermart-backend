@@ -121,7 +121,8 @@ class NewProductModel(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='new_products', null=True,
                              verbose_name=_('user'))
     sku = models.CharField(max_length=100, verbose_name=_('sku'))
-    title = models.CharField(max_length=300, verbose_name=_('title'))
+    title_en = models.CharField(max_length=300, verbose_name=_('title_en'))
+    title_ru = models.CharField(max_length=300, verbose_name=_('title_ru'))
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name=_('category'))
     brand = models.ForeignKey(
         Brand,
@@ -194,7 +195,7 @@ class NewProductModel(models.Model):
     )
 
     def __str__(self):
-        return self.title
+        return self.title_en
 
     class Meta:
         verbose_name = _('NewProduct')
