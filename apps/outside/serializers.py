@@ -37,16 +37,19 @@ class WishlistItemSerializer(serializers.ModelSerializer):
 
 
 class WishlistCreateSerializer(serializers.ModelSerializer):
+    weight = serializers.SerializerMethodField()
+
     class Meta:
         model = Add_to_wishlist
-        fields = ('id', 'user', 'product', 'created_at', 'updated_at')
+        fields = ('id', 'user', 'product', 'created_at', 'updated_at', 'weight')
+
+    def get_weight(self, instance):
+        if instance.product.weight:
+            return str(instance.product.weight)
+        else:
+            return None
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        pr = NewProductModel.objects.get(id=data['id'])
-        us = User.objects.get(id=data['user'])
-        serialized_obj = model_to_dict(pr)
-        serialized_obj2 = model_to_dict(us)
-        data['product'] = serialized_obj
-        data['user'] = serialized_obj2
+        data['weight'] = self.get_weight(instance)
         return data
