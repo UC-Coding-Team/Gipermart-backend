@@ -51,6 +51,6 @@ class ProductTypeAttributeAdmin(admin.ModelAdmin):
 
 @admin.register(models.NewProductModel)
 class NewProductModelAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title_en','title_ru', 'created_at']
+    list_display = ['id', 'title_en', 'title_ru', 'created_at']
     exclude = ['user']
     inlines = [NewProductMediaInline]
