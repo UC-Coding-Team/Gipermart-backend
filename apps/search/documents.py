@@ -43,6 +43,7 @@ class NewProductDocument(Document):
             "title_ru",
             "sku",
             "price",
+            "descriptions",
             "is_default",
             "is_active",
             "is_on_sale",

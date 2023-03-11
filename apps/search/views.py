@@ -19,7 +19,7 @@ class SearchProductInventory(APIView, LimitOffsetPagination):
                 should=[
                     Q("match_phrase_prefix", title_en=query),
                     Q("match_phrase_prefix", title_ru=query),
-                    Q("match_phrase_prefix", description=query),
+                    Q("match_phrase_prefix", descriptions=query),
                     Q("match_phrase_prefix", brand__name=query),
                 ],
             )

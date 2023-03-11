@@ -122,6 +122,7 @@ class ProductInventorySearchSerializer(serializers.ModelSerializer):
             # "title_ru",
             "sku",
             "price",
+            "descriptions",
             "is_default",
             "is_active",
             "is_on_sale",
@@ -132,6 +133,7 @@ class ProductInventorySearchSerializer(serializers.ModelSerializer):
             "updated_at",
         ]
 
+        # read_only_fields = '__all__'
         read_only_fields = ["id","title","new_media"]
 
 
