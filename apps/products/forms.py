@@ -4,7 +4,7 @@ from apps.products.models import NewProductModel
 
 
 class ProductForm(forms.ModelForm):
-    excel_file = forms.FileField()
+    excel_file = forms.FileField(required=False)
 
     class Meta:
         model = NewProductModel
