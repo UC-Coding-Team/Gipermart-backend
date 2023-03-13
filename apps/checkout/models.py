@@ -23,8 +23,6 @@ class Checkout(models.Model):
         default=False, verbose_name=_('PAY_STATUS'))
     NAXT_STATUS = models.BooleanField(
         default=False,  verbose_name=_('NAXT_STATUS'))
-    order_id = models.BigIntegerField(null=True, blank=True)
-    amount = models.FloatField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('created_at'))
     generate_link = models.CharField(max_length=300, blank=True)
     total_price = models.CharField(max_length=300, blank=True)
@@ -36,8 +34,8 @@ class Checkout(models.Model):
     def generate_pay_link(self):
         if self.PAY_STATUS:
             pay_link = GeneratePayLink(
-                payment_id=self.order_id,
-                amount=self.amount
+                payment_id=self.pk,
+                amount=self.total_price
             ).generate_link()
             self.generate_link = pay_link
             self.save()
