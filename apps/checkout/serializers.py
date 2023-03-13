@@ -6,8 +6,7 @@ from apps.cart.serializers import CartItemSerializer
 class CheckoutSerializer(serializers.ModelSerializer):
     class Meta:
         model = Checkout
-        fields = ['id', 'full_name', 'phone_number', 'region', 'town', 'address', 'comment', 'cart', 'user', 'PAY_STATUS',
-                  'NAXT_STATUS', 'order_id', 'amount', 'created_at']
+        fields = [ 'order_id', 'amount', ]
 
 
 class CheckoutAllSerializer(serializers.ModelSerializer):
