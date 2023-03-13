@@ -14,5 +14,4 @@ class CheckoutAllSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Checkout
-        fields = ['id','full_name', 'phone_number', 'region', 'town', 'address', 'comment', 'cart', 'PAY_STATUS',
-                  'NAXT_STATUS', 'created_at','total_price','generate_link']
+        fields = ['PAY_STATUS', 'order_id', 'amount', 'created_at', 'generate_link']
