@@ -10,7 +10,7 @@ class CheckoutSerializer(serializers.ModelSerializer):
 
 
 class CheckoutAllSerializer(serializers.ModelSerializer):
-    cart = CartItemSerializer(many=True, read_only=True)
+    # cart = CartItemSerializer(many=True, read_only=True)
 
     class Meta:
         model = Checkout
