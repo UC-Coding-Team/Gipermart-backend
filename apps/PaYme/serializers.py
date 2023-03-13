@@ -18,10 +18,10 @@ class MerchatTransactionsModelSerializer(serializers.ModelSerializer):
         """
         Validate the data given to the MerchatTransactionsModel.
         """
-        if data.get("order_id") is not None:
+        if data.get("payment_id") is not None:
             try:
                 order = Order.objects.get(
-                    id=data['order_id']
+                    id=data['payment_id']
                 )
                 if order.amount != int(data['amount']):
                     raise IncorrectAmount()
@@ -41,16 +41,16 @@ class MerchatTransactionsModelSerializer(serializers.ModelSerializer):
 
         return amount
 
-    def validate_order_id(self, order_id) -> int:
+    def validate_order_id(self, payment_id) -> int:
         """
         Use this method to check if a transaction is allowed to be executed.
-        :param order_id: string -> Order Indentation.
+        :param payment_id: string -> Order Indentation.
         """
         try:
             Order.objects.get(
-                id=order_id,
+                id=payment_id,
             )
         except Order.DoesNotExist:
             raise PerformTransactionDoesNotExist()
 
-        return order_id
+        return payment_id

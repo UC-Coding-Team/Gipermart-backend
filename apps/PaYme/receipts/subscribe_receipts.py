@@ -33,10 +33,10 @@ class PaymeSubscribeReceipts:
         }
         return requests.post(**req_data).json()
 
-    def _receipts_create(self, amount: float, order_id: int) -> dict:
+    def _receipts_create(self, amount: float, payment_id: int) -> dict:
         """Use this method to create a new payment receipt.
         :param amount float: Payment amount in tiyins
-        :param order_id int: Order object ID
+        :param payment_id int: Order object ID
         Full method documentation:
         https://developer.help.paycom.uz/uz/metody-subscribe-api/receipts.create
         """
@@ -45,7 +45,7 @@ class PaymeSubscribeReceipts:
             "params": {
                 "amount": amount,
                 "account": {
-                    "order_id": order_id,
+                    "payment_id": payment_id,
                 }
             }
         }
