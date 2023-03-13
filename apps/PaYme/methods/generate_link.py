@@ -20,11 +20,11 @@ class GeneratePayLink:
         GeneratePayLink for each order.
         """
         GENERETED_PAY_LINK: str = "{payme_url}/{encode_params}"
-        PARAMS: str = 'm={payme_id};ac.{payme_account}={payment_id};a={amount};c={call_back_url}'
+        PARAMS: str = 'm={payme_id};ac.{payme_account}={order_id};a={amount};c={call_back_url}'
         PARAMS = PARAMS.format(
             payme_id=PAYME_ID,
             payme_account=PAYME_ACCOUNT,
-            payment_id=self.payment_id,
+            order_id=self.payment_id,
             amount=self.amount,
             call_back_url=PAYME_CALL_BACK_URL
         )
