@@ -38,7 +38,7 @@ urlpatterns = [
     path("outside/", include("apps.outside.urls")),
     path("user/", include("apps.user_profile.urls")),
     path("cart/", include("apps.cart.urls")),
-    path("checkout/", include("apps.checkout.urls")),
+    path("", include("apps.checkout.urls")),
     path('', include('apps.PaYme.urls')),
     path('dashboard/', include('apps.dashboard_api.urls')),
 
